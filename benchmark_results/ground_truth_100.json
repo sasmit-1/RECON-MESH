@@ -1,0 +1,4979 @@
+{
+  "benchmark_metadata": {
+    "version": "2.1",
+    "record_count": 100,
+    "seed": 42,
+    "total_gross_paise": 507900000,
+    "total_net_paise": 493713560,
+    "total_mdr_paise": 10158000,
+    "total_gst_paise": 1828440
+  },
+  "razorpay_events": [
+    {
+      "event_id": "evt_rzp_001",
+      "order_id": "order_hbVrpoiV",
+      "payment_id": "pay_9876543211",
+      "amount_gross_paise": 12500000,
+      "fee_mdr_paise": 250000,
+      "fee_gst_paise": 45000,
+      "amount_net_paise": 12205000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T10:15:00Z",
+      "utr": "9876543211",
+      "metadata": {
+        "customer_email": "user1@enterprise.in",
+        "settlement_batch_id": "batch_std_001"
+      }
+    },
+    {
+      "event_id": "evt_rzp_002",
+      "order_id": "order_RV5IfLBc",
+      "payment_id": "pay_9876543212",
+      "amount_gross_paise": 250000,
+      "fee_mdr_paise": 5000,
+      "fee_gst_paise": 900,
+      "amount_net_paise": 244100,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T10:30:00Z",
+      "utr": "9876543212",
+      "metadata": {
+        "customer_email": "user2@enterprise.in",
+        "settlement_batch_id": "batch_std_002"
+      }
+    },
+    {
+      "event_id": "evt_rzp_003",
+      "order_id": "order_fnoGMbJm",
+      "payment_id": "pay_9876543213",
+      "amount_gross_paise": 100000,
+      "fee_mdr_paise": 2000,
+      "fee_gst_paise": 360,
+      "amount_net_paise": 97640,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T10:45:00Z",
+      "utr": "9876543213",
+      "metadata": {
+        "customer_email": "user3@enterprise.in",
+        "settlement_batch_id": "batch_std_003"
+      }
+    },
+    {
+      "event_id": "evt_rzp_004",
+      "order_id": "order_PSIAoCLr",
+      "payment_id": "pay_9876543214",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T11:00:00Z",
+      "utr": "9876543214",
+      "metadata": {
+        "customer_email": "user4@enterprise.in",
+        "settlement_batch_id": "batch_std_004"
+      }
+    },
+    {
+      "event_id": "evt_rzp_005",
+      "order_id": "order_WZkSBvrj",
+      "payment_id": "pay_9876543215",
+      "amount_gross_paise": 100000,
+      "fee_mdr_paise": 2000,
+      "fee_gst_paise": 360,
+      "amount_net_paise": 97640,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T11:15:00Z",
+      "utr": "9876543215",
+      "metadata": {
+        "customer_email": "user5@enterprise.in",
+        "settlement_batch_id": "batch_std_005"
+      }
+    },
+    {
+      "event_id": "evt_rzp_006",
+      "order_id": "order_9Wvgfygw",
+      "payment_id": "pay_9876543216",
+      "amount_gross_paise": 750000,
+      "fee_mdr_paise": 15000,
+      "fee_gst_paise": 2700,
+      "amount_net_paise": 732300,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T11:30:00Z",
+      "utr": "9876543216",
+      "metadata": {
+        "customer_email": "user6@enterprise.in",
+        "settlement_batch_id": "batch_std_006"
+      }
+    },
+    {
+      "event_id": "evt_rzp_007",
+      "order_id": "order_MqZcUDIh",
+      "payment_id": "pay_9876543217",
+      "amount_gross_paise": 1500000,
+      "fee_mdr_paise": 30000,
+      "fee_gst_paise": 5400,
+      "amount_net_paise": 1464600,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T11:45:00Z",
+      "utr": "9876543217",
+      "metadata": {
+        "customer_email": "user7@enterprise.in",
+        "settlement_batch_id": "batch_std_007"
+      }
+    },
+    {
+      "event_id": "evt_rzp_008",
+      "order_id": "order_fJs1ON43",
+      "payment_id": "pay_9876543218",
+      "amount_gross_paise": 2500000,
+      "fee_mdr_paise": 50000,
+      "fee_gst_paise": 9000,
+      "amount_net_paise": 2441000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T12:00:00Z",
+      "utr": "9876543218",
+      "metadata": {
+        "customer_email": "user8@enterprise.in",
+        "settlement_batch_id": "batch_std_008"
+      }
+    },
+    {
+      "event_id": "evt_rzp_009",
+      "order_id": "order_KmTecQoX",
+      "payment_id": "pay_9876543219",
+      "amount_gross_paise": 1500000,
+      "fee_mdr_paise": 30000,
+      "fee_gst_paise": 5400,
+      "amount_net_paise": 1464600,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T12:15:00Z",
+      "utr": "9876543219",
+      "metadata": {
+        "customer_email": "user9@enterprise.in",
+        "settlement_batch_id": "batch_std_009"
+      }
+    },
+    {
+      "event_id": "evt_rzp_010",
+      "order_id": "order_f2o3gyrD",
+      "payment_id": "pay_9876543220",
+      "amount_gross_paise": 1000000,
+      "fee_mdr_paise": 20000,
+      "fee_gst_paise": 3600,
+      "amount_net_paise": 976400,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T12:30:00Z",
+      "utr": "9876543220",
+      "metadata": {
+        "customer_email": "user10@enterprise.in",
+        "settlement_batch_id": "batch_std_010"
+      }
+    },
+    {
+      "event_id": "evt_rzp_011",
+      "order_id": "order_1xkxwnQr",
+      "payment_id": "pay_9876543221",
+      "amount_gross_paise": 12500000,
+      "fee_mdr_paise": 250000,
+      "fee_gst_paise": 45000,
+      "amount_net_paise": 12205000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T12:45:00Z",
+      "utr": "9876543221",
+      "metadata": {
+        "customer_email": "user11@enterprise.in",
+        "settlement_batch_id": "batch_std_011"
+      }
+    },
+    {
+      "event_id": "evt_rzp_012",
+      "order_id": "order_7RPeMOkI",
+      "payment_id": "pay_9876543222",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T13:00:00Z",
+      "utr": "9876543222",
+      "metadata": {
+        "customer_email": "user12@enterprise.in",
+        "settlement_batch_id": "batch_std_012"
+      }
+    },
+    {
+      "event_id": "evt_rzp_013",
+      "order_id": "order_pkDyr7OS",
+      "payment_id": "pay_9876543223",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T13:15:00Z",
+      "utr": "9876543223",
+      "metadata": {
+        "customer_email": "user13@enterprise.in",
+        "settlement_batch_id": "batch_std_013"
+      }
+    },
+    {
+      "event_id": "evt_rzp_014",
+      "order_id": "order_oRu1XXdo",
+      "payment_id": "pay_9876543224",
+      "amount_gross_paise": 7500000,
+      "fee_mdr_paise": 150000,
+      "fee_gst_paise": 27000,
+      "amount_net_paise": 7323000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T13:30:00Z",
+      "utr": "9876543224",
+      "metadata": {
+        "customer_email": "user14@enterprise.in",
+        "settlement_batch_id": "batch_std_014"
+      }
+    },
+    {
+      "event_id": "evt_rzp_015",
+      "order_id": "order_Zuzren68",
+      "payment_id": "pay_9876543225",
+      "amount_gross_paise": 100000,
+      "fee_mdr_paise": 2000,
+      "fee_gst_paise": 360,
+      "amount_net_paise": 97640,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T13:45:00Z",
+      "utr": "9876543225",
+      "metadata": {
+        "customer_email": "user15@enterprise.in",
+        "settlement_batch_id": "batch_std_015"
+      }
+    },
+    {
+      "event_id": "evt_rzp_016",
+      "order_id": "order_4TunPFz4",
+      "payment_id": "pay_9876543226",
+      "amount_gross_paise": 10000000,
+      "fee_mdr_paise": 200000,
+      "fee_gst_paise": 36000,
+      "amount_net_paise": 9764000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T14:00:00Z",
+      "utr": "9876543226",
+      "metadata": {
+        "customer_email": "user16@enterprise.in",
+        "settlement_batch_id": "batch_std_016"
+      }
+    },
+    {
+      "event_id": "evt_rzp_017",
+      "order_id": "order_DjqipVJI",
+      "payment_id": "pay_9876543227",
+      "amount_gross_paise": 12500000,
+      "fee_mdr_paise": 250000,
+      "fee_gst_paise": 45000,
+      "amount_net_paise": 12205000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T14:15:00Z",
+      "utr": "9876543227",
+      "metadata": {
+        "customer_email": "user17@enterprise.in",
+        "settlement_batch_id": "batch_std_017"
+      }
+    },
+    {
+      "event_id": "evt_rzp_018",
+      "order_id": "order_VLB5Lzxo",
+      "payment_id": "pay_9876543228",
+      "amount_gross_paise": 1000000,
+      "fee_mdr_paise": 20000,
+      "fee_gst_paise": 3600,
+      "amount_net_paise": 976400,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T14:30:00Z",
+      "utr": "9876543228",
+      "metadata": {
+        "customer_email": "user18@enterprise.in",
+        "settlement_batch_id": "batch_std_018"
+      }
+    },
+    {
+      "event_id": "evt_rzp_019",
+      "order_id": "order_GFfWd3hj",
+      "payment_id": "pay_9876543229",
+      "amount_gross_paise": 500000,
+      "fee_mdr_paise": 10000,
+      "fee_gst_paise": 1800,
+      "amount_net_paise": 488200,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T14:45:00Z",
+      "utr": "9876543229",
+      "metadata": {
+        "customer_email": "user19@enterprise.in",
+        "settlement_batch_id": "batch_std_019"
+      }
+    },
+    {
+      "event_id": "evt_rzp_020",
+      "order_id": "order_kYRBMeyy",
+      "payment_id": "pay_9876543230",
+      "amount_gross_paise": 12500000,
+      "fee_mdr_paise": 250000,
+      "fee_gst_paise": 45000,
+      "amount_net_paise": 12205000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T15:00:00Z",
+      "utr": "9876543230",
+      "metadata": {
+        "customer_email": "user20@enterprise.in",
+        "settlement_batch_id": "batch_std_020"
+      }
+    },
+    {
+      "event_id": "evt_rzp_021",
+      "order_id": "order_DHqJ38aR",
+      "payment_id": "pay_9876543231",
+      "amount_gross_paise": 10000000,
+      "fee_mdr_paise": 200000,
+      "fee_gst_paise": 36000,
+      "amount_net_paise": 9764000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T15:15:00Z",
+      "utr": "9876543231",
+      "metadata": {
+        "customer_email": "user21@enterprise.in",
+        "settlement_batch_id": "batch_std_021"
+      }
+    },
+    {
+      "event_id": "evt_rzp_022",
+      "order_id": "order_hR4IWrXP",
+      "payment_id": "pay_9876543232",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T15:30:00Z",
+      "utr": "9876543232",
+      "metadata": {
+        "customer_email": "user22@enterprise.in",
+        "settlement_batch_id": "batch_std_022"
+      }
+    },
+    {
+      "event_id": "evt_rzp_023",
+      "order_id": "order_hsBkDa9U",
+      "payment_id": "pay_9876543233",
+      "amount_gross_paise": 1500000,
+      "fee_mdr_paise": 30000,
+      "fee_gst_paise": 5400,
+      "amount_net_paise": 1464600,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T15:45:00Z",
+      "utr": "9876543233",
+      "metadata": {
+        "customer_email": "user23@enterprise.in",
+        "settlement_batch_id": "batch_std_023"
+      }
+    },
+    {
+      "event_id": "evt_rzp_024",
+      "order_id": "order_qGWlG6g3",
+      "payment_id": "pay_9876543234",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T16:00:00Z",
+      "utr": "9876543234",
+      "metadata": {
+        "customer_email": "user24@enterprise.in",
+        "settlement_batch_id": "batch_std_024"
+      }
+    },
+    {
+      "event_id": "evt_rzp_025",
+      "order_id": "order_t1OGMmjx",
+      "payment_id": "pay_9876543235",
+      "amount_gross_paise": 12500000,
+      "fee_mdr_paise": 250000,
+      "fee_gst_paise": 45000,
+      "amount_net_paise": 12205000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T16:15:00Z",
+      "utr": "9876543235",
+      "metadata": {
+        "customer_email": "user25@enterprise.in",
+        "settlement_batch_id": "batch_std_025"
+      }
+    },
+    {
+      "event_id": "evt_rzp_026",
+      "order_id": "order_I9X7H6aM",
+      "payment_id": "pay_9876543236",
+      "amount_gross_paise": 500000,
+      "fee_mdr_paise": 10000,
+      "fee_gst_paise": 1800,
+      "amount_net_paise": 488200,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T16:30:00Z",
+      "utr": "9876543236",
+      "metadata": {
+        "customer_email": "user26@enterprise.in",
+        "settlement_batch_id": "batch_std_026"
+      }
+    },
+    {
+      "event_id": "evt_rzp_027",
+      "order_id": "order_Fbh7x41Z",
+      "payment_id": "pay_9876543237",
+      "amount_gross_paise": 1500000,
+      "fee_mdr_paise": 30000,
+      "fee_gst_paise": 5400,
+      "amount_net_paise": 1464600,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T16:45:00Z",
+      "utr": "9876543237",
+      "metadata": {
+        "customer_email": "user27@enterprise.in",
+        "settlement_batch_id": "batch_std_027"
+      }
+    },
+    {
+      "event_id": "evt_rzp_028",
+      "order_id": "order_pdp4K8ff",
+      "payment_id": "pay_9876543238",
+      "amount_gross_paise": 1000000,
+      "fee_mdr_paise": 20000,
+      "fee_gst_paise": 3600,
+      "amount_net_paise": 976400,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T17:00:00Z",
+      "utr": "9876543238",
+      "metadata": {
+        "customer_email": "user28@enterprise.in",
+        "settlement_batch_id": "batch_std_028"
+      }
+    },
+    {
+      "event_id": "evt_rzp_029",
+      "order_id": "order_F0eWIXii",
+      "payment_id": "pay_9876543239",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T17:15:00Z",
+      "utr": "9876543239",
+      "metadata": {
+        "customer_email": "user29@enterprise.in",
+        "settlement_batch_id": "batch_std_029"
+      }
+    },
+    {
+      "event_id": "evt_rzp_030",
+      "order_id": "order_E8JkqH3M",
+      "payment_id": "pay_9876543240",
+      "amount_gross_paise": 12500000,
+      "fee_mdr_paise": 250000,
+      "fee_gst_paise": 45000,
+      "amount_net_paise": 12205000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T17:30:00Z",
+      "utr": "9876543240",
+      "metadata": {
+        "customer_email": "user30@enterprise.in",
+        "settlement_batch_id": "batch_std_030"
+      }
+    },
+    {
+      "event_id": "evt_rzp_031",
+      "order_id": "order_9n7IWUSm",
+      "payment_id": "pay_9876543241",
+      "amount_gross_paise": 2500000,
+      "fee_mdr_paise": 50000,
+      "fee_gst_paise": 9000,
+      "amount_net_paise": 2441000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T17:45:00Z",
+      "utr": "9876543241",
+      "metadata": {
+        "customer_email": "user31@enterprise.in",
+        "settlement_batch_id": "batch_std_031"
+      }
+    },
+    {
+      "event_id": "evt_rzp_032",
+      "order_id": "order_tzQPxC5H",
+      "payment_id": "pay_9876543242",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T18:00:00Z",
+      "utr": "9876543242",
+      "metadata": {
+        "customer_email": "user32@enterprise.in",
+        "settlement_batch_id": "batch_std_032"
+      }
+    },
+    {
+      "event_id": "evt_rzp_033",
+      "order_id": "order_hpoevbLJ",
+      "payment_id": "pay_9876543243",
+      "amount_gross_paise": 5000000,
+      "fee_mdr_paise": 100000,
+      "fee_gst_paise": 18000,
+      "amount_net_paise": 4882000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T18:15:00Z",
+      "utr": "9876543243",
+      "metadata": {
+        "customer_email": "user33@enterprise.in",
+        "settlement_batch_id": "batch_std_033"
+      }
+    },
+    {
+      "event_id": "evt_rzp_034",
+      "order_id": "order_LoaeTOdo",
+      "payment_id": "pay_9876543244",
+      "amount_gross_paise": 750000,
+      "fee_mdr_paise": 15000,
+      "fee_gst_paise": 2700,
+      "amount_net_paise": 732300,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T18:30:00Z",
+      "utr": "9876543244",
+      "metadata": {
+        "customer_email": "user34@enterprise.in",
+        "settlement_batch_id": "batch_std_034"
+      }
+    },
+    {
+      "event_id": "evt_rzp_035",
+      "order_id": "order_5c3veGpr",
+      "payment_id": "pay_9876543245",
+      "amount_gross_paise": 250000,
+      "fee_mdr_paise": 5000,
+      "fee_gst_paise": 900,
+      "amount_net_paise": 244100,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T18:45:00Z",
+      "utr": "9876543245",
+      "metadata": {
+        "customer_email": "user35@enterprise.in",
+        "settlement_batch_id": "batch_std_035"
+      }
+    },
+    {
+      "event_id": "evt_rzp_036",
+      "order_id": "order_FnIiU74K",
+      "payment_id": "pay_9876543246",
+      "amount_gross_paise": 12500000,
+      "fee_mdr_paise": 250000,
+      "fee_gst_paise": 45000,
+      "amount_net_paise": 12205000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T19:00:00Z",
+      "utr": "9876543246",
+      "metadata": {
+        "customer_email": "user36@enterprise.in",
+        "settlement_batch_id": "batch_std_036"
+      }
+    },
+    {
+      "event_id": "evt_rzp_037",
+      "order_id": "order_EpYEZAmg",
+      "payment_id": "pay_9876543247",
+      "amount_gross_paise": 10000000,
+      "fee_mdr_paise": 200000,
+      "fee_gst_paise": 36000,
+      "amount_net_paise": 9764000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T19:15:00Z",
+      "utr": "9876543247",
+      "metadata": {
+        "customer_email": "user37@enterprise.in",
+        "settlement_batch_id": "batch_std_037"
+      }
+    },
+    {
+      "event_id": "evt_rzp_038",
+      "order_id": "order_QBwBAD3U",
+      "payment_id": "pay_9876543248",
+      "amount_gross_paise": 250000,
+      "fee_mdr_paise": 5000,
+      "fee_gst_paise": 900,
+      "amount_net_paise": 244100,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T19:30:00Z",
+      "utr": "9876543248",
+      "metadata": {
+        "customer_email": "user38@enterprise.in",
+        "settlement_batch_id": "batch_std_038"
+      }
+    },
+    {
+      "event_id": "evt_rzp_039",
+      "order_id": "order_RPPgdzUv",
+      "payment_id": "pay_9876543249",
+      "amount_gross_paise": 100000,
+      "fee_mdr_paise": 2000,
+      "fee_gst_paise": 360,
+      "amount_net_paise": 97640,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T19:45:00Z",
+      "utr": "9876543249",
+      "metadata": {
+        "customer_email": "user39@enterprise.in",
+        "settlement_batch_id": "batch_std_039"
+      }
+    },
+    {
+      "event_id": "evt_rzp_040",
+      "order_id": "order_pmmICiBl",
+      "payment_id": "pay_9876543250",
+      "amount_gross_paise": 250000,
+      "fee_mdr_paise": 5000,
+      "fee_gst_paise": 900,
+      "amount_net_paise": 244100,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T20:00:00Z",
+      "utr": "9876543250",
+      "metadata": {
+        "customer_email": "user40@enterprise.in",
+        "settlement_batch_id": "batch_std_040"
+      }
+    },
+    {
+      "event_id": "evt_rzp_041",
+      "order_id": "order_Dp37eCZ3",
+      "payment_id": "pay_9876543251",
+      "amount_gross_paise": 1000000,
+      "fee_mdr_paise": 20000,
+      "fee_gst_paise": 3600,
+      "amount_net_paise": 976400,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T20:15:00Z",
+      "utr": "9876543251",
+      "metadata": {
+        "customer_email": "user41@enterprise.in",
+        "settlement_batch_id": "batch_std_041"
+      }
+    },
+    {
+      "event_id": "evt_rzp_042",
+      "order_id": "order_gdPI1af7",
+      "payment_id": "pay_9876543252",
+      "amount_gross_paise": 7500000,
+      "fee_mdr_paise": 150000,
+      "fee_gst_paise": 27000,
+      "amount_net_paise": 7323000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T20:30:00Z",
+      "utr": "9876543252",
+      "metadata": {
+        "customer_email": "user42@enterprise.in",
+        "settlement_batch_id": "batch_std_042"
+      }
+    },
+    {
+      "event_id": "evt_rzp_043",
+      "order_id": "order_kAFEn3z5",
+      "payment_id": "pay_9876543253",
+      "amount_gross_paise": 750000,
+      "fee_mdr_paise": 15000,
+      "fee_gst_paise": 2700,
+      "amount_net_paise": 732300,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T20:45:00Z",
+      "utr": "9876543253",
+      "metadata": {
+        "customer_email": "user43@enterprise.in",
+        "settlement_batch_id": "batch_std_043"
+      }
+    },
+    {
+      "event_id": "evt_rzp_044",
+      "order_id": "order_kyayq7YY",
+      "payment_id": "pay_9876543254",
+      "amount_gross_paise": 100000,
+      "fee_mdr_paise": 2000,
+      "fee_gst_paise": 360,
+      "amount_net_paise": 97640,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T21:00:00Z",
+      "utr": "9876543254",
+      "metadata": {
+        "customer_email": "user44@enterprise.in",
+        "settlement_batch_id": "batch_std_044"
+      }
+    },
+    {
+      "event_id": "evt_rzp_045",
+      "order_id": "order_sBS9UYJQ",
+      "payment_id": "pay_9876543255",
+      "amount_gross_paise": 5000000,
+      "fee_mdr_paise": 100000,
+      "fee_gst_paise": 18000,
+      "amount_net_paise": 4882000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T21:15:00Z",
+      "utr": "9876543255",
+      "metadata": {
+        "customer_email": "user45@enterprise.in",
+        "settlement_batch_id": "batch_std_045"
+      }
+    },
+    {
+      "event_id": "evt_rzp_046",
+      "order_id": "order_Fjmsn9dL",
+      "payment_id": "pay_9876543256",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T21:30:00Z",
+      "utr": "9876543256",
+      "metadata": {
+        "customer_email": "user46@enterprise.in",
+        "settlement_batch_id": "batch_std_046"
+      }
+    },
+    {
+      "event_id": "evt_rzp_047",
+      "order_id": "order_IdVuddLE",
+      "payment_id": "pay_9876543257",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T21:45:00Z",
+      "utr": "9876543257",
+      "metadata": {
+        "customer_email": "user47@enterprise.in",
+        "settlement_batch_id": "batch_std_047"
+      }
+    },
+    {
+      "event_id": "evt_rzp_048",
+      "order_id": "order_62Hkd9Gf",
+      "payment_id": "pay_9876543258",
+      "amount_gross_paise": 7500000,
+      "fee_mdr_paise": 150000,
+      "fee_gst_paise": 27000,
+      "amount_net_paise": 7323000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T22:00:00Z",
+      "utr": "9876543258",
+      "metadata": {
+        "customer_email": "user48@enterprise.in",
+        "settlement_batch_id": "batch_std_048"
+      }
+    },
+    {
+      "event_id": "evt_rzp_049",
+      "order_id": "order_eMeR3pzh",
+      "payment_id": "pay_9876543259",
+      "amount_gross_paise": 500000,
+      "fee_mdr_paise": 10000,
+      "fee_gst_paise": 1800,
+      "amount_net_paise": 488200,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T22:15:00Z",
+      "utr": "9876543259",
+      "metadata": {
+        "customer_email": "user49@enterprise.in",
+        "settlement_batch_id": "batch_std_049"
+      }
+    },
+    {
+      "event_id": "evt_rzp_050",
+      "order_id": "order_pLMcNfAQ",
+      "payment_id": "pay_9876543260",
+      "amount_gross_paise": 10000000,
+      "fee_mdr_paise": 200000,
+      "fee_gst_paise": 36000,
+      "amount_net_paise": 9764000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T22:30:00Z",
+      "utr": "9876543260",
+      "metadata": {
+        "customer_email": "user50@enterprise.in",
+        "settlement_batch_id": "batch_std_050"
+      }
+    },
+    {
+      "event_id": "evt_rzp_051",
+      "order_id": "order_KHu7qnQT",
+      "payment_id": "pay_9876543261",
+      "amount_gross_paise": 10000000,
+      "fee_mdr_paise": 200000,
+      "fee_gst_paise": 36000,
+      "amount_net_paise": 9764000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T22:45:00Z",
+      "utr": "9876543261",
+      "metadata": {
+        "customer_email": "user51@enterprise.in",
+        "settlement_batch_id": "batch_std_051"
+      }
+    },
+    {
+      "event_id": "evt_rzp_052",
+      "order_id": "order_pqziQPtD",
+      "payment_id": "pay_9876543262",
+      "amount_gross_paise": 1500000,
+      "fee_mdr_paise": 30000,
+      "fee_gst_paise": 5400,
+      "amount_net_paise": 1464600,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T23:00:00Z",
+      "utr": "9876543262",
+      "metadata": {
+        "customer_email": "user52@enterprise.in",
+        "settlement_batch_id": "batch_std_052"
+      }
+    },
+    {
+      "event_id": "evt_rzp_053",
+      "order_id": "order_7W7eaDNK",
+      "payment_id": "pay_9876543263",
+      "amount_gross_paise": 1500000,
+      "fee_mdr_paise": 30000,
+      "fee_gst_paise": 5400,
+      "amount_net_paise": 1464600,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T23:15:00Z",
+      "utr": "9876543263",
+      "metadata": {
+        "customer_email": "user53@enterprise.in",
+        "settlement_batch_id": "batch_std_053"
+      }
+    },
+    {
+      "event_id": "evt_rzp_054",
+      "order_id": "order_eInGqi7w",
+      "payment_id": "pay_9876543264",
+      "amount_gross_paise": 250000,
+      "fee_mdr_paise": 5000,
+      "fee_gst_paise": 900,
+      "amount_net_paise": 244100,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T23:30:00Z",
+      "utr": "9876543264",
+      "metadata": {
+        "customer_email": "user54@enterprise.in",
+        "settlement_batch_id": "batch_std_054"
+      }
+    },
+    {
+      "event_id": "evt_rzp_055",
+      "order_id": "order_4pxskC1I",
+      "payment_id": "pay_9876543265",
+      "amount_gross_paise": 250000,
+      "fee_mdr_paise": 5000,
+      "fee_gst_paise": 900,
+      "amount_net_paise": 244100,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T23:45:00Z",
+      "utr": "9876543265",
+      "metadata": {
+        "customer_email": "user55@enterprise.in",
+        "settlement_batch_id": "batch_std_055"
+      }
+    },
+    {
+      "event_id": "evt_rzp_056",
+      "order_id": "order_tNZPHaQ0",
+      "payment_id": "pay_9876543266",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T00:00:00Z",
+      "utr": "9876543266",
+      "metadata": {
+        "customer_email": "user56@enterprise.in",
+        "settlement_batch_id": "batch_std_056"
+      }
+    },
+    {
+      "event_id": "evt_rzp_057",
+      "order_id": "order_t7Qg84iq",
+      "payment_id": "pay_9876543267",
+      "amount_gross_paise": 7500000,
+      "fee_mdr_paise": 150000,
+      "fee_gst_paise": 27000,
+      "amount_net_paise": 7323000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T00:15:00Z",
+      "utr": "9876543267",
+      "metadata": {
+        "customer_email": "user57@enterprise.in",
+        "settlement_batch_id": "batch_std_057"
+      }
+    },
+    {
+      "event_id": "evt_rzp_058",
+      "order_id": "order_4gVJjrsM",
+      "payment_id": "pay_9876543268",
+      "amount_gross_paise": 250000,
+      "fee_mdr_paise": 5000,
+      "fee_gst_paise": 900,
+      "amount_net_paise": 244100,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T00:30:00Z",
+      "utr": "9876543268",
+      "metadata": {
+        "customer_email": "user58@enterprise.in",
+        "settlement_batch_id": "batch_std_058"
+      }
+    },
+    {
+      "event_id": "evt_rzp_059",
+      "order_id": "order_TvnRO2qG",
+      "payment_id": "pay_9876543269",
+      "amount_gross_paise": 750000,
+      "fee_mdr_paise": 15000,
+      "fee_gst_paise": 2700,
+      "amount_net_paise": 732300,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T00:45:00Z",
+      "utr": "9876543269",
+      "metadata": {
+        "customer_email": "user59@enterprise.in",
+        "settlement_batch_id": "batch_std_059"
+      }
+    },
+    {
+      "event_id": "evt_rzp_060",
+      "order_id": "order_q562dfOB",
+      "payment_id": "pay_9876543270",
+      "amount_gross_paise": 5000000,
+      "fee_mdr_paise": 100000,
+      "fee_gst_paise": 18000,
+      "amount_net_paise": 4882000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T01:00:00Z",
+      "utr": "9876543270",
+      "metadata": {
+        "customer_email": "user60@enterprise.in",
+        "settlement_batch_id": "batch_std_060"
+      }
+    },
+    {
+      "event_id": "evt_rzp_061",
+      "order_id": "order_avXiOqkV",
+      "payment_id": "pay_9876543271",
+      "amount_gross_paise": 100000,
+      "fee_mdr_paise": 2000,
+      "fee_gst_paise": 360,
+      "amount_net_paise": 97640,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T20:10:00Z",
+      "utr": "9876543271",
+      "metadata": {
+        "customer_email": "user61@enterprise.in",
+        "settlement_batch_id": "batch_001"
+      }
+    },
+    {
+      "event_id": "evt_rzp_062",
+      "order_id": "order_JTBJahe8",
+      "payment_id": "pay_9876543272",
+      "amount_gross_paise": 5000000,
+      "fee_mdr_paise": 100000,
+      "fee_gst_paise": 18000,
+      "amount_net_paise": 4882000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T20:20:00Z",
+      "utr": "9876543272",
+      "metadata": {
+        "customer_email": "user62@enterprise.in",
+        "settlement_batch_id": "batch_001"
+      }
+    },
+    {
+      "event_id": "evt_rzp_063",
+      "order_id": "order_5jIc1xLJ",
+      "payment_id": "pay_9876543273",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T20:30:00Z",
+      "utr": "9876543273",
+      "metadata": {
+        "customer_email": "user63@enterprise.in",
+        "settlement_batch_id": "batch_001"
+      }
+    },
+    {
+      "event_id": "evt_rzp_064",
+      "order_id": "order_Bictx57Y",
+      "payment_id": "pay_9876543274",
+      "amount_gross_paise": 500000,
+      "fee_mdr_paise": 10000,
+      "fee_gst_paise": 1800,
+      "amount_net_paise": 488200,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T20:40:00Z",
+      "utr": "9876543274",
+      "metadata": {
+        "customer_email": "user64@enterprise.in",
+        "settlement_batch_id": "batch_001"
+      }
+    },
+    {
+      "event_id": "evt_rzp_065",
+      "order_id": "order_nRpQgwXJ",
+      "payment_id": "pay_9876543275",
+      "amount_gross_paise": 1500000,
+      "fee_mdr_paise": 30000,
+      "fee_gst_paise": 5400,
+      "amount_net_paise": 1464600,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T20:50:00Z",
+      "utr": "9876543275",
+      "metadata": {
+        "customer_email": "user65@enterprise.in",
+        "settlement_batch_id": "batch_002"
+      }
+    },
+    {
+      "event_id": "evt_rzp_066",
+      "order_id": "order_NVj77p3k",
+      "payment_id": "pay_9876543276",
+      "amount_gross_paise": 2500000,
+      "fee_mdr_paise": 50000,
+      "fee_gst_paise": 9000,
+      "amount_net_paise": 2441000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T21:00:00Z",
+      "utr": "9876543276",
+      "metadata": {
+        "customer_email": "user66@enterprise.in",
+        "settlement_batch_id": "batch_002"
+      }
+    },
+    {
+      "event_id": "evt_rzp_067",
+      "order_id": "order_4AblV7vY",
+      "payment_id": "pay_9876543277",
+      "amount_gross_paise": 500000,
+      "fee_mdr_paise": 10000,
+      "fee_gst_paise": 1800,
+      "amount_net_paise": 488200,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T21:10:00Z",
+      "utr": "9876543277",
+      "metadata": {
+        "customer_email": "user67@enterprise.in",
+        "settlement_batch_id": "batch_002"
+      }
+    },
+    {
+      "event_id": "evt_rzp_068",
+      "order_id": "order_3VZprkYS",
+      "payment_id": "pay_9876543278",
+      "amount_gross_paise": 12500000,
+      "fee_mdr_paise": 250000,
+      "fee_gst_paise": 45000,
+      "amount_net_paise": 12205000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T21:20:00Z",
+      "utr": "9876543278",
+      "metadata": {
+        "customer_email": "user68@enterprise.in",
+        "settlement_batch_id": "batch_003"
+      }
+    },
+    {
+      "event_id": "evt_rzp_069",
+      "order_id": "order_y3c2Eom0",
+      "payment_id": "pay_9876543279",
+      "amount_gross_paise": 250000,
+      "fee_mdr_paise": 5000,
+      "fee_gst_paise": 900,
+      "amount_net_paise": 244100,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T21:30:00Z",
+      "utr": "9876543279",
+      "metadata": {
+        "customer_email": "user69@enterprise.in",
+        "settlement_batch_id": "batch_003"
+      }
+    },
+    {
+      "event_id": "evt_rzp_070",
+      "order_id": "order_wt0Y3oob",
+      "payment_id": "pay_9876543280",
+      "amount_gross_paise": 5000000,
+      "fee_mdr_paise": 100000,
+      "fee_gst_paise": 18000,
+      "amount_net_paise": 4882000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T21:40:00Z",
+      "utr": "9876543280",
+      "metadata": {
+        "customer_email": "user70@enterprise.in",
+        "settlement_batch_id": "batch_003"
+      }
+    },
+    {
+      "event_id": "evt_rzp_071",
+      "order_id": "order_mzvr3e9X",
+      "payment_id": "pay_9876543281",
+      "amount_gross_paise": 12500000,
+      "fee_mdr_paise": 250000,
+      "fee_gst_paise": 45000,
+      "amount_net_paise": 12205000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T21:50:00Z",
+      "utr": "9876543281",
+      "metadata": {
+        "customer_email": "user71@enterprise.in",
+        "settlement_batch_id": "batch_003"
+      }
+    },
+    {
+      "event_id": "evt_rzp_072",
+      "order_id": "order_PGzR1Iv8",
+      "payment_id": "pay_9876543282",
+      "amount_gross_paise": 1500000,
+      "fee_mdr_paise": 30000,
+      "fee_gst_paise": 5400,
+      "amount_net_paise": 1464600,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T22:00:00Z",
+      "utr": "9876543282",
+      "metadata": {
+        "customer_email": "user72@enterprise.in",
+        "settlement_batch_id": "batch_004"
+      }
+    },
+    {
+      "event_id": "evt_rzp_073",
+      "order_id": "order_h4qlL9qc",
+      "payment_id": "pay_9876543283",
+      "amount_gross_paise": 100000,
+      "fee_mdr_paise": 2000,
+      "fee_gst_paise": 360,
+      "amount_net_paise": 97640,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T22:10:00Z",
+      "utr": "9876543283",
+      "metadata": {
+        "customer_email": "user73@enterprise.in",
+        "settlement_batch_id": "batch_004"
+      }
+    },
+    {
+      "event_id": "evt_rzp_074",
+      "order_id": "order_MBwUYuBM",
+      "payment_id": "pay_9876543284",
+      "amount_gross_paise": 250000,
+      "fee_mdr_paise": 5000,
+      "fee_gst_paise": 900,
+      "amount_net_paise": 244100,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T22:20:00Z",
+      "utr": "9876543284",
+      "metadata": {
+        "customer_email": "user74@enterprise.in",
+        "settlement_batch_id": "batch_004"
+      }
+    },
+    {
+      "event_id": "evt_rzp_075",
+      "order_id": "order_hy5KmqcT",
+      "payment_id": "pay_9876543285",
+      "amount_gross_paise": 7500000,
+      "fee_mdr_paise": 150000,
+      "fee_gst_paise": 27000,
+      "amount_net_paise": 7323000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T22:30:00Z",
+      "utr": "9876543285",
+      "metadata": {
+        "customer_email": "user75@enterprise.in",
+        "settlement_batch_id": "batch_004"
+      }
+    },
+    {
+      "event_id": "evt_rzp_076",
+      "order_id": "order_H7ZIRU8V",
+      "payment_id": "pay_9876543286",
+      "amount_gross_paise": 100000,
+      "fee_mdr_paise": 2000,
+      "fee_gst_paise": 360,
+      "amount_net_paise": 97640,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T22:40:00Z",
+      "utr": "9876543286",
+      "metadata": {
+        "customer_email": "user76@enterprise.in",
+        "settlement_batch_id": "batch_005"
+      }
+    },
+    {
+      "event_id": "evt_rzp_077",
+      "order_id": "order_QmxBe8Q6",
+      "payment_id": "pay_9876543287",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T22:50:00Z",
+      "utr": "9876543287",
+      "metadata": {
+        "customer_email": "user77@enterprise.in",
+        "settlement_batch_id": "batch_005"
+      }
+    },
+    {
+      "event_id": "evt_rzp_078",
+      "order_id": "order_NuQ2hU5t",
+      "payment_id": "pay_9876543288",
+      "amount_gross_paise": 1500000,
+      "fee_mdr_paise": 30000,
+      "fee_gst_paise": 5400,
+      "amount_net_paise": 1464600,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T23:00:00Z",
+      "utr": "9876543288",
+      "metadata": {
+        "customer_email": "user78@enterprise.in",
+        "settlement_batch_id": "batch_005"
+      }
+    },
+    {
+      "event_id": "evt_rzp_079",
+      "order_id": "order_tQAuzSsJ",
+      "payment_id": "pay_9876543289",
+      "amount_gross_paise": 7500000,
+      "fee_mdr_paise": 150000,
+      "fee_gst_paise": 27000,
+      "amount_net_paise": 7323000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T23:10:00Z",
+      "utr": "9876543289",
+      "metadata": {
+        "customer_email": "user79@enterprise.in",
+        "settlement_batch_id": "batch_005"
+      }
+    },
+    {
+      "event_id": "evt_rzp_080",
+      "order_id": "order_AQ8yRV5l",
+      "payment_id": "pay_9876543290",
+      "amount_gross_paise": 750000,
+      "fee_mdr_paise": 15000,
+      "fee_gst_paise": 2700,
+      "amount_net_paise": 732300,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T23:20:00Z",
+      "utr": "9876543290",
+      "metadata": {
+        "customer_email": "user80@enterprise.in",
+        "settlement_batch_id": "batch_006"
+      }
+    },
+    {
+      "event_id": "evt_rzp_081",
+      "order_id": "order_KtzJ1ats",
+      "payment_id": "pay_9876543291",
+      "amount_gross_paise": 10000000,
+      "fee_mdr_paise": 200000,
+      "fee_gst_paise": 36000,
+      "amount_net_paise": 9764000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-21T23:58:00Z",
+      "utr": "9876543291",
+      "metadata": {
+        "customer_email": "user81@enterprise.in",
+        "settlement_batch_id": "batch_hol_081",
+        "timing_lag_days": 4
+      }
+    },
+    {
+      "event_id": "evt_rzp_082",
+      "order_id": "order_BYLMPuDC",
+      "payment_id": "pay_9876543292",
+      "amount_gross_paise": 750000,
+      "fee_mdr_paise": 15000,
+      "fee_gst_paise": 2700,
+      "amount_net_paise": 732300,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T00:08:00Z",
+      "utr": "9876543292",
+      "metadata": {
+        "customer_email": "user82@enterprise.in",
+        "settlement_batch_id": "batch_hol_082",
+        "timing_lag_days": 4
+      }
+    },
+    {
+      "event_id": "evt_rzp_083",
+      "order_id": "order_RnGEY59Y",
+      "payment_id": "pay_9876543293",
+      "amount_gross_paise": 5000000,
+      "fee_mdr_paise": 100000,
+      "fee_gst_paise": 18000,
+      "amount_net_paise": 4882000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T00:18:00Z",
+      "utr": "9876543293",
+      "metadata": {
+        "customer_email": "user83@enterprise.in",
+        "settlement_batch_id": "batch_hol_083",
+        "timing_lag_days": 4
+      }
+    },
+    {
+      "event_id": "evt_rzp_084",
+      "order_id": "order_kQfsGQON",
+      "payment_id": "pay_9876543294",
+      "amount_gross_paise": 15000000,
+      "fee_mdr_paise": 300000,
+      "fee_gst_paise": 54000,
+      "amount_net_paise": 14646000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T00:28:00Z",
+      "utr": "9876543294",
+      "metadata": {
+        "customer_email": "user84@enterprise.in",
+        "settlement_batch_id": "batch_hol_084",
+        "timing_lag_days": 4
+      }
+    },
+    {
+      "event_id": "evt_rzp_085",
+      "order_id": "order_f08WpRto",
+      "payment_id": "pay_9876543295",
+      "amount_gross_paise": 1500000,
+      "fee_mdr_paise": 30000,
+      "fee_gst_paise": 5400,
+      "amount_net_paise": 1464600,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T00:38:00Z",
+      "utr": "9876543295",
+      "metadata": {
+        "customer_email": "user85@enterprise.in",
+        "settlement_batch_id": "batch_hol_085",
+        "timing_lag_days": 4
+      }
+    },
+    {
+      "event_id": "evt_rzp_086",
+      "order_id": "order_jbcpEN2X",
+      "payment_id": "pay_9876543296",
+      "amount_gross_paise": 750000,
+      "fee_mdr_paise": 15000,
+      "fee_gst_paise": 2700,
+      "amount_net_paise": 732300,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T00:48:00Z",
+      "utr": "9876543296",
+      "metadata": {
+        "customer_email": "user86@enterprise.in",
+        "settlement_batch_id": "batch_hol_086",
+        "timing_lag_days": 4
+      }
+    },
+    {
+      "event_id": "evt_rzp_087",
+      "order_id": "order_DA4OKmTS",
+      "payment_id": "pay_9876543297",
+      "amount_gross_paise": 250000,
+      "fee_mdr_paise": 5000,
+      "fee_gst_paise": 900,
+      "amount_net_paise": 244100,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T00:58:00Z",
+      "utr": "9876543297",
+      "metadata": {
+        "customer_email": "user87@enterprise.in",
+        "settlement_batch_id": "batch_hol_087",
+        "timing_lag_days": 4
+      }
+    },
+    {
+      "event_id": "evt_rzp_088",
+      "order_id": "order_FzpjPSa5",
+      "payment_id": "pay_9876543298",
+      "amount_gross_paise": 2500000,
+      "fee_mdr_paise": 50000,
+      "fee_gst_paise": 9000,
+      "amount_net_paise": 2441000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T01:08:00Z",
+      "utr": "9876543298",
+      "metadata": {
+        "customer_email": "user88@enterprise.in",
+        "settlement_batch_id": "batch_hol_088",
+        "timing_lag_days": 4
+      }
+    },
+    {
+      "event_id": "evt_rzp_089",
+      "order_id": "order_XBolZ9SH",
+      "payment_id": "pay_9876543299",
+      "amount_gross_paise": 250000,
+      "fee_mdr_paise": 5000,
+      "fee_gst_paise": 900,
+      "amount_net_paise": 244100,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T01:18:00Z",
+      "utr": "9876543299",
+      "metadata": {
+        "customer_email": "user89@enterprise.in",
+        "settlement_batch_id": "batch_hol_089",
+        "timing_lag_days": 4
+      }
+    },
+    {
+      "event_id": "evt_rzp_090",
+      "order_id": "order_dJp62hDi",
+      "payment_id": "pay_9876543300",
+      "amount_gross_paise": 5000000,
+      "fee_mdr_paise": 100000,
+      "fee_gst_paise": 18000,
+      "amount_net_paise": 4882000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-08-22T01:28:00Z",
+      "utr": "9876543300",
+      "metadata": {
+        "customer_email": "user90@enterprise.in",
+        "settlement_batch_id": "batch_hol_090",
+        "timing_lag_days": 4
+      }
+    },
+    {
+      "event_id": "evt_rzp_091",
+      "order_id": "order_ZDQHJMu8",
+      "payment_id": "pay_9876543301",
+      "amount_gross_paise": 1200000,
+      "fee_mdr_paise": 24000,
+      "fee_gst_paise": 4320,
+      "amount_net_paise": 1171680,
+      "currency": "INR",
+      "status": "partially_refunded",
+      "timestamp": "2026-08-29T00:00:00Z",
+      "utr": "9876543301",
+      "metadata": {
+        "customer_email": "user91@enterprise.in",
+        "dispute_reserve_holdback_paise": 40000,
+        "partial_refund_paise": 400000
+      }
+    },
+    {
+      "event_id": "evt_rzp_092",
+      "order_id": "order_W5CN0U5G",
+      "payment_id": "pay_9876543302",
+      "amount_gross_paise": 1200000,
+      "fee_mdr_paise": 24000,
+      "fee_gst_paise": 4320,
+      "amount_net_paise": 1171680,
+      "currency": "INR",
+      "status": "partially_refunded",
+      "timestamp": "2026-08-29T02:00:00Z",
+      "utr": "9876543302",
+      "metadata": {
+        "customer_email": "user92@enterprise.in",
+        "dispute_reserve_holdback_paise": 40000,
+        "partial_refund_paise": 400000
+      }
+    },
+    {
+      "event_id": "evt_rzp_093",
+      "order_id": "order_B16JC5kV",
+      "payment_id": "pay_9876543303",
+      "amount_gross_paise": 1200000,
+      "fee_mdr_paise": 24000,
+      "fee_gst_paise": 4320,
+      "amount_net_paise": 1171680,
+      "currency": "INR",
+      "status": "partially_refunded",
+      "timestamp": "2026-08-29T04:00:00Z",
+      "utr": "9876543303",
+      "metadata": {
+        "customer_email": "user93@enterprise.in",
+        "dispute_reserve_holdback_paise": 40000,
+        "partial_refund_paise": 400000
+      }
+    },
+    {
+      "event_id": "evt_rzp_094",
+      "order_id": "order_3ECqWp1O",
+      "payment_id": "pay_9876543304",
+      "amount_gross_paise": 1200000,
+      "fee_mdr_paise": 24000,
+      "fee_gst_paise": 4320,
+      "amount_net_paise": 1171680,
+      "currency": "INR",
+      "status": "partially_refunded",
+      "timestamp": "2026-08-29T06:00:00Z",
+      "utr": "9876543304",
+      "metadata": {
+        "customer_email": "user94@enterprise.in",
+        "dispute_reserve_holdback_paise": 40000,
+        "partial_refund_paise": 400000
+      }
+    },
+    {
+      "event_id": "evt_rzp_095",
+      "order_id": "order_rXXHFOpr",
+      "payment_id": "pay_9876543305",
+      "amount_gross_paise": 1200000,
+      "fee_mdr_paise": 24000,
+      "fee_gst_paise": 4320,
+      "amount_net_paise": 1171680,
+      "currency": "INR",
+      "status": "partially_refunded",
+      "timestamp": "2026-08-29T08:00:00Z",
+      "utr": "9876543305",
+      "metadata": {
+        "customer_email": "user95@enterprise.in",
+        "dispute_reserve_holdback_paise": 40000,
+        "partial_refund_paise": 400000
+      }
+    },
+    {
+      "event_id": "evt_rzp_096",
+      "order_id": "order_eTsprvu5",
+      "payment_id": "pay_9876543306",
+      "amount_gross_paise": 5000000,
+      "fee_mdr_paise": 100000,
+      "fee_gst_paise": 18000,
+      "amount_net_paise": 4882000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-09-02T10:00:00Z",
+      "utr": "987654321096",
+      "metadata": {
+        "customer_email": "user96@enterprise.in"
+      }
+    },
+    {
+      "event_id": "evt_rzp_097",
+      "order_id": "order_fijoySjT",
+      "payment_id": "pay_9876543307",
+      "amount_gross_paise": 7500000,
+      "fee_mdr_paise": 150000,
+      "fee_gst_paise": 27000,
+      "amount_net_paise": 7323000,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-09-02T13:00:00Z",
+      "utr": "987654321097",
+      "metadata": {
+        "customer_email": "user97@enterprise.in"
+      }
+    },
+    {
+      "event_id": "evt_rzp_098",
+      "order_id": "order_eAAvIDAd",
+      "payment_id": "pay_9876543308",
+      "amount_gross_paise": 750000,
+      "fee_mdr_paise": 15000,
+      "fee_gst_paise": 2700,
+      "amount_net_paise": 732300,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-09-02T16:00:00Z",
+      "utr": "987654321098",
+      "metadata": {
+        "customer_email": "user98@enterprise.in"
+      }
+    },
+    {
+      "event_id": "evt_rzp_099",
+      "order_id": "order_1Ay5XL8S",
+      "payment_id": "pay_9876543309",
+      "amount_gross_paise": 750000,
+      "fee_mdr_paise": 15000,
+      "fee_gst_paise": 2700,
+      "amount_net_paise": 732300,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-09-02T19:00:00Z",
+      "utr": "987654321099",
+      "metadata": {
+        "customer_email": "user99@enterprise.in"
+      }
+    },
+    {
+      "event_id": "evt_rzp_100",
+      "order_id": "order_24WKyEa8",
+      "payment_id": "pay_9876543310",
+      "amount_gross_paise": 100000,
+      "fee_mdr_paise": 2000,
+      "fee_gst_paise": 360,
+      "amount_net_paise": 97640,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-09-02T22:00:00Z",
+      "utr": "9876543210100",
+      "metadata": {
+        "customer_email": "user100@enterprise.in"
+      }
+    }
+  ],
+  "bank_statements": [
+    {
+      "bank_entry_id": "bnk_stmt_001",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 12205000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T14:45:00Z",
+      "narration": "CMS/RZP/9876543211/MUMBAI",
+      "extracted_utr": "9876543211",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_002",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 244100,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T15:00:00Z",
+      "narration": "CMS/RZP/9876543212/MUMBAI",
+      "extracted_utr": "9876543212",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_003",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 97640,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T15:15:00Z",
+      "narration": "CMS/RZP/9876543213/MUMBAI",
+      "extracted_utr": "9876543213",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_004",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 14646000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T15:30:00Z",
+      "narration": "CMS/RZP/9876543214/MUMBAI",
+      "extracted_utr": "9876543214",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_005",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 97640,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T15:45:00Z",
+      "narration": "CMS/RZP/9876543215/MUMBAI",
+      "extracted_utr": "9876543215",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_006",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 732300,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T16:00:00Z",
+      "narration": "CMS/RZP/9876543216/MUMBAI",
+      "extracted_utr": "9876543216",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_007",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 1464600,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T16:15:00Z",
+      "narration": "CMS/RZP/9876543217/MUMBAI",
+      "extracted_utr": "9876543217",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_008",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 2441000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T16:30:00Z",
+      "narration": "CMS/RZP/9876543218/MUMBAI",
+      "extracted_utr": "9876543218",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_009",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 1464600,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T16:45:00Z",
+      "narration": "CMS/RZP/9876543219/MUMBAI",
+      "extracted_utr": "9876543219",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_010",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 976400,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T17:00:00Z",
+      "narration": "CMS/RZP/9876543220/MUMBAI",
+      "extracted_utr": "9876543220",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_011",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 12205000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T17:15:00Z",
+      "narration": "CMS/RZP/9876543221/MUMBAI",
+      "extracted_utr": "9876543221",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_012",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 14646000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T17:30:00Z",
+      "narration": "CMS/RZP/9876543222/MUMBAI",
+      "extracted_utr": "9876543222",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_013",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 14646000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T17:45:00Z",
+      "narration": "CMS/RZP/9876543223/MUMBAI",
+      "extracted_utr": "9876543223",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_014",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 7323000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T18:00:00Z",
+      "narration": "CMS/RZP/9876543224/MUMBAI",
+      "extracted_utr": "9876543224",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_015",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 97640,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T18:15:00Z",
+      "narration": "CMS/RZP/9876543225/MUMBAI",
+      "extracted_utr": "9876543225",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_016",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 9764000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T18:30:00Z",
+      "narration": "CMS/RZP/9876543226/MUMBAI",
+      "extracted_utr": "9876543226",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_017",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 12205000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T18:45:00Z",
+      "narration": "CMS/RZP/9876543227/MUMBAI",
+      "extracted_utr": "9876543227",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_018",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 976400,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T19:00:00Z",
+      "narration": "CMS/RZP/9876543228/MUMBAI",
+      "extracted_utr": "9876543228",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_019",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 488200,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T19:15:00Z",
+      "narration": "CMS/RZP/9876543229/MUMBAI",
+      "extracted_utr": "9876543229",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_020",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 12205000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T19:30:00Z",
+      "narration": "CMS/RZP/9876543230/MUMBAI",
+      "extracted_utr": "9876543230",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_021",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 9764000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T19:45:00Z",
+      "narration": "CMS/RZP/9876543231/MUMBAI",
+      "extracted_utr": "9876543231",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_022",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 14646000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T20:00:00Z",
+      "narration": "CMS/RZP/9876543232/MUMBAI",
+      "extracted_utr": "9876543232",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_023",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 1464600,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T20:15:00Z",
+      "narration": "CMS/RZP/9876543233/MUMBAI",
+      "extracted_utr": "9876543233",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_024",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 14646000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T20:30:00Z",
+      "narration": "CMS/RZP/9876543234/MUMBAI",
+      "extracted_utr": "9876543234",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_025",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 12205000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T20:45:00Z",
+      "narration": "CMS/RZP/9876543235/MUMBAI",
+      "extracted_utr": "9876543235",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_026",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 488200,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T21:00:00Z",
+      "narration": "CMS/RZP/9876543236/MUMBAI",
+      "extracted_utr": "9876543236",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_027",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 1464600,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T21:15:00Z",
+      "narration": "CMS/RZP/9876543237/MUMBAI",
+      "extracted_utr": "9876543237",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_028",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 976400,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T21:30:00Z",
+      "narration": "CMS/RZP/9876543238/MUMBAI",
+      "extracted_utr": "9876543238",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_029",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 14646000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T21:45:00Z",
+      "narration": "CMS/RZP/9876543239/MUMBAI",
+      "extracted_utr": "9876543239",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_030",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 12205000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T22:00:00Z",
+      "narration": "CMS/RZP/9876543240/MUMBAI",
+      "extracted_utr": "9876543240",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_031",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 2441000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T22:15:00Z",
+      "narration": "CMS/RZP/9876543241/MUMBAI",
+      "extracted_utr": "9876543241",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_032",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 14646000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T22:30:00Z",
+      "narration": "CMS/RZP/9876543242/MUMBAI",
+      "extracted_utr": "9876543242",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_033",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 4882000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T22:45:00Z",
+      "narration": "CMS/RZP/9876543243/MUMBAI",
+      "extracted_utr": "9876543243",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_034",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 732300,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T23:00:00Z",
+      "narration": "CMS/RZP/9876543244/MUMBAI",
+      "extracted_utr": "9876543244",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_035",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 244100,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T23:15:00Z",
+      "narration": "CMS/RZP/9876543245/MUMBAI",
+      "extracted_utr": "9876543245",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_036",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 12205000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T23:30:00Z",
+      "narration": "CMS/RZP/9876543246/MUMBAI",
+      "extracted_utr": "9876543246",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_037",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 9764000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-21",
+      "timestamp": "2026-08-21T23:45:00Z",
+      "narration": "CMS/RZP/9876543247/MUMBAI",
+      "extracted_utr": "9876543247",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_038",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 244100,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T00:00:00Z",
+      "narration": "CMS/RZP/9876543248/MUMBAI",
+      "extracted_utr": "9876543248",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_039",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 97640,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T00:15:00Z",
+      "narration": "CMS/RZP/9876543249/MUMBAI",
+      "extracted_utr": "9876543249",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_040",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 244100,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T00:30:00Z",
+      "narration": "CMS/RZP/9876543250/MUMBAI",
+      "extracted_utr": "9876543250",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_041",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 976400,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T00:45:00Z",
+      "narration": "CMS/RZP/9876543251/MUMBAI",
+      "extracted_utr": "9876543251",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_042",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 7323000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T01:00:00Z",
+      "narration": "CMS/RZP/9876543252/MUMBAI",
+      "extracted_utr": "9876543252",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_043",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 732300,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T01:15:00Z",
+      "narration": "CMS/RZP/9876543253/MUMBAI",
+      "extracted_utr": "9876543253",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_044",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 97640,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T01:30:00Z",
+      "narration": "CMS/RZP/9876543254/MUMBAI",
+      "extracted_utr": "9876543254",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_045",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 4882000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T01:45:00Z",
+      "narration": "CMS/RZP/9876543255/MUMBAI",
+      "extracted_utr": "9876543255",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_046",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 14646000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T02:00:00Z",
+      "narration": "CMS/RZP/9876543256/MUMBAI",
+      "extracted_utr": "9876543256",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_047",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 14646000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T02:15:00Z",
+      "narration": "CMS/RZP/9876543257/MUMBAI",
+      "extracted_utr": "9876543257",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_048",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 7323000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T02:30:00Z",
+      "narration": "CMS/RZP/9876543258/MUMBAI",
+      "extracted_utr": "9876543258",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_049",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 488200,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T02:45:00Z",
+      "narration": "CMS/RZP/9876543259/MUMBAI",
+      "extracted_utr": "9876543259",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_050",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 9764000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T03:00:00Z",
+      "narration": "CMS/RZP/9876543260/MUMBAI",
+      "extracted_utr": "9876543260",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_051",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 9764000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T03:15:00Z",
+      "narration": "CMS/RZP/9876543261/MUMBAI",
+      "extracted_utr": "9876543261",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_052",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 1464600,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T03:30:00Z",
+      "narration": "CMS/RZP/9876543262/MUMBAI",
+      "extracted_utr": "9876543262",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_053",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 1464600,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T03:45:00Z",
+      "narration": "CMS/RZP/9876543263/MUMBAI",
+      "extracted_utr": "9876543263",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_054",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 244100,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T04:00:00Z",
+      "narration": "CMS/RZP/9876543264/MUMBAI",
+      "extracted_utr": "9876543264",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_055",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 244100,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T04:15:00Z",
+      "narration": "CMS/RZP/9876543265/MUMBAI",
+      "extracted_utr": "9876543265",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_056",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 14646000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T04:30:00Z",
+      "narration": "CMS/RZP/9876543266/MUMBAI",
+      "extracted_utr": "9876543266",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_057",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 7323000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T04:45:00Z",
+      "narration": "CMS/RZP/9876543267/MUMBAI",
+      "extracted_utr": "9876543267",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_058",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 244100,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T05:00:00Z",
+      "narration": "CMS/RZP/9876543268/MUMBAI",
+      "extracted_utr": "9876543268",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_059",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 732300,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T05:15:00Z",
+      "narration": "CMS/RZP/9876543269/MUMBAI",
+      "extracted_utr": "9876543269",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_060",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 4882000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T05:30:00Z",
+      "narration": "CMS/RZP/9876543270/MUMBAI",
+      "extracted_utr": "9876543270",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_061",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 20113840,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T02:40:00Z",
+      "narration": "NEFT-RZP-SETTLE-BATCH-8901-HDFC",
+      "extracted_utr": "BATCH8901",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_062",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 4393800,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T03:10:00Z",
+      "narration": "NEFT-RZP-SETTLE-BATCH-8902-HDFC",
+      "extracted_utr": "BATCH8902",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_063",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 29536100,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T03:50:00Z",
+      "narration": "NEFT-RZP-SETTLE-BATCH-8903-HDFC",
+      "extracted_utr": "BATCH8903",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_064",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 9129340,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T04:30:00Z",
+      "narration": "NEFT-RZP-SETTLE-BATCH-8904-HDFC",
+      "extracted_utr": "BATCH8904",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_065",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 23531240,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T05:10:00Z",
+      "narration": "NEFT-RZP-SETTLE-BATCH-8905-HDFC",
+      "extracted_utr": "BATCH8905",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_066",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 732300,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-22",
+      "timestamp": "2026-08-22T05:20:00Z",
+      "narration": "NEFT-RZP-SETTLE-BATCH-8906-HDFC",
+      "extracted_utr": "BATCH8906",
+      "bank_code": "HDFC"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_067",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 9764000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-25",
+      "timestamp": "2026-08-25T10:15:00Z",
+      "narration": "CMS/RZP/9876543291/HOLIDAY_LAG_SETTLE",
+      "extracted_utr": "9876543291",
+      "bank_code": "ICICI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_068",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 732300,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-25",
+      "timestamp": "2026-08-25T10:25:00Z",
+      "narration": "CMS/RZP/9876543292/HOLIDAY_LAG_SETTLE",
+      "extracted_utr": "9876543292",
+      "bank_code": "ICICI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_069",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 4882000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-25",
+      "timestamp": "2026-08-25T10:35:00Z",
+      "narration": "CMS/RZP/9876543293/HOLIDAY_LAG_SETTLE",
+      "extracted_utr": "9876543293",
+      "bank_code": "ICICI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_070",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 14646000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-25",
+      "timestamp": "2026-08-25T10:45:00Z",
+      "narration": "CMS/RZP/9876543294/HOLIDAY_LAG_SETTLE",
+      "extracted_utr": "9876543294",
+      "bank_code": "ICICI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_071",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 1464600,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-25",
+      "timestamp": "2026-08-25T10:55:00Z",
+      "narration": "CMS/RZP/9876543295/HOLIDAY_LAG_SETTLE",
+      "extracted_utr": "9876543295",
+      "bank_code": "ICICI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_072",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 732300,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-25",
+      "timestamp": "2026-08-25T11:05:00Z",
+      "narration": "CMS/RZP/9876543296/HOLIDAY_LAG_SETTLE",
+      "extracted_utr": "9876543296",
+      "bank_code": "ICICI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_073",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 244100,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-25",
+      "timestamp": "2026-08-25T11:15:00Z",
+      "narration": "CMS/RZP/9876543297/HOLIDAY_LAG_SETTLE",
+      "extracted_utr": "9876543297",
+      "bank_code": "ICICI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_074",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 2441000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-25",
+      "timestamp": "2026-08-25T11:25:00Z",
+      "narration": "CMS/RZP/9876543298/HOLIDAY_LAG_SETTLE",
+      "extracted_utr": "9876543298",
+      "bank_code": "ICICI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_075",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 244100,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-25",
+      "timestamp": "2026-08-25T11:35:00Z",
+      "narration": "CMS/RZP/9876543299/HOLIDAY_LAG_SETTLE",
+      "extracted_utr": "9876543299",
+      "bank_code": "ICICI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_076",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 4882000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-25",
+      "timestamp": "2026-08-25T11:45:00Z",
+      "narration": "CMS/RZP/9876543300/HOLIDAY_LAG_SETTLE",
+      "extracted_utr": "9876543300",
+      "bank_code": "ICICI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_077",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 731680,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-29",
+      "timestamp": "2026-08-29T05:00:00Z",
+      "narration": "CMS/RZP/9876543301/DISPUTE_HOLD",
+      "extracted_utr": "9876543301",
+      "bank_code": "AXIS"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_078",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 731680,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-29",
+      "timestamp": "2026-08-29T07:00:00Z",
+      "narration": "CMS/RZP/9876543302/DISPUTE_HOLD",
+      "extracted_utr": "9876543302",
+      "bank_code": "AXIS"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_079",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 731680,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-29",
+      "timestamp": "2026-08-29T09:00:00Z",
+      "narration": "CMS/RZP/9876543303/DISPUTE_HOLD",
+      "extracted_utr": "9876543303",
+      "bank_code": "AXIS"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_080",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 731680,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-29",
+      "timestamp": "2026-08-29T11:00:00Z",
+      "narration": "CMS/RZP/9876543304/DISPUTE_HOLD",
+      "extracted_utr": "9876543304",
+      "bank_code": "AXIS"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_081",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 731680,
+      "debit_amount_paise": 0,
+      "value_date": "2026-08-29",
+      "timestamp": "2026-08-29T13:00:00Z",
+      "narration": "CMS/RZP/9876543305/DISPUTE_HOLD",
+      "extracted_utr": "9876543305",
+      "bank_code": "AXIS"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_082",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 4882000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-09-02",
+      "timestamp": "2026-09-02T14:00:00Z",
+      "narration": "UPI/987654321/PAY/RZP_NOISE",
+      "extracted_utr": "987654321",
+      "bank_code": "SBI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_083",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 7323000,
+      "debit_amount_paise": 0,
+      "value_date": "2026-09-02",
+      "timestamp": "2026-09-02T17:00:00Z",
+      "narration": "UPI/987654321/PAY/RZP_NOISE",
+      "extracted_utr": "987654321",
+      "bank_code": "SBI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_084",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 732300,
+      "debit_amount_paise": 0,
+      "value_date": "2026-09-02",
+      "timestamp": "2026-09-02T20:00:00Z",
+      "narration": "UPI/987654321/PAY/RZP_NOISE",
+      "extracted_utr": "987654321",
+      "bank_code": "SBI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_085",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 732300,
+      "debit_amount_paise": 0,
+      "value_date": "2026-09-02",
+      "timestamp": "2026-09-02T23:00:00Z",
+      "narration": "UPI/987654321/PAY/RZP_NOISE",
+      "extracted_utr": "987654321",
+      "bank_code": "SBI"
+    },
+    {
+      "bank_entry_id": "bnk_stmt_086",
+      "account_number": "XXXXXX4590",
+      "credit_amount_paise": 97640,
+      "debit_amount_paise": 0,
+      "value_date": "2026-09-03",
+      "timestamp": "2026-09-03T02:00:00Z",
+      "narration": "UPI/987654321/PAY/RZP_NOISE",
+      "extracted_utr": "987654321",
+      "bank_code": "SBI"
+    }
+  ],
+  "erp_invoices": [
+    {
+      "invoice_id": "INV-2026-001",
+      "order_id": "order_hbVrpoiV",
+      "customer_id": "cust_901",
+      "invoice_amount_paise": 12500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T10:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-002",
+      "order_id": "order_RV5IfLBc",
+      "customer_id": "cust_902",
+      "invoice_amount_paise": 250000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T10:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-003",
+      "order_id": "order_fnoGMbJm",
+      "customer_id": "cust_903",
+      "invoice_amount_paise": 100000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T10:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-004",
+      "order_id": "order_PSIAoCLr",
+      "customer_id": "cust_904",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T10:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-005",
+      "order_id": "order_WZkSBvrj",
+      "customer_id": "cust_905",
+      "invoice_amount_paise": 100000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T11:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-006",
+      "order_id": "order_9Wvgfygw",
+      "customer_id": "cust_906",
+      "invoice_amount_paise": 750000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T11:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-007",
+      "order_id": "order_MqZcUDIh",
+      "customer_id": "cust_907",
+      "invoice_amount_paise": 1500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T11:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-008",
+      "order_id": "order_fJs1ON43",
+      "customer_id": "cust_908",
+      "invoice_amount_paise": 2500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T11:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-009",
+      "order_id": "order_KmTecQoX",
+      "customer_id": "cust_909",
+      "invoice_amount_paise": 1500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T12:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-010",
+      "order_id": "order_f2o3gyrD",
+      "customer_id": "cust_910",
+      "invoice_amount_paise": 1000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T12:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-011",
+      "order_id": "order_1xkxwnQr",
+      "customer_id": "cust_911",
+      "invoice_amount_paise": 12500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T12:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-012",
+      "order_id": "order_7RPeMOkI",
+      "customer_id": "cust_912",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T12:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-013",
+      "order_id": "order_pkDyr7OS",
+      "customer_id": "cust_913",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T13:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-014",
+      "order_id": "order_oRu1XXdo",
+      "customer_id": "cust_914",
+      "invoice_amount_paise": 7500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T13:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-015",
+      "order_id": "order_Zuzren68",
+      "customer_id": "cust_915",
+      "invoice_amount_paise": 100000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T13:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-016",
+      "order_id": "order_4TunPFz4",
+      "customer_id": "cust_916",
+      "invoice_amount_paise": 10000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T13:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-017",
+      "order_id": "order_DjqipVJI",
+      "customer_id": "cust_917",
+      "invoice_amount_paise": 12500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T14:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-018",
+      "order_id": "order_VLB5Lzxo",
+      "customer_id": "cust_918",
+      "invoice_amount_paise": 1000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T14:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-019",
+      "order_id": "order_GFfWd3hj",
+      "customer_id": "cust_919",
+      "invoice_amount_paise": 500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T14:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-020",
+      "order_id": "order_kYRBMeyy",
+      "customer_id": "cust_920",
+      "invoice_amount_paise": 12500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T14:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-021",
+      "order_id": "order_DHqJ38aR",
+      "customer_id": "cust_921",
+      "invoice_amount_paise": 10000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T15:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-022",
+      "order_id": "order_hR4IWrXP",
+      "customer_id": "cust_922",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T15:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-023",
+      "order_id": "order_hsBkDa9U",
+      "customer_id": "cust_923",
+      "invoice_amount_paise": 1500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T15:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-024",
+      "order_id": "order_qGWlG6g3",
+      "customer_id": "cust_924",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T15:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-025",
+      "order_id": "order_t1OGMmjx",
+      "customer_id": "cust_925",
+      "invoice_amount_paise": 12500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T16:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-026",
+      "order_id": "order_I9X7H6aM",
+      "customer_id": "cust_926",
+      "invoice_amount_paise": 500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T16:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-027",
+      "order_id": "order_Fbh7x41Z",
+      "customer_id": "cust_927",
+      "invoice_amount_paise": 1500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T16:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-028",
+      "order_id": "order_pdp4K8ff",
+      "customer_id": "cust_928",
+      "invoice_amount_paise": 1000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T16:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-029",
+      "order_id": "order_F0eWIXii",
+      "customer_id": "cust_929",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T17:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-030",
+      "order_id": "order_E8JkqH3M",
+      "customer_id": "cust_930",
+      "invoice_amount_paise": 12500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T17:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-031",
+      "order_id": "order_9n7IWUSm",
+      "customer_id": "cust_931",
+      "invoice_amount_paise": 2500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T17:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-032",
+      "order_id": "order_tzQPxC5H",
+      "customer_id": "cust_932",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T17:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-033",
+      "order_id": "order_hpoevbLJ",
+      "customer_id": "cust_933",
+      "invoice_amount_paise": 5000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T18:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-034",
+      "order_id": "order_LoaeTOdo",
+      "customer_id": "cust_934",
+      "invoice_amount_paise": 750000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T18:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-035",
+      "order_id": "order_5c3veGpr",
+      "customer_id": "cust_935",
+      "invoice_amount_paise": 250000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T18:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-036",
+      "order_id": "order_FnIiU74K",
+      "customer_id": "cust_936",
+      "invoice_amount_paise": 12500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T18:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-037",
+      "order_id": "order_EpYEZAmg",
+      "customer_id": "cust_937",
+      "invoice_amount_paise": 10000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T19:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-038",
+      "order_id": "order_QBwBAD3U",
+      "customer_id": "cust_938",
+      "invoice_amount_paise": 250000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T19:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-039",
+      "order_id": "order_RPPgdzUv",
+      "customer_id": "cust_939",
+      "invoice_amount_paise": 100000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T19:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-040",
+      "order_id": "order_pmmICiBl",
+      "customer_id": "cust_940",
+      "invoice_amount_paise": 250000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T19:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-041",
+      "order_id": "order_Dp37eCZ3",
+      "customer_id": "cust_941",
+      "invoice_amount_paise": 1000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T20:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-042",
+      "order_id": "order_gdPI1af7",
+      "customer_id": "cust_942",
+      "invoice_amount_paise": 7500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T20:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-043",
+      "order_id": "order_kAFEn3z5",
+      "customer_id": "cust_943",
+      "invoice_amount_paise": 750000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T20:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-044",
+      "order_id": "order_kyayq7YY",
+      "customer_id": "cust_944",
+      "invoice_amount_paise": 100000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T20:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-045",
+      "order_id": "order_sBS9UYJQ",
+      "customer_id": "cust_945",
+      "invoice_amount_paise": 5000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T21:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-046",
+      "order_id": "order_Fjmsn9dL",
+      "customer_id": "cust_946",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T21:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-047",
+      "order_id": "order_IdVuddLE",
+      "customer_id": "cust_947",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T21:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-048",
+      "order_id": "order_62Hkd9Gf",
+      "customer_id": "cust_948",
+      "invoice_amount_paise": 7500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T21:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-049",
+      "order_id": "order_eMeR3pzh",
+      "customer_id": "cust_949",
+      "invoice_amount_paise": 500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T22:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-050",
+      "order_id": "order_pLMcNfAQ",
+      "customer_id": "cust_900",
+      "invoice_amount_paise": 10000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T22:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-051",
+      "order_id": "order_KHu7qnQT",
+      "customer_id": "cust_901",
+      "invoice_amount_paise": 10000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T22:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-052",
+      "order_id": "order_pqziQPtD",
+      "customer_id": "cust_902",
+      "invoice_amount_paise": 1500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T22:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-053",
+      "order_id": "order_7W7eaDNK",
+      "customer_id": "cust_903",
+      "invoice_amount_paise": 1500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T23:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-054",
+      "order_id": "order_eInGqi7w",
+      "customer_id": "cust_904",
+      "invoice_amount_paise": 250000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T23:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-055",
+      "order_id": "order_4pxskC1I",
+      "customer_id": "cust_905",
+      "invoice_amount_paise": 250000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T23:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-056",
+      "order_id": "order_tNZPHaQ0",
+      "customer_id": "cust_906",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T23:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-057",
+      "order_id": "order_t7Qg84iq",
+      "customer_id": "cust_907",
+      "invoice_amount_paise": 7500000,
+      "status": "PAID",
+      "issue_date": "2026-08-22T00:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-058",
+      "order_id": "order_4gVJjrsM",
+      "customer_id": "cust_908",
+      "invoice_amount_paise": 250000,
+      "status": "PAID",
+      "issue_date": "2026-08-22T00:20:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-059",
+      "order_id": "order_TvnRO2qG",
+      "customer_id": "cust_909",
+      "invoice_amount_paise": 750000,
+      "status": "PAID",
+      "issue_date": "2026-08-22T00:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-060",
+      "order_id": "order_q562dfOB",
+      "customer_id": "cust_910",
+      "invoice_amount_paise": 5000000,
+      "status": "PAID",
+      "issue_date": "2026-08-22T00:50:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-061",
+      "order_id": "order_avXiOqkV",
+      "customer_id": "cust_911",
+      "invoice_amount_paise": 100000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T20:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-062",
+      "order_id": "order_JTBJahe8",
+      "customer_id": "cust_912",
+      "invoice_amount_paise": 5000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T20:15:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-063",
+      "order_id": "order_5jIc1xLJ",
+      "customer_id": "cust_913",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T20:25:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-064",
+      "order_id": "order_Bictx57Y",
+      "customer_id": "cust_914",
+      "invoice_amount_paise": 500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T20:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-065",
+      "order_id": "order_nRpQgwXJ",
+      "customer_id": "cust_915",
+      "invoice_amount_paise": 1500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T20:45:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-066",
+      "order_id": "order_NVj77p3k",
+      "customer_id": "cust_916",
+      "invoice_amount_paise": 2500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T20:55:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-067",
+      "order_id": "order_4AblV7vY",
+      "customer_id": "cust_917",
+      "invoice_amount_paise": 500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T21:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-068",
+      "order_id": "order_3VZprkYS",
+      "customer_id": "cust_918",
+      "invoice_amount_paise": 12500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T21:15:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-069",
+      "order_id": "order_y3c2Eom0",
+      "customer_id": "cust_919",
+      "invoice_amount_paise": 250000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T21:25:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-070",
+      "order_id": "order_wt0Y3oob",
+      "customer_id": "cust_920",
+      "invoice_amount_paise": 5000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T21:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-071",
+      "order_id": "order_mzvr3e9X",
+      "customer_id": "cust_921",
+      "invoice_amount_paise": 12500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T21:45:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-072",
+      "order_id": "order_PGzR1Iv8",
+      "customer_id": "cust_922",
+      "invoice_amount_paise": 1500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T21:55:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-073",
+      "order_id": "order_h4qlL9qc",
+      "customer_id": "cust_923",
+      "invoice_amount_paise": 100000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T22:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-074",
+      "order_id": "order_MBwUYuBM",
+      "customer_id": "cust_924",
+      "invoice_amount_paise": 250000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T22:15:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-075",
+      "order_id": "order_hy5KmqcT",
+      "customer_id": "cust_925",
+      "invoice_amount_paise": 7500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T22:25:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-076",
+      "order_id": "order_H7ZIRU8V",
+      "customer_id": "cust_926",
+      "invoice_amount_paise": 100000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T22:35:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-077",
+      "order_id": "order_QmxBe8Q6",
+      "customer_id": "cust_927",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T22:45:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-078",
+      "order_id": "order_NuQ2hU5t",
+      "customer_id": "cust_928",
+      "invoice_amount_paise": 1500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T22:55:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-079",
+      "order_id": "order_tQAuzSsJ",
+      "customer_id": "cust_929",
+      "invoice_amount_paise": 7500000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T23:05:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-080",
+      "order_id": "order_AQ8yRV5l",
+      "customer_id": "cust_930",
+      "invoice_amount_paise": 750000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T23:15:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-081",
+      "order_id": "order_KtzJ1ats",
+      "customer_id": "cust_931",
+      "invoice_amount_paise": 10000000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T23:43:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-082",
+      "order_id": "order_BYLMPuDC",
+      "customer_id": "cust_932",
+      "invoice_amount_paise": 750000,
+      "status": "PAID",
+      "issue_date": "2026-08-21T23:53:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-083",
+      "order_id": "order_RnGEY59Y",
+      "customer_id": "cust_933",
+      "invoice_amount_paise": 5000000,
+      "status": "PAID",
+      "issue_date": "2026-08-22T00:03:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-084",
+      "order_id": "order_kQfsGQON",
+      "customer_id": "cust_934",
+      "invoice_amount_paise": 15000000,
+      "status": "PAID",
+      "issue_date": "2026-08-22T00:13:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-085",
+      "order_id": "order_f08WpRto",
+      "customer_id": "cust_935",
+      "invoice_amount_paise": 1500000,
+      "status": "PAID",
+      "issue_date": "2026-08-22T00:23:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-086",
+      "order_id": "order_jbcpEN2X",
+      "customer_id": "cust_936",
+      "invoice_amount_paise": 750000,
+      "status": "PAID",
+      "issue_date": "2026-08-22T00:33:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-087",
+      "order_id": "order_DA4OKmTS",
+      "customer_id": "cust_937",
+      "invoice_amount_paise": 250000,
+      "status": "PAID",
+      "issue_date": "2026-08-22T00:43:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-088",
+      "order_id": "order_FzpjPSa5",
+      "customer_id": "cust_938",
+      "invoice_amount_paise": 2500000,
+      "status": "PAID",
+      "issue_date": "2026-08-22T00:53:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-089",
+      "order_id": "order_XBolZ9SH",
+      "customer_id": "cust_939",
+      "invoice_amount_paise": 250000,
+      "status": "PAID",
+      "issue_date": "2026-08-22T01:03:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-090",
+      "order_id": "order_dJp62hDi",
+      "customer_id": "cust_940",
+      "invoice_amount_paise": 5000000,
+      "status": "PAID",
+      "issue_date": "2026-08-22T01:13:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-091",
+      "order_id": "order_ZDQHJMu8",
+      "customer_id": "cust_941",
+      "invoice_amount_paise": 1200000,
+      "status": "PAID",
+      "issue_date": "2026-08-28T23:40:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-092",
+      "order_id": "order_W5CN0U5G",
+      "customer_id": "cust_942",
+      "invoice_amount_paise": 1200000,
+      "status": "PAID",
+      "issue_date": "2026-08-29T01:40:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-093",
+      "order_id": "order_B16JC5kV",
+      "customer_id": "cust_943",
+      "invoice_amount_paise": 1200000,
+      "status": "PAID",
+      "issue_date": "2026-08-29T03:40:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-094",
+      "order_id": "order_3ECqWp1O",
+      "customer_id": "cust_944",
+      "invoice_amount_paise": 1200000,
+      "status": "PAID",
+      "issue_date": "2026-08-29T05:40:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-095",
+      "order_id": "order_rXXHFOpr",
+      "customer_id": "cust_945",
+      "invoice_amount_paise": 1200000,
+      "status": "PAID",
+      "issue_date": "2026-08-29T07:40:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-096",
+      "order_id": "order_eTsprvu5",
+      "customer_id": "cust_946",
+      "invoice_amount_paise": 5000000,
+      "status": "PAID",
+      "issue_date": "2026-09-02T09:48:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-097",
+      "order_id": "order_fijoySjT",
+      "customer_id": "cust_947",
+      "invoice_amount_paise": 7500000,
+      "status": "PAID",
+      "issue_date": "2026-09-02T12:48:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-098",
+      "order_id": "order_eAAvIDAd",
+      "customer_id": "cust_948",
+      "invoice_amount_paise": 750000,
+      "status": "PAID",
+      "issue_date": "2026-09-02T15:48:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-099",
+      "order_id": "order_1Ay5XL8S",
+      "customer_id": "cust_949",
+      "invoice_amount_paise": 750000,
+      "status": "PAID",
+      "issue_date": "2026-09-02T18:48:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    },
+    {
+      "invoice_id": "INV-2026-100",
+      "order_id": "order_24WKyEa8",
+      "customer_id": "cust_900",
+      "invoice_amount_paise": 100000,
+      "status": "PAID",
+      "issue_date": "2026-09-02T21:48:00Z",
+      "gl_account": "Accounts Receivable - Razorpay"
+    }
+  ],
+  "ground_truth_matches": [
+    {
+      "match_id": "match_001",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_001"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_001"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-001"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_002",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_002"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_002"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-002"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_003",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_003"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_003"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-003"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_004",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_004"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_004"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-004"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_005",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_005"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_005"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-005"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_006",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_006"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_006"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-006"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_007",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_007"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_007"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-007"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_008",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_008"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_008"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-008"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_009",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_009"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_009"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-009"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_010",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_010"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_010"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-010"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_011",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_011"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_011"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-011"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_012",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_012"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_012"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-012"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_013",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_013"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_013"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-013"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_014",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_014"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_014"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-014"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_015",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_015"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_015"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-015"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_016",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_016"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_016"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-016"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_017",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_017"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_017"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-017"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_018",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_018"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_018"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-018"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_019",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_019"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_019"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-019"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_020",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_020"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_020"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-020"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_021",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_021"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_021"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-021"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_022",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_022"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_022"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-022"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_023",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_023"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_023"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-023"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_024",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_024"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_024"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-024"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_025",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_025"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_025"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-025"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_026",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_026"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_026"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-026"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_027",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_027"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_027"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-027"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_028",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_028"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_028"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-028"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_029",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_029"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_029"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-029"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_030",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_030"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_030"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-030"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_031",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_031"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_031"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-031"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_032",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_032"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_032"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-032"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_033",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_033"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_033"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-033"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_034",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_034"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_034"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-034"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_035",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_035"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_035"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-035"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_036",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_036"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_036"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-036"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_037",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_037"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_037"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-037"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_038",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_038"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_038"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-038"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_039",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_039"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_039"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-039"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_040",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_040"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_040"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-040"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_041",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_041"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_041"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-041"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_042",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_042"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_042"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-042"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_043",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_043"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_043"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-043"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_044",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_044"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_044"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-044"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_045",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_045"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_045"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-045"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_046",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_046"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_046"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-046"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_047",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_047"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_047"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-047"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_048",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_048"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_048"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-048"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_049",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_049"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_049"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-049"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_050",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_050"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_050"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-050"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_051",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_051"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_051"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-051"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_052",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_052"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_052"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-052"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_053",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_053"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_053"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-053"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_054",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_054"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_054"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-054"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_055",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_055"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_055"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-055"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_056",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_056"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_056"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-056"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_057",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_057"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_057"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-057"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_058",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_058"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_058"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-058"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_059",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_059"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_059"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-059"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_060",
+      "type": "ONE_TO_ONE",
+      "razorpay_event_ids": [
+        "evt_rzp_060"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_060"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-060"
+      ],
+      "edge_case_type": "MDR_GST_SPLIT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_061",
+      "type": "ONE_TO_MANY",
+      "razorpay_event_ids": [
+        "evt_rzp_061",
+        "evt_rzp_062",
+        "evt_rzp_063",
+        "evt_rzp_064"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_061"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-061",
+        "INV-2026-062",
+        "INV-2026-063",
+        "INV-2026-064"
+      ],
+      "edge_case_type": "BATCH_SETTLEMENT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_062",
+      "type": "ONE_TO_MANY",
+      "razorpay_event_ids": [
+        "evt_rzp_065",
+        "evt_rzp_066",
+        "evt_rzp_067"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_062"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-065",
+        "INV-2026-066",
+        "INV-2026-067"
+      ],
+      "edge_case_type": "BATCH_SETTLEMENT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_063",
+      "type": "ONE_TO_MANY",
+      "razorpay_event_ids": [
+        "evt_rzp_068",
+        "evt_rzp_069",
+        "evt_rzp_070",
+        "evt_rzp_071"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_063"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-068",
+        "INV-2026-069",
+        "INV-2026-070",
+        "INV-2026-071"
+      ],
+      "edge_case_type": "BATCH_SETTLEMENT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_064",
+      "type": "ONE_TO_MANY",
+      "razorpay_event_ids": [
+        "evt_rzp_072",
+        "evt_rzp_073",
+        "evt_rzp_074",
+        "evt_rzp_075"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_064"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-072",
+        "INV-2026-073",
+        "INV-2026-074",
+        "INV-2026-075"
+      ],
+      "edge_case_type": "BATCH_SETTLEMENT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_065",
+      "type": "ONE_TO_MANY",
+      "razorpay_event_ids": [
+        "evt_rzp_076",
+        "evt_rzp_077",
+        "evt_rzp_078",
+        "evt_rzp_079"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_065"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-076",
+        "INV-2026-077",
+        "INV-2026-078",
+        "INV-2026-079"
+      ],
+      "edge_case_type": "BATCH_SETTLEMENT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_066",
+      "type": "ONE_TO_MANY",
+      "razorpay_event_ids": [
+        "evt_rzp_080"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_066"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-080"
+      ],
+      "edge_case_type": "BATCH_SETTLEMENT",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_067",
+      "type": "TEMPORAL_LAG",
+      "razorpay_event_ids": [
+        "evt_rzp_081"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_067"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-081"
+      ],
+      "edge_case_type": "HOLIDAY_LAG",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_068",
+      "type": "TEMPORAL_LAG",
+      "razorpay_event_ids": [
+        "evt_rzp_082"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_068"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-082"
+      ],
+      "edge_case_type": "HOLIDAY_LAG",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_069",
+      "type": "TEMPORAL_LAG",
+      "razorpay_event_ids": [
+        "evt_rzp_083"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_069"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-083"
+      ],
+      "edge_case_type": "HOLIDAY_LAG",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_070",
+      "type": "TEMPORAL_LAG",
+      "razorpay_event_ids": [
+        "evt_rzp_084"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_070"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-084"
+      ],
+      "edge_case_type": "HOLIDAY_LAG",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_071",
+      "type": "TEMPORAL_LAG",
+      "razorpay_event_ids": [
+        "evt_rzp_085"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_071"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-085"
+      ],
+      "edge_case_type": "HOLIDAY_LAG",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_072",
+      "type": "TEMPORAL_LAG",
+      "razorpay_event_ids": [
+        "evt_rzp_086"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_072"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-086"
+      ],
+      "edge_case_type": "HOLIDAY_LAG",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_073",
+      "type": "TEMPORAL_LAG",
+      "razorpay_event_ids": [
+        "evt_rzp_087"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_073"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-087"
+      ],
+      "edge_case_type": "HOLIDAY_LAG",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_074",
+      "type": "TEMPORAL_LAG",
+      "razorpay_event_ids": [
+        "evt_rzp_088"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_074"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-088"
+      ],
+      "edge_case_type": "HOLIDAY_LAG",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_075",
+      "type": "TEMPORAL_LAG",
+      "razorpay_event_ids": [
+        "evt_rzp_089"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_075"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-089"
+      ],
+      "edge_case_type": "HOLIDAY_LAG",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_076",
+      "type": "TEMPORAL_LAG",
+      "razorpay_event_ids": [
+        "evt_rzp_090"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_076"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-090"
+      ],
+      "edge_case_type": "HOLIDAY_LAG",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_077",
+      "type": "DISPUTE_HOLD",
+      "razorpay_event_ids": [
+        "evt_rzp_091"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_077"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-091"
+      ],
+      "edge_case_type": "DISPUTE_RESERVE_HOLD",
+      "discrepancy_paise": 440000,
+      "expected_status": "DISCREPANCY"
+    },
+    {
+      "match_id": "match_078",
+      "type": "DISPUTE_HOLD",
+      "razorpay_event_ids": [
+        "evt_rzp_092"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_078"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-092"
+      ],
+      "edge_case_type": "DISPUTE_RESERVE_HOLD",
+      "discrepancy_paise": 440000,
+      "expected_status": "DISCREPANCY"
+    },
+    {
+      "match_id": "match_079",
+      "type": "DISPUTE_HOLD",
+      "razorpay_event_ids": [
+        "evt_rzp_093"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_079"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-093"
+      ],
+      "edge_case_type": "DISPUTE_RESERVE_HOLD",
+      "discrepancy_paise": 440000,
+      "expected_status": "DISCREPANCY"
+    },
+    {
+      "match_id": "match_080",
+      "type": "DISPUTE_HOLD",
+      "razorpay_event_ids": [
+        "evt_rzp_094"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_080"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-094"
+      ],
+      "edge_case_type": "DISPUTE_RESERVE_HOLD",
+      "discrepancy_paise": 440000,
+      "expected_status": "DISCREPANCY"
+    },
+    {
+      "match_id": "match_081",
+      "type": "DISPUTE_HOLD",
+      "razorpay_event_ids": [
+        "evt_rzp_095"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_081"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-095"
+      ],
+      "edge_case_type": "DISPUTE_RESERVE_HOLD",
+      "discrepancy_paise": 440000,
+      "expected_status": "DISCREPANCY"
+    },
+    {
+      "match_id": "match_082",
+      "type": "FUZZY_UTR",
+      "razorpay_event_ids": [
+        "evt_rzp_096"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_082"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-096"
+      ],
+      "edge_case_type": "FUZZY_TRUNCATED_UTR",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_083",
+      "type": "FUZZY_UTR",
+      "razorpay_event_ids": [
+        "evt_rzp_097"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_083"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-097"
+      ],
+      "edge_case_type": "FUZZY_TRUNCATED_UTR",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_084",
+      "type": "FUZZY_UTR",
+      "razorpay_event_ids": [
+        "evt_rzp_098"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_084"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-098"
+      ],
+      "edge_case_type": "FUZZY_TRUNCATED_UTR",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_085",
+      "type": "FUZZY_UTR",
+      "razorpay_event_ids": [
+        "evt_rzp_099"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_085"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-099"
+      ],
+      "edge_case_type": "FUZZY_TRUNCATED_UTR",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    },
+    {
+      "match_id": "match_086",
+      "type": "FUZZY_UTR",
+      "razorpay_event_ids": [
+        "evt_rzp_100"
+      ],
+      "bank_entry_ids": [
+        "bnk_stmt_086"
+      ],
+      "erp_invoice_ids": [
+        "INV-2026-100"
+      ],
+      "edge_case_type": "FUZZY_TRUNCATED_UTR",
+      "discrepancy_paise": 0,
+      "expected_status": "MATCHED"
+    }
+  ]
+}

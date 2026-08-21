@@ -148,5 +148,5 @@ export const ThreeLaserArcOverlay: React.FC<ThreeLaserArcOverlayProps> = ({ lase
     });
   }, [lasers]);
 
-  return <div ref={mountRef} className="absolute inset-0 pointer-events-none z-0" />;
+  return <div ref={mountRef} className="absolute inset-0 w-full h-full pointer-events-none z-0" />;
 };

@@ -142,6 +142,7 @@ async def reconcile_batch(req: BatchReconcileRequest) -> Dict[str, Any]:
             "latency_ms": latency_ms,
         },
         "merkle_root": _GLOBAL_LEDGER.get_merkle_root(),
+        "clusters": [cl.model_dump() if hasattr(cl, "model_dump") else cl.dict() for cl in all_clusters],
         "audit_verdict": "INVARIANTS_VERIFIED",
     }
 

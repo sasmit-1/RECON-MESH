@@ -37,8 +37,8 @@ export const HUDMetricsBar: React.FC<HUDMetricsBarProps> = ({ metrics, merkleRoo
   const latencyStr = metrics.latencyMs > 0 ? `${metrics.latencyMs.toFixed(1)} ms` : '< 1.0 ms';
 
   return (
-    <section className="bg-[#000000] border-b border-[#181818] p-3 select-none">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+    <section className="bg-[#09090b] border-b border-[#27272a] p-3 select-none flex-shrink-0">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
 
         {/* Card 1: Precision & Recall */}
         <div className="bg-[#080808] border border-[#181818] hover:border-[#2A2A2A] transition-colors rounded p-2.5 flex flex-col justify-between">
@@ -129,8 +129,8 @@ export const HUDMetricsBar: React.FC<HUDMetricsBarProps> = ({ metrics, merkleRoo
           </div>
         </div>
 
-        {/* Card 5 & 6: Cryptographic Merkle Root (Spans 2 columns on lg screens) */}
-        <div className="bg-[#080808] border border-[#181818] hover:border-[#2A2A2A] transition-colors rounded p-2.5 flex flex-col justify-between lg:col-span-2">
+        {/* Card 5: Cryptographic Merkle Root */}
+        <div className="bg-[#080808] border border-[#181818] hover:border-[#2A2A2A] transition-colors rounded p-2.5 flex flex-col justify-between md:col-span-1">
           <div className="flex items-center justify-between text-[11px] font-mono text-[#888888] mb-1">
             <span className="flex items-center space-x-1">
               <ShieldCheck className="w-3 h-3 text-[#00FF66]" />

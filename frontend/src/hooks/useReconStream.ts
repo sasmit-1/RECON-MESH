@@ -124,6 +124,9 @@ export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamRe
           if (data.merkle_root) {
             setMerkleRoot(data.merkle_root);
           }
+          if (data.clusters) {
+            setClusters(data.clusters);
+          }
         }
       } catch (e) {
         console.error('Batch reconciliation error:', e);

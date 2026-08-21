@@ -113,8 +113,8 @@ export const LiveAuditTerminal: React.FC<LiveAuditTerminalProps> = ({
 
   return (
     <div
-      className={`border-t border-[#181818] bg-[#030303] flex flex-col transition-all duration-200 ${
-        collapsed ? 'h-[32px]' : 'h-[180px]'
+      className={`border-t border-[#27272a] bg-[#050505] flex flex-col flex-shrink-0 transition-all duration-200 ${
+        collapsed ? 'h-[32px]' : 'h-40'
       }`}
     >
       {/* Terminal Header */}
@@ -144,7 +144,7 @@ export const LiveAuditTerminal: React.FC<LiveAuditTerminalProps> = ({
 
       {/* Log Scroll Area */}
       {!collapsed && (
-        <div ref={scrollRef} className="flex-1 overflow-y-auto p-2 space-y-0.5 font-mono text-[10px]">
+        <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 space-y-0.5 font-mono text-xs bg-[#050505]">
           {logs.map((log) => (
             <div key={log.id} className="flex items-start space-x-2 leading-relaxed">
               <span className="text-[#333333] flex-shrink-0">{log.timestamp}</span>

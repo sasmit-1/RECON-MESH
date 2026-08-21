@@ -52,7 +52,7 @@ export const ControlHeader: React.FC<ControlHeaderProps> = ({
   const isNative = engineMode.toLowerCase().includes('native') || engineMode.toLowerCase().includes('c++');
 
   return (
-    <header className="h-[48px] bg-[#050505] border-b border-[#181818] px-4 flex items-center justify-between select-none">
+    <header className="flex items-center justify-between px-4 py-2.5 bg-black border-b border-[#27272a] select-none flex-shrink-0 h-[48px]">
       {/* Left: Brand logo & Engine Status Badges */}
       <div className="flex items-center space-x-3">
         <div className="flex items-center space-x-2">

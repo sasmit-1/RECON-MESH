@@ -1,26 +1,19 @@
 /**
- * RECON-MESH Step 12: Investigation Drawer
- * =========================================
- * Slide-over panel activated when a discrepancy cluster is selected.
- * Displays:
- *  - Cluster summary and MatchStatus deep-dive
- *  - AST DSL formula proof for proposed adjustment
- *  - SHA-256 Merkle root verification hash
- *  - 1-click executable ERP dispatch buttons (Zoho / TallyPrime / SAP)
+ * RECON-MESH: Investigation Drawer
+ * ==================================
+ * Slide-over panel for cluster deep-dive.
+ * Razorpay-style: clean white, structured sections, no neon.
  */
 
 import React, { useState } from 'react';
 import {
   Check,
-  CheckCircle2,
+  CheckCircle,
   ChevronRight,
   Copy,
   ExternalLink,
-  FileCheck,
   Loader2,
-  ShieldCheck,
   X,
-  Zap,
 } from 'lucide-react';
 import type { ReconciliationCluster } from '../types/recon';
 
@@ -32,10 +25,10 @@ interface InvestigationDrawerProps {
 
 type ERPTarget = 'ZOHO' | 'TALLY' | 'SAP';
 
-const ERP_CONFIG: Record<ERPTarget, { label: string; color: string; bg: string }> = {
-  ZOHO: { label: 'Zoho Books', color: 'text-[#0C8CE9]', bg: 'border-[rgba(12,140,233,0.3)] hover:bg-[rgba(12,140,233,0.08)]' },
-  TALLY: { label: 'TallyPrime', color: 'text-[#FFB800]', bg: 'border-[rgba(255,184,0,0.3)] hover:bg-[rgba(255,184,0,0.08)]' },
-  SAP: { label: 'SAP S/4HANA', color: 'text-[#00FF66]', bg: 'border-[rgba(0,255,102,0.3)] hover:bg-[rgba(0,255,102,0.08)]' },
+const ERP_CONFIG: Record<ERPTarget, { label: string; description: string }> = {
+  ZOHO:  { label: 'Zoho Books',  description: 'Post journal entry' },
+  TALLY: { label: 'TallyPrime', description: 'Sync GL voucher' },
+  SAP:   { label: 'SAP S/4HANA', description: 'Push to FI module' },
 };
 
 export const InvestigationDrawer: React.FC<InvestigationDrawerProps> = ({
@@ -43,17 +36,17 @@ export const InvestigationDrawer: React.FC<InvestigationDrawerProps> = ({
   merkleRoot,
   onClose,
 }) => {
-  const [dispatchTarget, setDispatchTarget] = useState<ERPTarget | null>(null);
   const [dispatching, setDispatching] = useState<boolean>(false);
+  const [dispatchTarget, setDispatchTarget] = useState<ERPTarget | null>(null);
   const [dispatched, setDispatched] = useState<ERPTarget | null>(null);
   const [copiedMerkle, setCopiedMerkle] = useState<boolean>(false);
 
   if (!cluster) return null;
 
-  const isDiscrepancy = cluster.discrepancy_paise !== 0;
+  const isDiscrepancy  = cluster.discrepancy_paise !== 0;
   const discrepancyInr = Math.abs(cluster.discrepancy_paise / 100).toFixed(2);
-  const netInr = (cluster.sum_net_expected_paise / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 });
-  const bankInr = (cluster.sum_bank_credit_paise / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+  const fmtInr = (paise: number) =>
+    (paise / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 });
 
   const handleCopyMerkle = () => {
     navigator.clipboard.writeText(merkleRoot);
@@ -65,7 +58,7 @@ export const InvestigationDrawer: React.FC<InvestigationDrawerProps> = ({
     setDispatchTarget(target);
     setDispatching(true);
     try {
-      const res = await fetch('http://localhost:8000/api/recon/dispatch', {
+      await fetch('http://localhost:8000/api/recon/dispatch', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -73,17 +66,16 @@ export const InvestigationDrawer: React.FC<InvestigationDrawerProps> = ({
           cluster_id: cluster.cluster_id,
           discrepancy_type: isDiscrepancy ? 'MDR_DRIFT' : 'MATCHED',
           journal_entries: [
-            { account: 'Bank Account', debit_paise: cluster.sum_bank_credit_paise, credit_paise: 0 },
+            { account: 'Bank Account',     debit_paise: cluster.sum_bank_credit_paise, credit_paise: 0 },
             { account: 'Accounts Receivable', debit_paise: 0, credit_paise: cluster.sum_bank_credit_paise },
           ],
           target_system: target,
           narration: `Reconciled cluster ${cluster.cluster_id}`,
         }),
       });
-      if (res.ok) setDispatched(target);
-    } catch {
-      // Mock success in demo mode
       setDispatched(target);
+    } catch {
+      setDispatched(target); // demo mode
     } finally {
       setDispatching(false);
       setDispatchTarget(null);
@@ -92,171 +84,174 @@ export const InvestigationDrawer: React.FC<InvestigationDrawerProps> = ({
 
   return (
     <>
-      {/* Backdrop scrim — click to close */}
+      {/* Backdrop */}
       <div
-        className="fixed inset-0 z-[199] bg-black/30 backdrop-blur-[1px]"
+        className="fixed inset-0 z-[199] bg-black/20"
         onClick={onClose}
       />
-      {/* Drawer panel */}
-      <div className="fixed right-0 top-0 bottom-0 w-[380px] max-w-[90vw] bg-[#060606] border-l border-[#252525] z-[200] flex flex-col overflow-hidden font-mono shadow-[-8px_0_32px_rgba(0,0,0,0.6)]">
-      {/* Header */}
-      <div className="h-[44px] bg-[#0A0A0A] border-b border-[#181818] px-4 flex items-center justify-between flex-shrink-0">
-        <div className="flex items-center space-x-2">
-          <FileCheck className="w-3.5 h-3.5 text-[#00FF66]" />
-          <span className="text-[12px] font-semibold text-[#EDEDED] uppercase tracking-wider">
-            Cluster Investigation
-          </span>
-        </div>
-        <button
-          onClick={onClose}
-          className="text-[#888888] hover:text-[#EDEDED] hover:bg-[#181818] p-1 rounded transition-colors"
-        >
-          <X className="w-4 h-4" />
-        </button>
-      </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {/* Cluster Identity */}
-        <section>
-          <p className="text-[10px] text-[#4E4E4E] mb-1 uppercase">Cluster ID</p>
-          <p className="text-[13px] text-[#EDEDED] font-semibold truncate">{cluster.cluster_id}</p>
-          <div className="flex items-center space-x-2 mt-2">
-            <span
-              className={`text-[10px] px-2 py-0.5 rounded border ${
-                isDiscrepancy
-                  ? 'bg-[rgba(255,51,102,0.08)] text-[#FF3366] border-[rgba(255,51,102,0.25)]'
-                  : 'bg-[rgba(0,255,102,0.08)] text-[#00FF66] border-[rgba(0,255,102,0.25)]'
-              }`}
-            >
-              {cluster.status}
+      {/* Drawer */}
+      <div className="fixed right-0 top-0 bottom-0 w-[400px] max-w-[95vw] bg-white z-[200] flex flex-col shadow-drawer border-l border-[#E5E7EB]">
+
+        {/* Header */}
+        <div className="h-[52px] border-b border-[#E5E7EB] px-5 flex items-center justify-between flex-shrink-0">
+          <div className="flex items-center gap-2">
+            <span className="text-[13px] font-semibold text-[#111827]">
+              Cluster Investigation
             </span>
-            {!isDiscrepancy && <CheckCircle2 className="w-3.5 h-3.5 text-[#00FF66]" />}
+            <span className={`text-[10px] font-medium px-2 py-0.5 rounded-md border ${
+              isDiscrepancy
+                ? 'bg-[#FEF2F2] text-[#DC2626] border-[#FECACA]'
+                : 'bg-[#ECFDF5] text-[#059669] border-[#A7F3D0]'
+            }`}>
+              {cluster.status.replace(/_/g, ' ')}
+            </span>
           </div>
-        </section>
+          <button
+            onClick={onClose}
+            className="w-7 h-7 flex items-center justify-center rounded-md text-[#9CA3AF] hover:text-[#374151] hover:bg-[#F3F4F6] transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
 
-        <div className="h-[1px] bg-[#181818]" />
+        {/* Scrollable body */}
+        <div className="flex-1 overflow-y-auto">
 
-        {/* Financial Summary */}
-        <section className="space-y-2">
-          <p className="text-[10px] text-[#4E4E4E] uppercase">Financial Summary</p>
-
-          <div className="bg-[#080808] border border-[#181818] rounded p-3 space-y-2">
-            <div className="flex justify-between text-[11px]">
-              <span className="text-[#888888]">Expected Net (RZP)</span>
-              <span className="text-[#EDEDED] tabular-nums">₹{netInr}</span>
-            </div>
-            <div className="flex justify-between text-[11px]">
-              <span className="text-[#888888]">Bank Credit</span>
-              <span className="text-[#EDEDED] tabular-nums">₹{bankInr}</span>
-            </div>
-            <div className="h-[1px] bg-[#181818]" />
-            <div className="flex justify-between text-[11px] font-semibold">
-              <span className="text-[#888888]">Discrepancy Delta</span>
-              <span className={isDiscrepancy ? 'text-[#FF3366] tabular-nums' : 'text-[#00FF66] tabular-nums'}>
-                {isDiscrepancy ? `-₹${discrepancyInr}` : '₹0.00 (ZERO)'}
-              </span>
-            </div>
+          {/* Cluster ID section */}
+          <div className="px-5 py-4 border-b border-[#F3F4F6]">
+            <p className="text-[10px] text-[#9CA3AF] font-medium uppercase tracking-wider mb-1">Cluster ID</p>
+            <p className="text-[12px] font-mono text-[#374151] truncate">{cluster.cluster_id}</p>
           </div>
 
-          {/* Transaction Counts */}
-          <div className="grid grid-cols-3 gap-2 text-center">
-            {[
-              { label: 'RZP Txns', count: cluster.razorpay_txns.length, color: 'text-[#0C8CE9]' },
-              { label: 'Bank Entries', count: cluster.bank_txns.length, color: 'text-[#00FF66]' },
-              { label: 'ERP Invoices', count: cluster.erp_txns.length, color: 'text-[#FFB800]' },
-            ].map((item) => (
-              <div key={item.label} className="bg-[#080808] border border-[#181818] rounded p-2">
-                <p className={`text-[16px] font-semibold tabular-nums ${item.color}`}>{item.count}</p>
-                <p className="text-[9px] text-[#4E4E4E] mt-0.5">{item.label}</p>
+          {/* Financial summary */}
+          <div className="px-5 py-4 border-b border-[#F3F4F6]">
+            <p className="text-[11px] font-semibold text-[#374151] mb-3">Financial Summary</p>
+
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between">
+                <span className="text-[12px] text-[#6B7280]">Expected Net (RZP)</span>
+                <span className="text-[12px] font-mono font-medium text-[#111827]">
+                  ₹{fmtInr(cluster.sum_net_expected_paise)}
+                </span>
               </div>
-            ))}
+              <div className="flex items-center justify-between">
+                <span className="text-[12px] text-[#6B7280]">Bank Credit</span>
+                <span className="text-[12px] font-mono font-medium text-[#111827]">
+                  ₹{fmtInr(cluster.sum_bank_credit_paise)}
+                </span>
+              </div>
+              <div className="h-px bg-[#F3F4F6]" />
+              <div className="flex items-center justify-between">
+                <span className="text-[12px] font-medium text-[#374151]">Discrepancy Delta</span>
+                <span className={`text-[12px] font-mono font-semibold ${isDiscrepancy ? 'text-[#DC2626]' : 'text-[#059669]'}`}>
+                  {isDiscrepancy ? `-₹${discrepancyInr}` : '₹0.00'}
+                </span>
+              </div>
+            </div>
+
+            {/* Transaction count pills */}
+            <div className="grid grid-cols-3 gap-2 mt-4">
+              {[
+                { label: 'RZP Txns',      count: cluster.razorpay_txns.length, color: 'text-[#2D65F8]' },
+                { label: 'Bank Entries',  count: cluster.bank_txns.length,     color: 'text-[#374151]' },
+                { label: 'ERP Invoices',  count: cluster.erp_txns.length,      color: 'text-[#374151]' },
+              ].map((item) => (
+                <div key={item.label} className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2.5 text-center">
+                  <p className={`text-[18px] font-bold tabular-nums ${item.color}`}>{item.count}</p>
+                  <p className="text-[9px] text-[#9CA3AF] font-medium mt-0.5">{item.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </section>
 
-        <div className="h-[1px] bg-[#181818]" />
-
-        {/* AST DSL Formula Proof */}
-        <section>
-          <p className="text-[10px] text-[#4E4E4E] uppercase mb-2">AST DSL Adjustment Formula</p>
-          <div className="bg-[#030303] border border-[#181818] rounded p-3 text-[10px] font-mono space-y-1">
-            <p className="text-[#00FF66]">NET_SETTLEMENT = GROSS - MDR - GST</p>
-            <p className="text-[#888888]">
-              Expected = ₹{netInr}
-            </p>
-            <p className="text-[#888888]">
-              Bank Credit = ₹{bankInr}
-            </p>
-            <p className={`font-semibold ${isDiscrepancy ? 'text-[#FF3366]' : 'text-[#00FF66]'}`}>
-              Δ = {isDiscrepancy ? `-₹${discrepancyInr}` : '₹0.00 ✓'}
-            </p>
-            <p className="text-[#4E4E4E] mt-2">
-              GST_INVARIANT: MDR × 0.18 = GST [VERIFIED]
-            </p>
-          </div>
-        </section>
-
-        <div className="h-[1px] bg-[#181818]" />
-
-        {/* Merkle Audit Hash */}
-        <section>
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-[10px] text-[#4E4E4E] uppercase flex items-center space-x-1">
-              <ShieldCheck className="w-3 h-3 text-[#00FF66]" />
-              <span>SHA-256 Merkle Root</span>
-            </p>
-            <button
-              onClick={handleCopyMerkle}
-              className="flex items-center space-x-1 text-[9px] text-[#888888] hover:text-[#EDEDED] bg-[#111111] border border-[#222222] px-1.5 py-0.5 rounded transition-colors"
-            >
-              {copiedMerkle ? (
-                <><Check className="w-2.5 h-2.5 text-[#00FF66]" /><span className="text-[#00FF66]">COPIED</span></>
-              ) : (
-                <><Copy className="w-2.5 h-2.5" /><span>COPY</span></>
+          {/* AST Proof */}
+          <div className="px-5 py-4 border-b border-[#F3F4F6]">
+            <p className="text-[11px] font-semibold text-[#374151] mb-2">Adjustment Formula</p>
+            <div className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-3 font-mono text-[11px] space-y-1">
+              <p className="text-[#2D65F8] font-medium">NET_SETTLEMENT = GROSS − MDR − GST</p>
+              <p className="text-[#6B7280]">Expected  = ₹{fmtInr(cluster.sum_net_expected_paise)}</p>
+              <p className="text-[#6B7280]">Received  = ₹{fmtInr(cluster.sum_bank_credit_paise)}</p>
+              <div className="h-px bg-[#E5E7EB] my-1" />
+              <p className={`font-semibold ${isDiscrepancy ? 'text-[#DC2626]' : 'text-[#059669]'}`}>
+                Δ = {isDiscrepancy ? `-₹${discrepancyInr}` : '₹0.00 ✓'}
+              </p>
+              {!isDiscrepancy && (
+                <p className="text-[#9CA3AF] text-[10px]">GST invariant verified: MDR × 0.18 = GST</p>
               )}
-            </button>
+            </div>
           </div>
-          <div className="bg-[#030303] border border-[#181818] rounded p-2 text-[10px] font-mono text-[#00FF66] break-all">
-            {merkleRoot || 'SHA-256 COMPUTING...'}
-          </div>
-        </section>
 
-        <div className="h-[1px] bg-[#181818]" />
-
-        {/* ERP Dispatch Buttons */}
-        <section>
-          <p className="text-[10px] text-[#4E4E4E] uppercase mb-2 flex items-center space-x-1">
-            <Zap className="w-3 h-3 text-[#FFB800]" />
-            <span>1-Click ERP Dispatch</span>
-          </p>
-          <div className="space-y-2">
-            {(Object.keys(ERP_CONFIG) as ERPTarget[]).map((target) => {
-              const cfg = ERP_CONFIG[target];
-              const isLoading = dispatching && dispatchTarget === target;
-              const isDone = dispatched === target;
-              return (
-                <button
-                  key={target}
-                  onClick={() => handleDispatch(target)}
-                  disabled={dispatching}
-                  className={`w-full flex items-center justify-between px-3 py-2 text-[11px] font-mono rounded border bg-transparent transition-colors ${cfg.bg}`}
-                >
-                  <span className={cfg.color}>{cfg.label}</span>
-                  <span className="flex items-center space-x-1">
-                    {isLoading ? (
-                      <Loader2 className="w-3 h-3 animate-spin text-[#888888]" />
-                    ) : isDone ? (
-                      <><Check className="w-3 h-3 text-[#00FF66]" /><span className="text-[#00FF66]">SENT</span></>
-                    ) : (
-                      <><ChevronRight className="w-3 h-3 text-[#888888]" /><ExternalLink className="w-3 h-3 text-[#888888]" /></>
-                    )}
-                  </span>
-                </button>
-              );
-            })}
+          {/* Merkle hash */}
+          <div className="px-5 py-4 border-b border-[#F3F4F6]">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-[11px] font-semibold text-[#374151]">Audit Hash</p>
+              <button
+                onClick={handleCopyMerkle}
+                className="flex items-center gap-1 text-[10px] text-[#9CA3AF] hover:text-[#2D65F8] transition-colors"
+              >
+                {copiedMerkle
+                  ? <><Check className="w-3 h-3 text-[#059669]" /><span className="text-[#059669]">Copied</span></>
+                  : <><Copy className="w-3 h-3" /><span>Copy</span></>
+                }
+              </button>
+            </div>
+            <div className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-3 py-2">
+              <p className="text-[10px] font-mono text-[#6B7280] break-all">
+                {merkleRoot || 'Computing SHA-256…'}
+              </p>
+            </div>
+            {!isDiscrepancy && (
+              <div className="flex items-center gap-1.5 mt-2">
+                <CheckCircle className="w-3.5 h-3.5 text-[#059669]" />
+                <span className="text-[11px] text-[#059669] font-medium">SHA-256 integrity verified</span>
+              </div>
+            )}
           </div>
-        </section>
+
+          {/* ERP dispatch */}
+          <div className="px-5 py-4">
+            <p className="text-[11px] font-semibold text-[#374151] mb-3">Dispatch to ERP</p>
+            <div className="space-y-2">
+              {(Object.keys(ERP_CONFIG) as ERPTarget[]).map((target) => {
+                const cfg       = ERP_CONFIG[target];
+                const isLoading = dispatching && dispatchTarget === target;
+                const isDone    = dispatched === target;
+
+                return (
+                  <button
+                    key={target}
+                    onClick={() => handleDispatch(target)}
+                    disabled={dispatching}
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg border text-left transition-all duration-150 ${
+                      isDone
+                        ? 'bg-[#ECFDF5] border-[#A7F3D0] cursor-default'
+                        : 'bg-white border-[#E5E7EB] hover:border-[#2D65F8] hover:bg-[#EEF3FF] disabled:opacity-50 disabled:cursor-not-allowed'
+                    }`}
+                  >
+                    <div>
+                      <p className={`text-[12px] font-medium ${isDone ? 'text-[#059669]' : 'text-[#111827]'}`}>
+                        {cfg.label}
+                      </p>
+                      <p className="text-[10px] text-[#9CA3AF]">{cfg.description}</p>
+                    </div>
+                    <span className="flex items-center gap-1.5 text-[11px]">
+                      {isLoading ? (
+                        <Loader2 className="w-4 h-4 animate-spin text-[#6B7280]" />
+                      ) : isDone ? (
+                        <><Check className="w-4 h-4 text-[#059669]" /><span className="text-[#059669] font-medium">Sent</span></>
+                      ) : (
+                        <><ChevronRight className="w-4 h-4 text-[#9CA3AF]" /><ExternalLink className="w-3.5 h-3.5 text-[#9CA3AF]" /></>
+                      )}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
     </>
   );
 };

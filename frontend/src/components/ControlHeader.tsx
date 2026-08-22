@@ -1,20 +1,12 @@
 /**
- * RECON-MESH Step 11: Control Header Component
- * ============================================
- * Compact 44px AMOLED top bar containing engine status badges, live stream controls,
- * batch ingestion triggers (100, 500, 1000 txns), and WebSocket connection indicators.
+ * RECON-MESH: Control Header
+ * ===========================
+ * Razorpay-style top navigation bar — clean white surface,
+ * brand blue accents, minimal iconography.
  */
 
 import React, { useState } from 'react';
-import {
-  Activity,
-  Cpu,
-  Play,
-  RefreshCw,
-  ShieldCheck,
-  Square,
-  Zap,
-} from 'lucide-react';
+import { Play, Square, RefreshCw, Zap, Wifi, WifiOff } from 'lucide-react';
 
 interface ControlHeaderProps {
   isConnected: boolean;
@@ -29,7 +21,6 @@ interface ControlHeaderProps {
 export const ControlHeader: React.FC<ControlHeaderProps> = ({
   isConnected,
   isStreaming,
-  engineMode,
   onStartStream,
   onStopStream,
   onRunBatch,
@@ -49,53 +40,50 @@ export const ControlHeader: React.FC<ControlHeaderProps> = ({
     }
   };
 
-  const isNative = engineMode.toLowerCase().includes('native') || engineMode.toLowerCase().includes('c++');
-
   return (
-    <header className="flex items-center justify-between px-4 py-2.5 bg-black border-b border-[#27272a] select-none flex-shrink-0 h-[48px]">
-      {/* Left: Brand logo & Engine Status Badges */}
-      <div className="flex items-center space-x-3">
-        <div className="flex items-center space-x-2">
-          <div
-            className={`w-2.5 h-2.5 rounded-full ${
-              isConnected ? 'bg-[#00FF66] animate-pulse' : 'bg-[#FF3366]'
-            }`}
-          />
-          <span className="text-[13px] font-semibold tracking-wider text-[#EDEDED] uppercase font-mono">
-            RECON-MESH
-          </span>
-          <span className="text-[10px] font-mono text-[#888888] bg-[#111111] border border-[#222222] px-1.5 py-0.5 rounded">
-            v2.1
-          </span>
+    <header className="h-[52px] bg-white border-b border-[#E5E7EB] flex items-center justify-between px-5 flex-shrink-0 select-none">
+
+      {/* Left: Brand */}
+      <div className="flex items-center gap-3">
+        {/* Razorpay-style wordmark */}
+        <div className="flex items-center gap-2">
+          {/* Simple brand mark */}
+          <div className="w-7 h-7 rounded-md bg-[#2D65F8] flex items-center justify-center flex-shrink-0">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 11L6 3h2l2 5h-3l-1 3H2z" fill="white" opacity="0.9"/>
+              <path d="M7 8l2-5h3l-2 8h-2L7 8z" fill="white"/>
+            </svg>
+          </div>
+          <div className="flex flex-col leading-none">
+            <span className="text-[13px] font-semibold text-[#111827] tracking-tight">
+              Recon-Mesh
+            </span>
+            <span className="text-[10px] text-[#9CA3AF] font-medium">
+              Financial Reconciliation Engine
+            </span>
+          </div>
         </div>
 
-        <div className="h-3.5 w-[1px] bg-[#222222]" />
+        {/* Divider */}
+        <div className="h-5 w-px bg-[#E5E7EB] mx-1" />
 
-        {/* Engine Mode Pill */}
-        <div
+        {/* Engine health indicator */}
+        <button
           onClick={onRefreshHealth}
-          className="cursor-pointer px-2 py-0.5 text-[11px] font-mono rounded bg-[#0A0A0A] hover:bg-[#121212] border border-[#222222] text-[#888888] hover:text-[#EDEDED] flex items-center space-x-1.5 transition-colors"
-          title="Click to refresh engine health check"
+          title="Refresh engine health"
+          className="flex items-center gap-1.5 text-[11px] text-[#6B7280] hover:text-[#111827] transition-colors"
         >
-          <Cpu className={`w-3.5 h-3.5 ${isNative ? 'text-[#00FF66]' : 'text-[#0C8CE9]'}`} />
-          <span>{isNative ? 'C++ NATIVE (SIMD)' : 'PYTHON NUMBA (JIT)'}</span>
-        </div>
-
-        {/* Zero-Egress Invariant Pill */}
-        <div className="hidden sm:flex items-center space-x-1 px-2 py-0.5 text-[11px] font-mono rounded bg-[#0A0A0A] border border-[#222222] text-[#888888]">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#00FF66]" />
-          <span>0-EGRESS EDGE INVARIANTS</span>
-        </div>
+          <div className="w-1.5 h-1.5 rounded-full bg-[#059669]" />
+          <span className="font-medium">Engine Live</span>
+        </button>
       </div>
 
-      {/* Right: Controls - Stream Toggle & Batch Runners */}
-      <div className="flex items-center space-x-3">
+      {/* Right: Actions */}
+      <div className="flex items-center gap-2">
 
-        {/* Batch Ingestion Runner Buttons */}
-        <div className="flex items-center bg-[#0D0D0D] border border-[#222222] rounded p-0.5">
-          <span className="text-[10px] font-mono text-[#888888] px-2 hidden md:inline">
-            RUN BENCHMARK:
-          </span>
+        {/* Batch runner */}
+        <div className="flex items-center gap-1 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-1">
+          <span className="text-[10px] text-[#9CA3AF] font-medium px-1.5 hidden md:block">Ingest</span>
           {[100, 500, 1000].map((count) => {
             const isLoading = isProcessingBatch && activeBatchSize === count;
             return (
@@ -103,55 +91,50 @@ export const ControlHeader: React.FC<ControlHeaderProps> = ({
                 key={count}
                 disabled={isProcessingBatch}
                 onClick={() => handleBatchClick(count)}
-                className={`px-2 py-1 text-[11px] font-mono rounded transition-colors flex items-center space-x-1 ${
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium transition-all duration-150 ${
                   isLoading
-                    ? 'bg-[#00FF66] text-[#000000] font-semibold'
-                    : 'text-[#888888] hover:text-[#EDEDED] hover:bg-[#1A1A1A]'
+                    ? 'bg-[#2D65F8] text-white shadow-sm'
+                    : 'text-[#374151] hover:bg-white hover:shadow-sm hover:text-[#2D65F8]'
                 }`}
               >
-                {isLoading ? (
-                  <RefreshCw className="w-3 h-3 animate-spin" />
-                ) : (
-                  <Zap className="w-3 h-3 text-[#FFB800]" />
-                )}
-                <span>{count}</span>
+                {isLoading
+                  ? <RefreshCw className="w-3 h-3 animate-spin" />
+                  : <Zap className="w-3 h-3 opacity-50" />
+                }
+                <span>{count.toLocaleString()}</span>
               </button>
             );
           })}
         </div>
 
-        {/* WebSocket Stream Toggle */}
+        {/* Stream toggle */}
         <button
           onClick={isStreaming ? onStopStream : onStartStream}
-          className={`px-3 py-1 text-[11px] font-mono rounded border flex items-center space-x-1.5 transition-colors font-semibold ${
+          className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-[12px] font-semibold transition-all duration-150 border ${
             isStreaming
-              ? 'bg-[rgba(255,51,102,0.1)] text-[#FF3366] border-[rgba(255,51,102,0.3)] hover:bg-[rgba(255,51,102,0.2)]'
-              : 'bg-[rgba(0,255,102,0.1)] text-[#00FF66] border-[rgba(0,255,102,0.3)] hover:bg-[rgba(0,255,102,0.2)]'
+              ? 'bg-[#FEF2F2] text-[#DC2626] border-[#FECACA] hover:bg-[#FEE2E2]'
+              : 'bg-[#2D65F8] text-white border-transparent hover:bg-[#2458DC] shadow-sm'
           }`}
         >
-          {isStreaming ? (
-            <>
-              <Square className="w-3 h-3 fill-current" />
-              <span>STOP STREAM</span>
-            </>
-          ) : (
-            <>
-              <Play className="w-3 h-3 fill-current" />
-              <span>START STREAM</span>
-            </>
-          )}
+          {isStreaming
+            ? <><Square className="w-3 h-3 fill-current" /><span>Stop</span></>
+            : <><Play className="w-3 h-3 fill-current" /><span>Start Stream</span></>
+          }
         </button>
 
-        {/* Connection Status Pill */}
+        {/* Connection pill */}
         <div
-          className={`px-2 py-1 text-[10px] font-mono rounded border flex items-center space-x-1 ${
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium border ${
             isConnected
-              ? 'bg-[rgba(0,255,102,0.05)] text-[#00FF66] border-[rgba(0,255,102,0.2)]'
-              : 'bg-[rgba(255,51,102,0.05)] text-[#FF3366] border-[rgba(255,51,102,0.2)]'
+              ? 'bg-[#ECFDF5] text-[#059669] border-[#A7F3D0]'
+              : 'bg-[#FEF2F2] text-[#DC2626] border-[#FECACA]'
           }`}
         >
-          <Activity className="w-3 h-3" />
-          <span>{isConnected ? 'LIVE WS' : 'OFFLINE'}</span>
+          {isConnected
+            ? <Wifi className="w-3.5 h-3.5" />
+            : <WifiOff className="w-3.5 h-3.5" />
+          }
+          <span>{isConnected ? 'Connected' : 'Offline'}</span>
         </div>
 
       </div>

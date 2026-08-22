@@ -1,17 +1,9 @@
 /**
- * RECON-MESH Step 12: Custom Transaction Node for React Flow
- * ==========================================================
- * Renders a dense, compact, AMOLED-dark financial transaction card inside React Flow.
- * Color-coded by MatchStatus: Green = MATCHED, Amber = SETTLED_PENDING_ERP, Red = DISCREPANCY.
- * Compatible with @xyflow/react v12 NodeProps API.
- *
- * FIX LOG (v2.2):
- *  - Enforced min-w-[280px] to prevent text overlap on MDR/GST/UTR/amount fields.
- *  - Added gap-2 vertical rhythm between financial rows.
- *  - Increased font contrast: MDR/GST/UTR upgraded from text-[#4E4E4E] to text-[#888888].
- *  - Padded card to p-3 (was p-2) for better breathing room.
- *  - Status badge wrapping: status text uses truncate + max-w to avoid overlap.
- *  - Gross amount font size lifted to text-[15px] for readability.
+ * RECON-MESH: Custom Transaction Node
+ * =====================================
+ * Clean, professional node card for React Flow.
+ * White surface, subtle colored left-border by status, readable typography.
+ * No neon — uses muted semantic colors (emerald / amber / rose).
  */
 
 import React from 'react';
@@ -34,143 +26,130 @@ export interface TransactionNodeData extends Record<string, unknown> {
   onSelect?: (id: string) => void;
 }
 
-const STATUS_CONFIG: Record<MatchStatus, { border: string; text: string; badge: string; dot: string; glow: string }> = {
+interface StatusStyle {
+  accent: string;   // left border color
+  badge: string;    // badge classes
+  label: string;    // display label
+  amount: string;   // amount text color
+}
+
+const STATUS_STYLES: Record<MatchStatus, StatusStyle> = {
   MATCHED: {
-    border: 'border-[rgba(0,255,102,0.4)]',
-    text: 'text-[#00FF66]',
-    badge: 'bg-[rgba(0,255,102,0.1)] text-[#00FF66] border-[rgba(0,255,102,0.3)]',
-    dot: 'bg-[#00FF66]',
-    glow: 'shadow-[0_0_8px_rgba(0,255,102,0.12)]',
+    accent: 'border-l-[#059669]',
+    badge: 'bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0]',
+    label: 'Matched',
+    amount: 'text-[#059669]',
   },
   SETTLED_PENDING_ERP: {
-    border: 'border-[rgba(255,184,0,0.4)]',
-    text: 'text-[#FFB800]',
-    badge: 'bg-[rgba(255,184,0,0.1)] text-[#FFB800] border-[rgba(255,184,0,0.3)]',
-    dot: 'bg-[#FFB800]',
-    glow: 'shadow-[0_0_8px_rgba(255,184,0,0.12)]',
+    accent: 'border-l-[#D97706]',
+    badge: 'bg-[#FFFBEB] text-[#D97706] border border-[#FDE68A]',
+    label: 'Pending ERP',
+    amount: 'text-[#D97706]',
   },
   DISCREPANCY: {
-    border: 'border-[rgba(255,51,102,0.4)]',
-    text: 'text-[#FF3366]',
-    badge: 'bg-[rgba(255,51,102,0.1)] text-[#FF3366] border-[rgba(255,51,102,0.3)]',
-    dot: 'bg-[#FF3366]',
-    glow: 'shadow-[0_0_8px_rgba(255,51,102,0.12)]',
+    accent: 'border-l-[#DC2626]',
+    badge: 'bg-[#FEF2F2] text-[#DC2626] border border-[#FECACA]',
+    label: 'Discrepancy',
+    amount: 'text-[#DC2626]',
   },
   PENDING: {
-    border: 'border-[#252525]',
-    text: 'text-[#888888]',
-    badge: 'bg-[#111111] text-[#888888] border-[#252525]',
-    dot: 'bg-[#888888]',
-    glow: '',
+    accent: 'border-l-[#D1D5DB]',
+    badge: 'bg-[#F9FAFB] text-[#6B7280] border border-[#E5E7EB]',
+    label: 'Pending',
+    amount: 'text-[#6B7280]',
   },
   ORPHAN: {
-    border: 'border-[rgba(255,51,102,0.25)]',
-    text: 'text-[#FF3366]',
-    badge: 'bg-[rgba(255,51,102,0.06)] text-[#FF3366] border-[rgba(255,51,102,0.18)]',
-    dot: 'bg-[#FF3366] opacity-50',
-    glow: '',
+    accent: 'border-l-[#EF4444]',
+    badge: 'bg-[#FEF2F2] text-[#EF4444] border border-[#FECACA]',
+    label: 'Orphan',
+    amount: 'text-[#EF4444]',
   },
 };
 
-const SOURCE_LABEL: Record<SourceType, string> = {
-  RAZORPAY: 'RZP',
-  BANK: 'BANK',
-  ERP: 'ERP',
+const SOURCE_CONFIG: Record<SourceType, { label: string; color: string }> = {
+  RAZORPAY: { label: 'Razorpay', color: 'text-[#2D65F8]' },
+  BANK:     { label: 'Bank',     color: 'text-[#374151]' },
+  ERP:      { label: 'ERP/GL',   color: 'text-[#374151]' },
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const CustomTransactionNode: React.FC<any> = ({ data }: { data: TransactionNodeData }) => {
   const d = data as TransactionNodeData;
-  const cfg = STATUS_CONFIG[d.status] ?? STATUS_CONFIG.PENDING;
+  const style = STATUS_STYLES[d.status] ?? STATUS_STYLES.PENDING;
+  const src   = SOURCE_CONFIG[d.source];
 
-  const grossInr = (d.amount_gross_paise / 100).toLocaleString('en-IN', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-  const netInr = (d.amount_net_paise / 100).toLocaleString('en-IN', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-  const mdrInr = (d.fee_mdr_paise / 100).toFixed(2);
-  const gstInr = (d.fee_gst_paise / 100).toFixed(2);
-
-  const handleClick = () => {
-    if (d.onSelect) d.onSelect(d.txnId);
-  };
+  const fmtInr = (paise: number) =>
+    (paise / 100).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   return (
     <div
-      onClick={handleClick}
-      className={`bg-[#080808] border ${cfg.border} ${cfg.glow} rounded p-3 min-w-[280px] w-[280px] cursor-pointer hover:bg-[#0E0E0E] transition-all duration-150 select-none flex flex-col gap-2`}
+      onClick={() => d.onSelect?.(d.txnId)}
+      className={`
+        bg-white border border-[#E5E7EB] border-l-[3px] ${style.accent}
+        rounded-lg shadow-card
+        min-w-[240px] w-[240px]
+        cursor-pointer select-none
+        hover:shadow-panel hover:-translate-y-px
+        transition-all duration-150
+        flex flex-col gap-2 p-3
+      `}
     >
-      {/* Row 1: Source badge + Status indicator */}
+      {/* Row 1: Source label + status badge */}
       <div className="flex items-center justify-between gap-2">
-        <span
-          className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded border tracking-wider flex-shrink-0 ${cfg.badge}`}
-        >
-          {SOURCE_LABEL[d.source]}
+        <span className={`text-[11px] font-semibold ${src.color}`}>
+          {src.label}
         </span>
-        <div className="flex items-center gap-1 min-w-0 overflow-hidden">
-          <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${cfg.dot}`} />
-          <span className={`text-[8px] font-mono font-semibold truncate ${cfg.text}`}>
-            {d.status}
-          </span>
-        </div>
+        <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-md ${style.badge}`}>
+          {style.label}
+        </span>
       </div>
 
-      {/* Row 2: Transaction ID (full display, monospace) */}
+      {/* Row 2: Transaction ID */}
       <p
-        className="text-[9px] font-mono text-[#AAAAAA] font-medium truncate leading-tight"
+        className="text-[11px] font-mono text-[#374151] truncate leading-none"
         title={d.original_id}
       >
         {d.original_id}
       </p>
 
-      {/* Row 3: Gross Amount — primary financial figure */}
-      <p className={`text-[15px] font-mono font-bold tabular-nums leading-none ${cfg.text}`}>
-        ₹{grossInr}
+      {/* Row 3: Gross Amount */}
+      <p className={`text-[17px] font-bold tabular-nums leading-none ${style.amount}`}>
+        ₹{fmtInr(d.amount_gross_paise)}
       </p>
 
-      {/* Row 4: Per-source financial detail rows */}
+      {/* Row 4: Source-specific detail */}
       {d.source === 'RAZORPAY' && (
-        <div className="grid grid-cols-2 gap-1 pt-1 border-t border-[#1A1A1A]">
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[8px] font-mono text-[#555555] uppercase tracking-wider">MDR</span>
-            <span className="text-[10px] font-mono text-[#888888] tabular-nums">₹{mdrInr}</span>
+        <div className="grid grid-cols-2 gap-1.5 pt-2 border-t border-[#F3F4F6]">
+          <div>
+            <p className="text-[9px] text-[#9CA3AF] uppercase tracking-wide font-medium">MDR</p>
+            <p className="text-[11px] font-mono text-[#374151]">₹{fmtInr(d.fee_mdr_paise)}</p>
           </div>
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[8px] font-mono text-[#555555] uppercase tracking-wider">GST</span>
-            <span className="text-[10px] font-mono text-[#888888] tabular-nums">₹{gstInr}</span>
+          <div>
+            <p className="text-[9px] text-[#9CA3AF] uppercase tracking-wide font-medium">GST</p>
+            <p className="text-[11px] font-mono text-[#374151]">₹{fmtInr(d.fee_gst_paise)}</p>
           </div>
         </div>
       )}
 
       {d.source === 'BANK' && (
-        <div className="pt-1 border-t border-[#1A1A1A]">
-          <div className="flex items-center justify-between gap-1">
-            <span className="text-[8px] font-mono text-[#555555] uppercase tracking-wider flex-shrink-0">NET CREDIT</span>
-            <span className="text-[10px] font-mono text-[#00FF66] tabular-nums">₹{netInr}</span>
-          </div>
+        <div className="pt-2 border-t border-[#F3F4F6]">
+          <p className="text-[9px] text-[#9CA3AF] uppercase tracking-wide font-medium">Net Credit</p>
+          <p className="text-[11px] font-mono text-[#374151]">₹{fmtInr(d.amount_net_paise)}</p>
         </div>
       )}
 
       {d.source === 'ERP' && (
-        <div className="pt-1 border-t border-[#1A1A1A]">
-          <div className="flex items-center justify-between gap-1">
-            <span className="text-[8px] font-mono text-[#555555] uppercase tracking-wider flex-shrink-0">GL AMOUNT</span>
-            <span className="text-[10px] font-mono text-[#FFB800] tabular-nums">₹{grossInr}</span>
-          </div>
+        <div className="pt-2 border-t border-[#F3F4F6]">
+          <p className="text-[9px] text-[#9CA3AF] uppercase tracking-wide font-medium">GL Amount</p>
+          <p className="text-[11px] font-mono text-[#374151]">₹{fmtInr(d.amount_gross_paise)}</p>
         </div>
       )}
 
-      {/* Row 5: UTR reference (if present) */}
+      {/* UTR reference */}
       {d.utr && (
-        <div className="flex items-center gap-1 overflow-hidden">
-          <span className="text-[8px] font-mono text-[#444444] uppercase tracking-wider flex-shrink-0">UTR</span>
-          <span
-            className="text-[9px] font-mono text-[#666666] truncate"
-            title={d.utr}
-          >
+        <div className="flex items-center gap-1.5 overflow-hidden">
+          <span className="text-[9px] text-[#9CA3AF] uppercase tracking-wide font-medium flex-shrink-0">UTR</span>
+          <span className="text-[10px] font-mono text-[#6B7280] truncate" title={d.utr}>
             {d.utr}
           </span>
         </div>
@@ -179,12 +158,12 @@ export const CustomTransactionNode: React.FC<any> = ({ data }: { data: Transacti
       <Handle
         type="source"
         position={Position.Right}
-        className="!w-2 !h-2 !bg-[#1A1A1A] !border !border-[#333333] !rounded-full"
+        className="!w-2.5 !h-2.5 !bg-white !border !border-[#D1D5DB] !rounded-full"
       />
       <Handle
         type="target"
         position={Position.Left}
-        className="!w-2 !h-2 !bg-[#1A1A1A] !border !border-[#333333] !rounded-full"
+        className="!w-2.5 !h-2.5 !bg-white !border !border-[#D1D5DB] !rounded-full"
       />
     </div>
   );

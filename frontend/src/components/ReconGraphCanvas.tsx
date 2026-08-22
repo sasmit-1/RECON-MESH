@@ -31,10 +31,10 @@ const NODE_TYPES: NodeTypes = {
   transaction: CustomTransactionNode as NodeTypes[string],
 };
 
-// Fixed column X positions (in React Flow coordinate space)
-// Node width is 280px; columns spaced at 360px intervals = 80px gutters
-const COL_X = { RAZORPAY: 0, BANK: 360, ERP: 720 };
-const ROW_HEIGHT = 160;
+// Fixed column X positions (React Flow coordinate space)
+// Node width 240px; 320px column intervals = 80px gutters
+const COL_X = { RAZORPAY: 0, BANK: 320, ERP: 640 };
+const ROW_HEIGHT = 140;
 
 interface ReconGraphCanvasProps {
   clusters: ReconciliationCluster[];
@@ -51,28 +51,25 @@ const FlowInner: React.FC<{
   const viewport = useViewport();
 
   return (
-    <div className="relative w-full h-full bg-[#000000] overflow-hidden">
-      {/* Layer 0: WebGL Laser Arc Overlay — behind React Flow */}
+    <div className="relative w-full h-full bg-[#F4F6FA] overflow-hidden">
+      {/* Layer 0: WebGL Laser Arc Overlay */}
       <ThreeLaserArcOverlay lasers={lasers} viewport={viewport} />
 
-      {/* Layer 1: Interactive 2D React Flow Canvas */}
+      {/* Layer 1: React Flow Canvas */}
       <ReactFlow
         nodes={nodes}
         edges={edges}
         nodeTypes={NODE_TYPES}
         onNodeClick={(_, node) => onNodeSelect(node.id)}
         fitView
-        fitViewOptions={{ padding: 0.2 }}
+        fitViewOptions={{ padding: 0.25 }}
         minZoom={0.15}
         maxZoom={2.5}
         className="z-10"
         proOptions={{ hideAttribution: true }}
       >
-        <Background color="#111111" gap={24} size={1} />
-        <Controls
-          className="!bg-[#080808] !border !border-[#181818] [&>button]:!bg-[#080808] [&>button]:!border-b-[#181818] [&>button]:!fill-[#888888] [&>button]:hover:!bg-[#141414]"
-          showInteractive={false}
-        />
+        <Background color="#E5E7EB" gap={24} size={1} />
+        <Controls showInteractive={false} />
       </ReactFlow>
     </div>
   );
@@ -87,7 +84,8 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
     clusters.forEach((cluster, clusterIdx) => {
       const baseY = clusterIdx * ROW_HEIGHT * 1.2;
       const matchStatus = cluster.discrepancy_paise === 0 ? 'MATCHED' : 'DISCREPANCY';
-      const laserColor = cluster.discrepancy_paise === 0 ? '#00FF66' : '#FF3366';
+      // Muted professional edge colors — no neon
+      const laserColor = cluster.discrepancy_paise === 0 ? '#059669' : '#DC2626';
 
       // Razorpay nodes
       cluster.razorpay_txns.forEach((txn, i) => {
@@ -123,11 +121,11 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
             source: nodeId,
             target: bankNodeId,
             animated: matchStatus === 'DISCREPANCY',
-            style: { stroke: laserColor, strokeWidth: 1, opacity: 0.35 },
+            style: { stroke: laserColor, strokeWidth: 1.5, opacity: 0.5 },
           });
           lasers.push({
             id: edgeId,
-            sourceX: COL_X.RAZORPAY + 280,
+            sourceX: COL_X.RAZORPAY + 240,
             sourceY: y + 50,
             targetX: COL_X.BANK,
             targetY: baseY + 50,
@@ -163,7 +161,7 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
 
         // Bank → ERP edges + laser arcs
         const bankLaserColor =
-          cluster.status === 'SETTLED_PENDING_ERP' ? '#FFB800' : laserColor;
+          cluster.status === 'SETTLED_PENDING_ERP' ? '#D97706' : laserColor;
         cluster.erp_txns.forEach((erp) => {
           const erpNodeId = `erp-${erp.id}`;
           const edgeId2 = `e-${nodeId}-${erpNodeId}`;
@@ -172,11 +170,11 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
             source: nodeId,
             target: erpNodeId,
             animated: cluster.status === 'SETTLED_PENDING_ERP',
-            style: { stroke: bankLaserColor, strokeWidth: 1, opacity: 0.35 },
+            style: { stroke: bankLaserColor, strokeWidth: 1.5, opacity: 0.5 },
           });
           lasers.push({
             id: edgeId2 + '-laser',
-            sourceX: COL_X.BANK + 280,
+            sourceX: COL_X.BANK + 240,
             sourceY: y + 50,
             targetX: COL_X.ERP,
             targetY: baseY + 50,

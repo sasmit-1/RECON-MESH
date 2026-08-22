@@ -1,20 +1,12 @@
 /**
- * RECON-MESH Step 11: HUD Metrics Bar
- * ====================================
- * High-density AMOLED telemetry cards displaying Precision, Recall, Processed Txns,
- * Discrepancy Variance, Engine Latency, and Cryptographic SHA-256 Merkle Root.
+ * RECON-MESH: HUD Metrics Bar
+ * ============================
+ * Clean metric cards showing key reconciliation KPIs.
+ * Razorpay-style: white cards, subtle shadows, brand blue accents.
  */
 
 import React, { useState } from 'react';
-import {
-  Check,
-  CheckCircle2,
-  Clock,
-  Copy,
-  Database,
-  ShieldCheck,
-  Zap,
-} from 'lucide-react';
+import { Check, Copy, TrendingUp, Database, AlertTriangle, Clock, Shield } from 'lucide-react';
 import type { ReconMetrics } from '../types/recon';
 
 interface HUDMetricsBarProps {
@@ -25,143 +17,119 @@ interface HUDMetricsBarProps {
 export const HUDMetricsBar: React.FC<HUDMetricsBarProps> = ({ metrics, merkleRoot }) => {
   const [copied, setCopied] = useState<boolean>(false);
 
-  const displayMerkle = merkleRoot || metrics.merkleRoot || 'SHA-256 INITIALIZED';
+  const displayMerkle = merkleRoot || metrics.merkleRoot || '';
 
   const handleCopyMerkle = () => {
+    if (!displayMerkle) return;
     navigator.clipboard.writeText(displayMerkle);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const discrepancyInr = (metrics.discrepancyPaise / 100).toFixed(2);
-  const latencyStr = metrics.latencyMs > 0 ? `${metrics.latencyMs.toFixed(1)} ms` : '< 1.0 ms';
+  const latencyStr = metrics.latencyMs > 0 ? `${metrics.latencyMs.toFixed(1)} ms` : '—';
+  const hasDiscrepancy = metrics.discrepancyPaise !== 0;
 
   return (
-    <section className="bg-[#09090b] border-b border-[#27272a] p-3 select-none flex-shrink-0">
+    <div className="bg-white border-b border-[#E5E7EB] px-5 py-3 flex-shrink-0">
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
 
         {/* Card 1: Precision & Recall */}
-        <div className="bg-[#080808] border border-[#181818] hover:border-[#2A2A2A] transition-colors rounded p-2.5 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[11px] font-mono text-[#888888] mb-1">
-            <span className="flex items-center space-x-1">
-              <CheckCircle2 className="w-3 h-3 text-[#00FF66]" />
-              <span>PRECISION / RECALL</span>
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-1.5 text-[11px] text-[#9CA3AF] font-medium">
+            <TrendingUp className="w-3.5 h-3.5" />
+            <span>Match Accuracy</span>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <span className="text-[22px] font-bold text-[#111827] leading-none">
+              {metrics.precision.toFixed(1)}%
             </span>
-            <span className="text-[#00FF66] font-semibold">100% AUDITED</span>
+            <span className="text-[12px] text-[#9CA3AF]">
+              / {metrics.recall.toFixed(1)}%
+            </span>
           </div>
-          <div className="flex items-baseline justify-between font-mono">
-            <div className="flex flex-col">
-              <span className="text-[10px] text-[#4E4E4E]">PRECISION</span>
-              <span className="text-[18px] font-semibold text-[#00FF66] tabular-nums">
-                {metrics.precision.toFixed(1)}%
-              </span>
-            </div>
-            <div className="h-6 w-[1px] bg-[#181818]" />
-            <div className="flex flex-col items-end">
-              <span className="text-[10px] text-[#4E4E4E]">RECALL</span>
-              <span className="text-[18px] font-semibold text-[#00FF66] tabular-nums">
-                {metrics.recall.toFixed(1)}%
-              </span>
-            </div>
-          </div>
+          <span className="text-[10px] text-[#9CA3AF]">Precision / Recall</span>
         </div>
 
-        {/* Card 2: Total Processed Transactions */}
-        <div className="bg-[#080808] border border-[#181818] hover:border-[#2A2A2A] transition-colors rounded p-2.5 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[11px] font-mono text-[#888888] mb-1">
-            <span className="flex items-center space-x-1">
-              <Database className="w-3 h-3 text-[#0C8CE9]" />
-              <span>PROCESSED TELEMETRY</span>
-            </span>
-            <span className="text-[10px] text-[#4E4E4E] font-mono">3-WAY MATCH</span>
+        {/* Separator */}
+        <div className="hidden md:block absolute" />
+
+        {/* Card 2: Processed */}
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-1.5 text-[11px] text-[#9CA3AF] font-medium">
+            <Database className="w-3.5 h-3.5" />
+            <span>Processed</span>
           </div>
-          <div className="flex items-baseline justify-between font-mono">
-            <span className="text-[20px] font-semibold text-[#EDEDED] tabular-nums">
-              {metrics.totalProcessed > 0 ? metrics.totalProcessed.toLocaleString() : '100'}
-            </span>
-            <span className="text-[11px] text-[#888888]">
-              {metrics.resolvedClusters > 0 ? `${metrics.resolvedClusters} CLUSTERS` : 'BATCH ACTIVE'}
+          <div className="flex items-baseline gap-2">
+            <span className="text-[22px] font-bold text-[#111827] leading-none">
+              {metrics.totalProcessed > 0 ? metrics.totalProcessed.toLocaleString() : '—'}
             </span>
           </div>
+          <span className="text-[10px] text-[#9CA3AF]">
+            {metrics.resolvedClusters > 0 ? `${metrics.resolvedClusters} clusters resolved` : 'No batch yet'}
+          </span>
         </div>
 
-        {/* Card 3: Discrepancy Variance */}
-        <div className="bg-[#080808] border border-[#181818] hover:border-[#2A2A2A] transition-colors rounded p-2.5 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[11px] font-mono text-[#888888] mb-1">
-            <span className="flex items-center space-x-1">
-              <Zap className="w-3 h-3 text-[#FFB800]" />
-              <span>VARIANCE DELTA</span>
-            </span>
-            <span
-              className={`text-[10px] font-mono rounded px-1 py-0.2 ${
-                metrics.discrepancyPaise === 0
-                  ? 'bg-[rgba(0,255,102,0.1)] text-[#00FF66] border border-[rgba(0,255,102,0.2)]'
-                  : 'bg-[rgba(255,51,102,0.1)] text-[#FF3366] border border-[rgba(255,51,102,0.2)]'
-              }`}
-            >
-              {metrics.discrepancyPaise === 0 ? 'ZERO VARIANCE' : 'DISCREPANCY'}
-            </span>
+        {/* Card 3: Variance */}
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-1.5 text-[11px] text-[#9CA3AF] font-medium">
+            <AlertTriangle className="w-3.5 h-3.5" />
+            <span>Variance Delta</span>
           </div>
-          <div className="flex items-baseline justify-between font-mono">
-            <span className="text-[20px] font-semibold text-[#EDEDED] tabular-nums">
+          <div className="flex items-baseline gap-2">
+            <span className={`text-[22px] font-bold leading-none ${hasDiscrepancy ? 'text-[#DC2626]' : 'text-[#059669]'}`}>
               ₹{discrepancyInr}
             </span>
-            <span className="text-[11px] text-[#4E4E4E]">({metrics.discrepancyPaise} paise)</span>
           </div>
+          <span className={`text-[10px] font-medium ${hasDiscrepancy ? 'text-[#DC2626]' : 'text-[#059669]'}`}>
+            {hasDiscrepancy ? 'Discrepancy detected' : 'Zero variance'}
+          </span>
         </div>
 
-        {/* Card 4: Engine Latency */}
-        <div className="bg-[#080808] border border-[#181818] hover:border-[#2A2A2A] transition-colors rounded p-2.5 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[11px] font-mono text-[#888888] mb-1">
-            <span className="flex items-center space-x-1">
-              <Clock className="w-3 h-3 text-[#00FF66]" />
-              <span>ENGINE LATENCY</span>
-            </span>
-            <span className="text-[10px] text-[#00FF66] font-mono">SUB-50ms TARGET</span>
+        {/* Card 4: Latency */}
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-1.5 text-[11px] text-[#9CA3AF] font-medium">
+            <Clock className="w-3.5 h-3.5" />
+            <span>Latency</span>
           </div>
-          <div className="flex items-baseline justify-between font-mono">
-            <span className="text-[20px] font-semibold text-[#00FF66] tabular-nums">
+          <div className="flex items-baseline gap-2">
+            <span className="text-[22px] font-bold text-[#111827] leading-none">
               {latencyStr}
             </span>
-            <span className="text-[11px] text-[#888888]">
-              {metrics.throughput > 0 ? `${metrics.throughput} TX/SEC` : 'HIGH-SPEED'}
-            </span>
           </div>
+          <span className="text-[10px] text-[#9CA3AF]">
+            {metrics.throughput > 0 ? `${metrics.throughput.toLocaleString()} tx/sec` : 'Pipeline idle'}
+          </span>
         </div>
 
-        {/* Card 5: Cryptographic Merkle Root */}
-        <div className="bg-[#080808] border border-[#181818] hover:border-[#2A2A2A] transition-colors rounded p-2.5 flex flex-col justify-between md:col-span-1">
-          <div className="flex items-center justify-between text-[11px] font-mono text-[#888888] mb-1">
-            <span className="flex items-center space-x-1">
-              <ShieldCheck className="w-3 h-3 text-[#00FF66]" />
-              <span>CRYPTOGRAPHIC MERKLE ROOT</span>
-            </span>
-            <button
-              onClick={handleCopyMerkle}
-              className="flex items-center space-x-1 text-[10px] font-mono text-[#888888] hover:text-[#EDEDED] bg-[#111111] hover:bg-[#1C1C1C] border border-[#222222] px-1.5 py-0.5 rounded transition-colors"
-              title="Copy Merkle Root SHA-256"
-            >
-              {copied ? (
-                <>
-                  <Check className="w-3 h-3 text-[#00FF66]" />
-                  <span className="text-[#00FF66]">COPIED</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3 h-3 text-[#888888]" />
-                  <span>COPY HASH</span>
-                </>
-              )}
-            </button>
+        {/* Card 5: Merkle hash */}
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5 text-[11px] text-[#9CA3AF] font-medium">
+              <Shield className="w-3.5 h-3.5" />
+              <span>Merkle Root</span>
+            </div>
+            {displayMerkle && (
+              <button
+                onClick={handleCopyMerkle}
+                className="flex items-center gap-1 text-[10px] text-[#9CA3AF] hover:text-[#2D65F8] transition-colors"
+                title="Copy hash"
+              >
+                {copied
+                  ? <><Check className="w-3 h-3 text-[#059669]" /><span className="text-[#059669]">Copied</span></>
+                  : <><Copy className="w-3 h-3" /><span>Copy</span></>
+                }
+              </button>
+            )}
           </div>
-          <div className="flex items-center justify-between font-mono mt-1">
-            <span className="text-[13px] font-mono text-[#00FF66] tracking-wider truncate bg-[#000000] border border-[#181818] px-2 py-1 rounded w-full">
-              {displayMerkle}
+          <div className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-md px-2 py-1 mt-0.5">
+            <span className="text-[10px] font-mono text-[#374151] truncate block">
+              {displayMerkle ? displayMerkle.slice(0, 32) + '…' : 'Awaiting batch…'}
             </span>
           </div>
         </div>
 
       </div>
-    </section>
+    </div>
   );
 };

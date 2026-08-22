@@ -1,18 +1,12 @@
 /**
- * RECON-MESH Step 12: Live Audit Terminal
- * ========================================
- * AMOLED monospace terminal window streaming real-time verification logs,
- * AST math evaluations, invariant check results, and WebSocket telemetry.
- * Auto-scrolls to latest entry; supports collapsible drawer.
+ * RECON-MESH: Live Audit Terminal
+ * ================================
+ * Clean log stream panel — light gray background, JetBrains Mono,
+ * muted color-coded level tags. Collapsible bottom dock.
  */
 
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  ChevronDown,
-  ChevronUp,
-  Terminal,
-  Trash2,
-} from 'lucide-react';
+import { ChevronDown, ChevronUp, Terminal, Trash2 } from 'lucide-react';
 import type { ReconciliationCluster } from '../types/recon';
 
 interface LiveAuditTerminalProps {
@@ -29,15 +23,16 @@ interface LogEntry {
   message: string;
 }
 
-const LEVEL_COLORS: Record<LogEntry['level'], string> = {
-  SYS: 'text-[#0C8CE9]',
-  MATCH: 'text-[#00FF66]',
-  INVAR: 'text-[#FFB800]',
-  MERKLE: 'text-[#888888]',
-  AST: 'text-[#EDEDED]',
-  WS: 'text-[#888888]',
-  ERR: 'text-[#FF3366]',
-  OK: 'text-[#00FF66]',
+// Clean muted palette — no neon
+const LEVEL_STYLES: Record<LogEntry['level'], { tag: string; text: string }> = {
+  SYS:    { tag: 'bg-[#EEF3FF] text-[#2D65F8]',    text: 'text-[#374151]' },
+  MATCH:  { tag: 'bg-[#ECFDF5] text-[#059669]',    text: 'text-[#374151]' },
+  INVAR:  { tag: 'bg-[#FFFBEB] text-[#D97706]',    text: 'text-[#374151]' },
+  MERKLE: { tag: 'bg-[#F3F4F6] text-[#6B7280]',    text: 'text-[#6B7280]' },
+  AST:    { tag: 'bg-[#F3F4F6] text-[#374151]',    text: 'text-[#374151]' },
+  WS:     { tag: 'bg-[#F3F4F6] text-[#6B7280]',    text: 'text-[#6B7280]' },
+  ERR:    { tag: 'bg-[#FEF2F2] text-[#DC2626]',    text: 'text-[#DC2626]' },
+  OK:     { tag: 'bg-[#ECFDF5] text-[#059669]',    text: 'text-[#059669]' },
 };
 
 function now(): string {
@@ -57,30 +52,30 @@ export const LiveAuditTerminal: React.FC<LiveAuditTerminalProps> = ({
 }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [logs, setLogs] = useState<LogEntry[]>([
-    makeLog('SYS', 'RECON-MESH Engine v2.1.0 initialized.'),
-    makeLog('INVAR', 'Double-Entry Zero-Sum Gatekeeper → ACTIVE.'),
-    makeLog('MERKLE', 'SHA-256 Binary Merkle Ledger → READY.'),
-    makeLog('SYS', 'Awaiting batch reconciliation trigger...'),
+    makeLog('SYS',   'RECON-MESH Engine v2.1.0 initialized.'),
+    makeLog('INVAR', 'Double-entry zero-sum gatekeeper → active.'),
+    makeLog('MERKLE','SHA-256 binary Merkle ledger → ready.'),
+    makeLog('SYS',   'Awaiting reconciliation batch…'),
   ]);
   const scrollRef = useRef<HTMLDivElement>(null);
   const prevClusterCount = useRef<number>(0);
 
-  // Append logs when new clusters arrive
+  // Append logs on new batch
   useEffect(() => {
     const newCount = clusters.length;
     if (newCount === 0 || newCount === prevClusterCount.current) return;
 
-    const newLogs: LogEntry[] = [];
-
-    newLogs.push(makeLog('MATCH', `Stage 1 Heuristic Pruner resolved ${newCount} clusters.`));
-    newLogs.push(makeLog('INVAR', `Validating double-entry invariants for ${newCount} vouchers...`));
-    newLogs.push(makeLog('OK', `All invariants PASSED. Zero-sum delta = ₹0.00.`));
-    newLogs.push(makeLog('MERKLE', `Merkle root updated: ${merkleRoot.slice(0, 20)}...`));
+    const newLogs: LogEntry[] = [
+      makeLog('MATCH',  `Stage-1 heuristic pruner resolved ${newCount} clusters.`),
+      makeLog('INVAR',  `Validating double-entry invariants for ${newCount} vouchers…`),
+      makeLog('OK',     `All invariants passed. Zero-sum delta = ₹0.00.`),
+      makeLog('MERKLE', `Merkle root: ${merkleRoot.slice(0, 16)}…`),
+    ];
 
     clusters.slice(0, 5).forEach((cl) => {
-      const netInr = (cl.sum_net_expected_paise / 100).toFixed(2);
+      const net = (cl.sum_net_expected_paise / 100).toFixed(2);
       newLogs.push(
-        makeLog('AST', `[${cl.cluster_id}] NET_SETTLEMENT(${netInr}) = GROSS - MDR - GST → ${cl.status}`)
+        makeLog('AST', `[${cl.cluster_id}] NET_SETTLEMENT(${net}) = GROSS − MDR − GST → ${cl.status}`)
       );
     });
 
@@ -92,68 +87,72 @@ export const LiveAuditTerminal: React.FC<LiveAuditTerminalProps> = ({
     prevClusterCount.current = newCount;
   }, [clusters, merkleRoot, latencyMs]);
 
-  // WebSocket connection state logs
+  // WS state logs
   useEffect(() => {
     setLogs((prev) => [
       ...prev,
-      makeLog('WS', isConnected ? 'WebSocket CONNECTED → ws://localhost:8000/ws/recon-stream' : 'WebSocket DISCONNECTED.'),
+      makeLog('WS', isConnected
+        ? 'WebSocket connected → ws://localhost:8000/ws/recon-stream'
+        : 'WebSocket disconnected.'),
     ]);
   }, [isConnected]);
 
-  // Auto-scroll to bottom
+  // Auto-scroll
   useEffect(() => {
     if (scrollRef.current && !collapsed) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [logs, collapsed]);
 
-  const handleClear = () => {
-    setLogs([makeLog('SYS', 'Terminal cleared by operator.')]);
-  };
-
   return (
     <div
-      className={`border-t border-[#27272a] bg-[#050505] flex flex-col flex-shrink-0 transition-all duration-200 ${
-        collapsed ? 'h-[32px]' : 'h-40'
+      className={`border-t border-[#E5E7EB] bg-[#FAFAFA] flex flex-col flex-shrink-0 transition-all duration-200 ${
+        collapsed ? 'h-[36px]' : 'h-[160px]'
       }`}
     >
-      {/* Terminal Header */}
-      <div className="h-[32px] bg-[#080808] border-b border-[#181818] px-3 flex items-center justify-between flex-shrink-0 cursor-pointer select-none">
-        <div className="flex items-center space-x-2" onClick={() => setCollapsed((p) => !p)}>
-          <Terminal className="w-3.5 h-3.5 text-[#FFB800]" />
-          <span className="text-[11px] font-mono font-semibold text-[#EDEDED]">AUDIT TERMINAL</span>
-          <div className={`w-1.5 h-1.5 rounded-full ${isConnected ? 'bg-[#00FF66] animate-pulse' : 'bg-[#FF3366]'}`} />
-          <span className="text-[10px] font-mono text-[#4E4E4E]">{logs.length} entries</span>
+      {/* Terminal header */}
+      <div
+        className="h-[36px] bg-white border-b border-[#E5E7EB] px-4 flex items-center justify-between flex-shrink-0 cursor-pointer select-none"
+        onClick={() => setCollapsed((p) => !p)}
+      >
+        <div className="flex items-center gap-2">
+          <Terminal className="w-3.5 h-3.5 text-[#6B7280]" />
+          <span className="text-[11px] font-semibold text-[#374151]">Audit Log</span>
+          <div className={`w-1.5 h-1.5 rounded-full ${isConnected ? 'bg-[#059669]' : 'bg-[#DC2626]'}`} />
+          <span className="text-[10px] text-[#9CA3AF]">{logs.length} entries</span>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <button
-            onClick={(e) => { e.stopPropagation(); handleClear(); }}
-            className="text-[#4E4E4E] hover:text-[#888888] transition-colors"
-            title="Clear terminal"
+            onClick={(e) => { e.stopPropagation(); setLogs([makeLog('SYS', 'Log cleared.')]); }}
+            className="text-[#D1D5DB] hover:text-[#6B7280] transition-colors"
+            title="Clear log"
           >
             <Trash2 className="w-3 h-3" />
           </button>
-          <button
-            onClick={() => setCollapsed((p) => !p)}
-            className="text-[#888888] hover:text-[#EDEDED] transition-colors"
-          >
+          <button className="text-[#9CA3AF] hover:text-[#374151] transition-colors">
             {collapsed ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
           </button>
         </div>
       </div>
 
-      {/* Log Scroll Area */}
+      {/* Log body */}
       {!collapsed && (
-        <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 space-y-0.5 font-mono text-xs bg-[#050505]">
-          {logs.map((log) => (
-            <div key={log.id} className="flex items-start space-x-2 leading-relaxed">
-              <span className="text-[#333333] flex-shrink-0">{log.timestamp}</span>
-              <span className={`font-semibold flex-shrink-0 w-[40px] text-right ${LEVEL_COLORS[log.level]}`}>
-                [{log.level}]
-              </span>
-              <span className="text-[#888888] break-all">{log.message}</span>
-            </div>
-          ))}
+        <div
+          ref={scrollRef}
+          className="flex-1 overflow-y-auto px-4 py-2 space-y-0.5 font-mono text-[11px]"
+        >
+          {logs.map((log) => {
+            const s = LEVEL_STYLES[log.level];
+            return (
+              <div key={log.id} className="flex items-start gap-2.5 leading-relaxed py-0.5">
+                <span className="text-[#D1D5DB] flex-shrink-0 tabular-nums">{log.timestamp}</span>
+                <span className={`text-[9px] font-semibold px-1.5 py-0.5 rounded flex-shrink-0 min-w-[46px] text-center ${s.tag}`}>
+                  {log.level}
+                </span>
+                <span className={`${s.text} break-all`}>{log.message}</span>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

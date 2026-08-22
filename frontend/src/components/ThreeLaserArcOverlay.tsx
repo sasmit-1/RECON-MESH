@@ -147,7 +147,7 @@ export const ThreeLaserArcOverlay: React.FC<ThreeLaserArcOverlayProps> = ({ lase
       const material = new THREE.LineBasicMaterial({
         color: hexColor,
         transparent: true,
-        opacity: 0.75,
+        opacity: 0.45,
         linewidth: 1,
       });
 

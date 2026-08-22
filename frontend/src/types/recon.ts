@@ -72,8 +72,13 @@ export interface WebSocketMessage {
   event?: string;
   type?: string;
   data?: any;
+  cluster?: any;
+  voucher?: any;
+  streamed_count?: number;
+  matched_clusters_total?: number;
   status?: string;
   engine?: string;
   metrics?: Partial<ReconMetrics>;
   timestamp?: string | number;
+  [key: string]: any;
 }

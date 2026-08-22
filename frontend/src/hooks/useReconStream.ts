@@ -138,6 +138,14 @@ export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamRe
   // Stream controls
   const startStream = useCallback(async () => {
     setIsStreaming(true);
+    setClusters([]); // Clear old static batch to visualize real-time incoming stream
+    clusterBufferRef.current = [];
+    setMetrics((prev) => ({
+      ...prev,
+      resolvedClusters: 0,
+      totalProcessed: 0,
+      throughput: 5,
+    }));
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify({ action: 'START_STREAM', frequency_hz: 5 }));
     }
@@ -190,15 +198,38 @@ export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamRe
       ws.onmessage = (event: MessageEvent) => {
         try {
           const msg: WebSocketMessage = JSON.parse(event.data);
+          const eventType = (msg.event || msg.type || '').toUpperCase();
 
-          if (msg.event === 'HANDSHAKE' && msg.engine) {
+          if (eventType === 'HANDSHAKE' && msg.engine) {
             setEngineMode(msg.engine);
-          } else if (msg.type === 'CLUSTER_MATCHED' && msg.data) {
-            clusterBufferRef.current.unshift(msg.data);
-          } else if (msg.type === 'VOUCHER_GENERATED' && msg.data) {
-            voucherBufferRef.current.unshift(msg.data);
-          } else if (msg.type === 'METRICS_UPDATE' && msg.data) {
-            setMetrics((prev) => ({ ...prev, ...msg.data }));
+          } else if (eventType === 'CLUSTER_MATCHED') {
+            const cl = msg.cluster || msg.data;
+            if (cl) {
+              clusterBufferRef.current.push(cl);
+            }
+          } else if (eventType === 'VOUCHER_GENERATED') {
+            const vch = msg.voucher || msg.data;
+            if (vch) {
+              voucherBufferRef.current.push(vch);
+            }
+          } else if (eventType === 'METRICS_UPDATE') {
+            const d = msg.data || msg;
+            setMetrics((prev) => ({
+              ...prev,
+              resolvedClusters: d.resolved_clusters ?? prev.resolvedClusters,
+              orphanRazorpay: d.orphan_rzp ?? prev.orphanRazorpay,
+              orphanBank: d.orphan_bank ?? prev.orphanBank,
+              discrepancyPaise: d.discrepancy_variance_paise ?? prev.discrepancyPaise,
+              latencyMs: d.latency_ms ?? prev.latencyMs,
+              throughput: Math.max(prev.throughput, 5),
+            }));
+          } else if (eventType === 'STREAM_TICK') {
+            setMetrics((prev) => ({
+              ...prev,
+              totalProcessed: msg.streamed_count ?? prev.totalProcessed + 1,
+            }));
+          } else if (eventType === 'STREAM_COMPLETE') {
+            setIsStreaming(false);
           }
         } catch (e) {
           console.error('WS Parse error:', e);
@@ -211,15 +242,23 @@ export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamRe
     // 100ms throttled state flush interval
     const flushInterval = setInterval(() => {
       if (clusterBufferRef.current.length > 0) {
-        const newClusters = clusterBufferRef.current.slice(0, 50);
+        const newClusters = [...clusterBufferRef.current];
         clusterBufferRef.current = [];
-        setClusters((prev) => [...newClusters, ...prev].slice(0, 100));
+        setClusters((prev) => {
+          const existingIds = new Set(prev.map((c) => c.cluster_id));
+          const filtered = newClusters.filter((c) => !existingIds.has(c.cluster_id));
+          return [...prev, ...filtered].slice(-100);
+        });
       }
 
       if (voucherBufferRef.current.length > 0) {
-        const newVouchers = voucherBufferRef.current.slice(0, 20);
+        const newVouchers = [...voucherBufferRef.current];
         voucherBufferRef.current = [];
-        setActiveVouchers((prev) => [...newVouchers, ...prev].slice(0, 50));
+        setActiveVouchers((prev) => {
+          const existingIds = new Set(prev.map((v) => v.voucher_id));
+          const filtered = newVouchers.filter((v) => !existingIds.has(v.voucher_id));
+          return [...prev, ...filtered].slice(-50);
+        });
       }
     }, 100);
 

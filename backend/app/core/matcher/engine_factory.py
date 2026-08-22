@@ -150,7 +150,55 @@ class NativeMatcher:
             )
             settled_clusters.append(cluster)
 
-        # Delegate remaining unmatched transactions to Python pruner (Stages 1B, 1C, and batch)
+        # Stage 1B: C++ 1:N batch settlement match
+        matched_rzp_set: set[str] = set(used_rzp_ids)
+        matched_bank_set: set[str] = set(used_bank_ids)
+        try:
+            batch_matches = self._native_kernel.match_1toN_batch(
+                native_rzp, native_bank, matched_rzp_set, matched_bank_set
+            )
+            for b_match in batch_matches:
+                batch_rzp = [rzp_by_id[rid] for rid in b_match.rzp_ids if rid in rzp_by_id]
+                b = bank_by_id.get(b_match.bank_id)
+                if not batch_rzp or b is None:
+                    continue
+
+                for r in batch_rzp:
+                    used_rzp_ids.add(r.id)
+                used_bank_ids.add(b.id)
+
+                matched_erp = []
+                all_erp_found = True
+                for r in batch_rzp:
+                    if r.order_id and r.order_id in erp_by_order:
+                        matched_erp.extend(erp_by_order[r.order_id])
+                    elif r.order_id:
+                        all_erp_found = False
+                    elif not r.order_id:
+                        all_erp_found = False
+
+                status = MatchStatus.MATCHED if all_erp_found else MatchStatus.SETTLED_PENDING_ERP
+                sum_gross = sum(r.amount_gross_paise for r in batch_rzp)
+                sum_net_expected = sum(r.amount_net_paise for r in batch_rzp)
+                sum_bank_credit = b.amount_net_paise
+                discrepancy = sum_net_expected - sum_bank_credit
+
+                cluster = ReconciliationCluster(
+                    cluster_id=f"cluster_native_1toN_{uuid4().hex[:8]}",
+                    razorpay_txns=batch_rzp,
+                    bank_txns=[b],
+                    erp_txns=matched_erp,
+                    sum_gross_paise=sum_gross,
+                    sum_net_expected_paise=sum_net_expected,
+                    sum_bank_credit_paise=sum_bank_credit,
+                    discrepancy_paise=discrepancy,
+                    status=status,
+                )
+                settled_clusters.append(cluster)
+        except Exception as exc:
+            logger.debug("Native 1:N batch matching delegated to Python fallback: %s", exc)
+
+        # Delegate remaining unmatched transactions to Python pruner (Stage 1C amount/ts fallback)
         residual_rzp = [r for r in rzp_txns if r.id not in used_rzp_ids]
         residual_bank = [b for b in bank_txns if b.id not in used_bank_ids]
 

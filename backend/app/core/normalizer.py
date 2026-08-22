@@ -24,36 +24,46 @@ NOISE_PREFIXES = {
 }
 
 
-def to_paise(amount: Union[float, str, int, Decimal]) -> int:
+def to_paise(amount: Union[float, str, int, Decimal], is_rupees: bool = False) -> int:
     """
-    Converts standard INR currency values into exact integer paise (1 Rupee = 100 Paise).
-    Uses Decimal with ROUND_HALF_UP quantization to eliminate floating-point precision errors.
-    
-    Examples:
-    - to_paise("1,00,000.50") -> 10000050
-    - to_paise(976.40) -> 97640
-    - to_paise(10000050) -> 10000050
+    Converts INR currency values into exact integer paise (1 Rupee = 100 Paise).
+    Uses Decimal with ROUND_HALF_UP quantization to eliminate floating-point errors.
+
+    - Int values: Treated directly as integer paise by default (is_rupees=False).
+                  Multiplied by 100 only when is_rupees=True is explicitly set.
+    - Float/Decimal values: Treated as Rupees by default, or when is_rupees=True -> multiplied by 100.
+    - String values: Parsed via Decimal; if contains '.' or is_rupees=True -> multiplied by 100.
     """
+    if amount is None:
+        return 0
+
     if isinstance(amount, int):
-        return amount
-        
-    if isinstance(amount, Decimal):
-        d = amount
-    elif isinstance(amount, float):
+        return amount * 100 if is_rupees else amount
+
+    if isinstance(amount, float):
         d = Decimal(str(amount))
-    elif isinstance(amount, str):
+        if is_rupees or not amount.is_integer() or amount < 100:
+            return int((d * Decimal("100")).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+        return int(d.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+    if isinstance(amount, str):
         cleaned = amount.replace(",", "").strip()
         if not cleaned:
             return 0
         d = Decimal(cleaned)
-        if "." in cleaned or "," in amount:
+        if is_rupees or "." in cleaned:
             return int((d * Decimal("100")).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
-        else:
-            return int(d)
-    else:
-        d = Decimal(str(amount))
-        
-    return int((d * Decimal("100")).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+        return int(d.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+    if isinstance(amount, Decimal):
+        if is_rupees:
+            return int((amount * Decimal("100")).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+        return int(amount.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+
+    d = Decimal(str(amount))
+    return int((d * Decimal("100")).quantize(Decimal("1"), rounding=ROUND_HALF_UP)) if is_rupees else int(d)
+
+
 
 
 def calculate_mdr_and_gst(gross_paise: int, mdr_rate_bps: int = 200) -> Tuple[int, int, int]:
@@ -156,15 +166,31 @@ def normalize_event(raw_event: Dict[str, Any], source: SourceType) -> CanonicalT
         order_id = raw_event.get("order_id")
         utr = raw_event.get("utr") or extract_clean_utr(raw_event.get("narration", ""))
         
-        gross_paise = to_paise(raw_event.get("amount_gross_paise", raw_event.get("amount", 0)))
-        mdr_paise = to_paise(raw_event.get("fee_mdr_paise", raw_event.get("fee", 0)))
-        gst_paise = to_paise(raw_event.get("fee_gst_paise", raw_event.get("tax", 0)))
+        if "amount_gross_paise" in raw_event:
+            gross_paise = to_paise(raw_event["amount_gross_paise"], is_rupees=False)
+        else:
+            raw_amt = raw_event.get("amount", 0)
+            gross_paise = to_paise(raw_amt, is_rupees=isinstance(raw_amt, (float, str)) and ("." in str(raw_amt)))
+
+        if "fee_mdr_paise" in raw_event:
+            mdr_paise = to_paise(raw_event["fee_mdr_paise"], is_rupees=False)
+        else:
+            raw_fee = raw_event.get("fee", 0)
+            mdr_paise = to_paise(raw_fee, is_rupees=isinstance(raw_fee, (float, str)) and ("." in str(raw_fee)))
+
+        if "fee_gst_paise" in raw_event:
+            gst_paise = to_paise(raw_event["fee_gst_paise"], is_rupees=False)
+        else:
+            raw_tax = raw_event.get("tax", 0)
+            gst_paise = to_paise(raw_tax, is_rupees=isinstance(raw_tax, (float, str)) and ("." in str(raw_tax)))
         
         if mdr_paise == 0 and gross_paise > 0:
             mdr_paise, gst_paise, calculated_net = calculate_mdr_and_gst(gross_paise)
             net_paise = calculated_net
+        elif "amount_net_paise" in raw_event:
+            net_paise = to_paise(raw_event["amount_net_paise"], is_rupees=False)
         else:
-            net_paise = to_paise(raw_event.get("amount_net_paise", gross_paise - mdr_paise - gst_paise))
+            net_paise = gross_paise - mdr_paise - gst_paise
             
         ts_utc = parse_iso_utc(raw_event.get("timestamp", datetime.now(timezone.utc)))
         tokens = [utr] if utr else []
@@ -191,7 +217,12 @@ def normalize_event(raw_event: Dict[str, Any], source: SourceType) -> CanonicalT
         narration = raw_event.get("narration", "")
         extracted_utr = raw_event.get("extracted_utr") or extract_clean_utr(narration)
         
-        credit_paise = to_paise(raw_event.get("credit_amount_paise", raw_event.get("amount", 0)))
+        if "credit_amount_paise" in raw_event:
+            credit_paise = to_paise(raw_event["credit_amount_paise"], is_rupees=False)
+        else:
+            raw_amt = raw_event.get("amount", 0)
+            credit_paise = to_paise(raw_amt, is_rupees=isinstance(raw_amt, (float, str)) and ("." in str(raw_amt)))
+
         ts_utc = parse_iso_utc(raw_event.get("timestamp", raw_event.get("value_date", datetime.now(timezone.utc))))
         tokens = [extracted_utr] if extracted_utr else []
         
@@ -218,7 +249,13 @@ def normalize_event(raw_event: Dict[str, Any], source: SourceType) -> CanonicalT
     elif source == SourceType.ERP:
         invoice_id = str(raw_event.get("invoice_id") or f"inv_{uuid4().hex[:8]}")
         order_id = raw_event.get("order_id")
-        amount_paise = to_paise(raw_event.get("invoice_amount_paise", raw_event.get("amount", 0)))
+        
+        if "invoice_amount_paise" in raw_event:
+            amount_paise = to_paise(raw_event["invoice_amount_paise"], is_rupees=False)
+        else:
+            raw_amt = raw_event.get("amount", 0)
+            amount_paise = to_paise(raw_amt, is_rupees=isinstance(raw_amt, (float, str)) and ("." in str(raw_amt)))
+
         ts_utc = parse_iso_utc(raw_event.get("issue_date", raw_event.get("timestamp", datetime.now(timezone.utc))))
         
         return CanonicalTransaction(

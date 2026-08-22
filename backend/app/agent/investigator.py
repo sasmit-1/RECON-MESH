@@ -65,9 +65,9 @@ Sum Gross Amount (paise): {cluster.sum_gross_paise}
 Sum Net Expected (paise): {cluster.sum_net_expected_paise}
 Sum Bank Credit (paise): {cluster.sum_bank_credit_paise}
 
-Razorpay Transactions: {[t.dict() for t in cluster.razorpay_txns]}
-Bank Transactions: {[b.dict() for b in cluster.bank_txns]}
-ERP Invoices: {[e.dict() for e in cluster.erp_txns]}
+Razorpay Transactions: {[t.model_dump() if hasattr(t, "model_dump") else t.dict() for t in cluster.razorpay_txns]}
+Bank Transactions: {[b.model_dump() if hasattr(b, "model_dump") else b.dict() for b in cluster.bank_txns]}
+ERP Invoices: {[e.model_dump() if hasattr(e, "model_dump") else e.dict() for e in cluster.erp_txns]}
 
 Please analyze the variance and generate the resolution hypothesis JSON.
 """

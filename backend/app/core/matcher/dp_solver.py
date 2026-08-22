@@ -156,13 +156,15 @@ class BoundedDPSolver:
         remaining_bank: List[CanonicalTransaction] = []
 
         for bank_item in orphan_bank:
-            # Filter candidates to the temporal window and hard-cap at max_cluster_size
+            # Filter candidates by temporal proximity window ONLY.
+            # Do NOT truncate with [: max_cluster_size] here — that would drop valid subset members.
+            # Depth-bounding is enforced inside solve_exact_subset_sum() via _MAX_DP_STATES.
             candidates: List[CanonicalTransaction] = [
                 r for r in remaining_rzp
                 if abs(
                     (bank_item.timestamp_utc - r.timestamp_utc).total_seconds()
                 ) <= self.max_time_window_sec
-            ][: self.max_cluster_size]
+            ]
 
             if not candidates:
                 remaining_bank.append(bank_item)

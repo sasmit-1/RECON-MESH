@@ -2,7 +2,11 @@
 RECON-MESH Step 10: WebSocket Streaming Manager
 ================================================
 Provides bidirectional real-time event streaming to the React/Three.js frontend.
-Broadcasts live telemetry ticks, cluster status updates, and Merkle root syncs.
+Broadcasts live CLUSTER_MATCHED, METRICS_UPDATE, and STREAM_TICK payloads.
+
+START_STREAM → asyncio.create_task consuming stream_synthetic_events()
+            → normalize → match → broadcast CLUSTER_MATCHED events
+STOP_STREAM  → cancel active background task cleanly
 """
 
 from __future__ import annotations
@@ -10,7 +14,9 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
-from typing import Any, Dict, List, Set
+import time
+from typing import Any, Dict, List, Optional, Set
+from uuid import uuid4
 
 from fastapi import WebSocket, WebSocketDisconnect
 
@@ -20,7 +26,7 @@ logger = logging.getLogger("recon_mesh.websocket")
 class ConnectionManager:
     """
     Asynchronous Connection Manager tracking active WebSocket connections
-    and broadcasting telemetry ticks to connected clients.
+    and broadcasting telemetry payloads to all connected clients.
     """
 
     def __init__(self) -> None:
@@ -30,19 +36,19 @@ class ConnectionManager:
         """Accepts an incoming WebSocket connection and registers it."""
         await websocket.accept()
         self.active_connections.add(websocket)
-        logger.info(f"WebSocket client connected. Total active: {len(self.active_connections)}")
+        logger.info("WebSocket client connected. Total active: %d", len(self.active_connections))
 
     def disconnect(self, websocket: WebSocket) -> None:
         """Removes a disconnected WebSocket client."""
         self.active_connections.discard(websocket)
-        logger.info(f"WebSocket client disconnected. Total active: {len(self.active_connections)}")
+        logger.info("WebSocket client disconnected. Total active: %d", len(self.active_connections))
 
     async def send_personal_message(self, message: Dict[str, Any], websocket: WebSocket) -> None:
         """Sends a JSON message to a single connected client."""
         try:
-            await websocket.send_text(json.dumps(message))
+            await websocket.send_text(json.dumps(message, default=str))
         except Exception as exc:
-            logger.warning(f"Error sending message to client: {exc}")
+            logger.warning("Error sending message to client: %s", exc)
             self.disconnect(websocket)
 
     async def broadcast(self, message: Dict[str, Any]) -> None:
@@ -50,14 +56,14 @@ class ConnectionManager:
         if not self.active_connections:
             return
 
-        payload_str = json.dumps(message)
+        payload_str = json.dumps(message, default=str)
         disconnected: List[WebSocket] = []
 
         for connection in list(self.active_connections):
             try:
                 await connection.send_text(payload_str)
             except Exception as exc:
-                logger.warning(f"Error broadcasting to client: {exc}")
+                logger.warning("Error broadcasting to client: %s", exc)
                 disconnected.append(connection)
 
         for conn in disconnected:
@@ -67,20 +73,157 @@ class ConnectionManager:
 # Global singleton connection manager
 manager = ConnectionManager()
 
+# Active streaming task registry (per WebSocket connection)
+_active_stream_tasks: Dict[int, asyncio.Task] = {}
+
+
+# ---------------------------------------------------------------------------
+# Streaming background task
+# ---------------------------------------------------------------------------
+
+async def _stream_pipeline_task(
+    rate_hz: float,
+    count: int,
+    seed: int,
+    websocket: WebSocket,
+) -> None:
+    """
+    Background coroutine: consumes stream_synthetic_events(), normalizes each event,
+    runs it through the matcher pipeline, and broadcasts CLUSTER_MATCHED payloads.
+    """
+    from backend.app.benchmark.generator import stream_synthetic_events
+    from backend.app.core.matcher.engine_factory import get_matcher_engine
+    from backend.app.core.normalizer import normalize_event
+    from backend.app.core.models import SourceType, MatchStatus
+
+    matcher = get_matcher_engine()
+
+    # Accumulate stream buffers for mini-batch matching every N events
+    rzp_buf: list = []
+    bank_buf: list = []
+    erp_buf: list = []
+    streamed = 0
+    matched_clusters = 0
+
+    source_map = {
+        "RAZORPAY": SourceType.RAZORPAY,
+        "BANK": SourceType.BANK,
+        "ERP": SourceType.ERP,
+    }
+
+    try:
+        async for event_item in stream_synthetic_events(rate_hz=rate_hz, count=count, seed=seed):
+            src_str = event_item.get("source_type", "RAZORPAY")
+            src_type = source_map.get(src_str, SourceType.RAZORPAY)
+            canonical = normalize_event(event_item["payload"], src_type)
+
+            if src_type == SourceType.RAZORPAY:
+                rzp_buf.append(canonical)
+            elif src_type == SourceType.BANK:
+                bank_buf.append(canonical)
+            elif src_type == SourceType.ERP:
+                erp_buf.append(canonical)
+
+            streamed += 1
+
+            # Broadcast raw STREAM_TICK for UI progress indication
+            await manager.broadcast({
+                "event": "STREAM_TICK",
+                "source": src_str,
+                "txn_id": canonical.original_id,
+                "amount_paise": canonical.amount_gross_paise,
+                "timestamp": event_item.get("timestamp"),
+                "streamed_count": streamed,
+            })
+
+            # Mini-batch matching every 10 bank events
+            if len(bank_buf) >= 10 and len(rzp_buf) >= 5:
+                try:
+                    clusters, orphan_rzp, orphan_bank = matcher.prune(
+                        list(rzp_buf), list(bank_buf), list(erp_buf)
+                    )
+                    matched_clusters += len(clusters)
+
+                    for cl in clusters:
+                        cl_dict = cl.model_dump() if hasattr(cl, "model_dump") else cl.dict()
+                        await manager.broadcast({
+                            "event": "CLUSTER_MATCHED",
+                            "cluster": cl_dict,
+                            "matched_clusters_total": matched_clusters,
+                        })
+
+                    # Broadcast aggregated metrics update
+                    variance_paise = sum(abs(c.discrepancy_paise) for c in clusters)
+                    await manager.broadcast({
+                        "event": "METRICS_UPDATE",
+                        "resolved_clusters": matched_clusters,
+                        "orphan_rzp": len(orphan_rzp),
+                        "orphan_bank": len(orphan_bank),
+                        "discrepancy_variance_paise": variance_paise,
+                        "latency_ms": round(time.perf_counter() * 1000 % 1000, 1),
+                    })
+
+                    # Clear matched entries from buffers
+                    used_rzp = {t.id for cl in clusters for t in cl.razorpay_txns}
+                    used_bank = {t.id for cl in clusters for t in cl.bank_txns}
+                    rzp_buf = [r for r in rzp_buf if r.id not in used_rzp]
+                    bank_buf = [b for b in bank_buf if b.id not in used_bank]
+
+                except Exception as exc:
+                    logger.warning("Mini-batch match error: %s", exc)
+
+        # Final flush of remaining buffer
+        if bank_buf and rzp_buf:
+            try:
+                clusters, _, _ = matcher.prune(rzp_buf, bank_buf, erp_buf)
+                matched_clusters += len(clusters)
+                for cl in clusters:
+                    cl_dict = cl.model_dump() if hasattr(cl, "model_dump") else cl.dict()
+                    await manager.broadcast({"event": "CLUSTER_MATCHED", "cluster": cl_dict})
+            except Exception:
+                pass
+
+        await manager.broadcast({
+            "event": "STREAM_COMPLETE",
+            "total_streamed": streamed,
+            "total_matched_clusters": matched_clusters,
+        })
+
+    except asyncio.CancelledError:
+        logger.info("Stream task cancelled cleanly.")
+        await manager.broadcast({"event": "STREAM_STATUS", "active": False, "reason": "cancelled"})
+    except Exception as exc:
+        logger.error("Stream pipeline error: %s", exc)
+        await manager.broadcast({"event": "STREAM_ERROR", "message": str(exc)})
+
+
+# ---------------------------------------------------------------------------
+# WebSocket Endpoint
+# ---------------------------------------------------------------------------
 
 async def websocket_endpoint(websocket: WebSocket) -> None:
     """
-    WebSocket endpoint handler listening on /ws/recon-stream.
+    WebSocket endpoint handler on /ws/recon-stream.
+    Handles PING, START_STREAM, STOP_STREAM, and generic ACK.
     """
     await manager.connect(websocket)
+    ws_id = id(websocket)
+
     try:
-        # Send initial handshake message
+        # Handshake
         await manager.send_personal_message(
             {
                 "event": "HANDSHAKE",
                 "status": "CONNECTED",
                 "engine": "RECON-MESH Autonomous FinOps v2.1",
-                "features": ["HeuristicPruner", "DPSolver", "MerkleAudit", "EpisodicMemoryStore"],
+                "features": [
+                    "HeuristicPruner",
+                    "DPSolver",
+                    "Pass3AIAgent",
+                    "EpisodicMemoryStore",
+                    "MerkleAudit",
+                    "LiveStreaming",
+                ],
             },
             websocket,
         )
@@ -92,29 +235,68 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
                 action = data.get("action", "").upper()
 
                 if action == "PING":
-                    await manager.send_personal_message({"event": "PONG", "timestamp": data.get("timestamp")}, websocket)
-                elif action == "START_STREAM":
                     await manager.send_personal_message(
-                        {"event": "STREAM_STATUS", "active": True, "frequency_hz": data.get("frequency_hz", 5)},
+                        {"event": "PONG", "timestamp": data.get("timestamp")},
                         websocket,
                     )
+
+                elif action == "START_STREAM":
+                    # Cancel any existing stream task for this connection
+                    if ws_id in _active_stream_tasks:
+                        _active_stream_tasks[ws_id].cancel()
+
+                    rate_hz = float(data.get("frequency_hz", 5))
+                    count = int(data.get("count", 100))
+                    seed = int(data.get("seed", 42))
+
+                    task = asyncio.create_task(
+                        _stream_pipeline_task(rate_hz, count, seed, websocket),
+                        name=f"stream_{ws_id}",
+                    )
+                    _active_stream_tasks[ws_id] = task
+
+                    await manager.send_personal_message(
+                        {
+                            "event": "STREAM_STATUS",
+                            "active": True,
+                            "frequency_hz": rate_hz,
+                            "count": count,
+                        },
+                        websocket,
+                    )
+                    logger.info("Stream task started for ws=%d at %.1f Hz, count=%d", ws_id, rate_hz, count)
+
                 elif action == "STOP_STREAM":
+                    task = _active_stream_tasks.pop(ws_id, None)
+                    if task and not task.done():
+                        task.cancel()
+                        logger.info("Stream task cancelled for ws=%d", ws_id)
                     await manager.send_personal_message(
                         {"event": "STREAM_STATUS", "active": False},
                         websocket,
                     )
+
                 else:
                     await manager.send_personal_message(
                         {"event": "ACK", "received": action, "data": data},
                         websocket,
                     )
+
             except json.JSONDecodeError:
                 await manager.send_personal_message(
                     {"event": "ERROR", "message": "Invalid JSON format"},
                     websocket,
                 )
+
     except WebSocketDisconnect:
+        # Clean up streaming task on disconnect
+        task = _active_stream_tasks.pop(ws_id, None)
+        if task and not task.done():
+            task.cancel()
         manager.disconnect(websocket)
     except Exception as exc:
-        logger.error(f"Unexpected WebSocket error: {exc}")
+        logger.error("Unexpected WebSocket error: %s", exc)
+        task = _active_stream_tasks.pop(ws_id, None)
+        if task and not task.done():
+            task.cancel()
         manager.disconnect(websocket)

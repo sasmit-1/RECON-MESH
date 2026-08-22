@@ -72,44 +72,38 @@ export function App() {
 
       {/* Row 3: Main Graph Canvas — fills all remaining vertical space */}
       <div className="relative flex-1 w-full min-h-0 overflow-hidden bg-black">
-        {/* Column lane labels floating above graph */}
-        <div className="absolute top-2 left-0 right-0 pointer-events-none z-20 flex">
+        {/* Column lane labels: pinned to top, divided into equal thirds matching the 3-column DAG layout */}
+        <div className="absolute top-0 left-0 right-0 pointer-events-none z-20 flex h-9 border-b border-[#151515] bg-[rgba(0,0,0,0.7)] backdrop-blur-[2px]">
           {[
-            { label: 'RAZORPAY FEEDS', sub: 'Gross · MDR · GST · UTR', color: 'text-[#0C8CE9]' },
-            { label: 'BANK STATEMENTS', sub: 'Net Credit · Narration · Date', color: 'text-[#00FF66]' },
-            { label: 'ERP / GL LEDGER', sub: 'Invoice · AR Account · Amount', color: 'text-[#FFB800]' },
+            { label: 'RAZORPAY FEEDS', sub: 'Gross · MDR · GST · UTR', color: 'text-[#0C8CE9]', border: 'border-r border-[#151515]' },
+            { label: 'BANK STATEMENTS', sub: 'Net Credit · Narration · Date', color: 'text-[#00FF66]', border: 'border-r border-[#151515]' },
+            { label: 'ERP / GL LEDGER', sub: 'Invoice · AR Account · Amount', color: 'text-[#FFB800]', border: '' },
           ].map((col) => (
-            <div key={col.label} className="flex-1 flex flex-col items-center gap-0.5">
-              <span className={`text-[9px] font-mono font-semibold tracking-widest uppercase ${col.color}`}>
+            <div
+              key={col.label}
+              className={`flex-1 flex flex-col items-center justify-center gap-0.5 ${col.border}`}
+            >
+              <span className={`text-[9px] font-mono font-bold tracking-widest uppercase ${col.color}`}>
                 {col.label}
               </span>
-              <span className="text-[8px] font-mono text-[#2a2a2a]">{col.sub}</span>
+              <span className="text-[7px] font-mono text-[#333333] tracking-wider">{col.sub}</span>
             </div>
           ))}
         </div>
 
-        {/* React Flow graph canvas — absolutely fills the container */}
-        <div className="absolute inset-0 w-full h-full">
+        {/* React Flow graph canvas — absolutely fills the container, offset below column header strip */}
+        <div className="absolute inset-0 top-9 w-full h-[calc(100%-36px)]">
           <ReconGraphCanvas clusters={clusters} onNodeSelect={handleNodeSelect} />
         </div>
 
         {/* Empty state shown before first batch */}
         {clusters.length === 0 && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none gap-3">
+          <div className="absolute inset-0 top-9 flex flex-col items-center justify-center z-10 pointer-events-none gap-3">
             <div className="w-7 h-7 border-2 border-[#00FF66] border-t-transparent rounded-full animate-spin" />
             <p className="text-[11px] font-mono text-[#555555]">
-              Awaiting reconciliation batch — click 100 / 500 / 1000 above
+              Awaiting reconciliation batch — click ⚡ 100 / 500 / 1000 above
             </p>
           </div>
-        )}
-
-        {/* Investigation slide-over drawer (right side) */}
-        {selectedCluster && (
-          <InvestigationDrawer
-            cluster={selectedCluster}
-            merkleRoot={merkleRoot}
-            onClose={handleCloseDrawer}
-          />
         )}
       </div>
 
@@ -120,6 +114,15 @@ export function App() {
         isConnected={isConnected}
         latencyMs={metrics.latencyMs}
       />
+
+      {/* Investigation Drawer — fixed overlay, always above canvas and Three.js layer */}
+      {selectedCluster && (
+        <InvestigationDrawer
+          cluster={selectedCluster}
+          merkleRoot={merkleRoot}
+          onClose={handleCloseDrawer}
+        />
+      )}
     </div>
   );
 }

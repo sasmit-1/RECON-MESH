@@ -92,16 +92,24 @@ export const ThreeLaserArcOverlay: React.FC<ThreeLaserArcOverlayProps> = ({ lase
   }, []);
 
   // Sync Three.js orthographic camera with React Flow's viewport transform
+  // React Flow viewport: { x: pan_x (px from left), y: pan_y (px from top), zoom }
+  // Three.js orthographic camera: (0,0) = screen center, y-up
+  // World position of camera center: ((w/2 - vp.x) / vp.zoom,  (vp.y - h/2) / vp.zoom)
   useEffect(() => {
     if (!cameraRef.current || !mountRef.current) return;
     const el = mountRef.current;
-    const width = el.clientWidth || window.innerWidth;
-    const height = el.clientHeight || window.innerHeight;
+    const w = el.clientWidth || window.innerWidth;
+    const h = el.clientHeight || window.innerHeight;
     const cam = cameraRef.current;
 
+    // Apply zoom by setting the orthographic camera's zoom factor
     cam.zoom = viewport.zoom;
-    cam.position.x = -(viewport.x - width / 2) / viewport.zoom;
-    cam.position.y = (viewport.y - height / 2) / viewport.zoom;
+    // Pan: translate camera so that the Three.js origin (0,0) maps to React Flow (0,0)
+    // RF (0,0) renders at screen pixel (viewport.x, viewport.y)
+    // In camera world-space (centre=origin): RF(0,0) is at (-w/2 + viewport.x, h/2 - viewport.y)
+    // Camera position is offset from that by 0, so camera.position = negation
+    cam.position.x = (w / 2 - viewport.x) / viewport.zoom;
+    cam.position.y = -(h / 2 - viewport.y) / viewport.zoom;
     cam.updateProjectionMatrix();
   }, [viewport]);
 

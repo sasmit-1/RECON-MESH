@@ -91,7 +91,14 @@ export const InvestigationDrawer: React.FC<InvestigationDrawerProps> = ({
   };
 
   return (
-    <div className="absolute right-0 top-0 bottom-0 w-[360px] bg-[#060606] border-l border-[#181818] z-50 flex flex-col overflow-hidden font-mono">
+    <>
+      {/* Backdrop scrim — click to close */}
+      <div
+        className="fixed inset-0 z-[199] bg-black/30 backdrop-blur-[1px]"
+        onClick={onClose}
+      />
+      {/* Drawer panel */}
+      <div className="fixed right-0 top-0 bottom-0 w-[380px] max-w-[90vw] bg-[#060606] border-l border-[#252525] z-[200] flex flex-col overflow-hidden font-mono shadow-[-8px_0_32px_rgba(0,0,0,0.6)]">
       {/* Header */}
       <div className="h-[44px] bg-[#0A0A0A] border-b border-[#181818] px-4 flex items-center justify-between flex-shrink-0">
         <div className="flex items-center space-x-2">
@@ -250,5 +257,6 @@ export const InvestigationDrawer: React.FC<InvestigationDrawerProps> = ({
         </section>
       </div>
     </div>
+    </>
   );
 };

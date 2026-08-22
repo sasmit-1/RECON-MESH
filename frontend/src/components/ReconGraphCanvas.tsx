@@ -32,8 +32,9 @@ const NODE_TYPES: NodeTypes = {
 };
 
 // Fixed column X positions (in React Flow coordinate space)
-const COL_X = { RAZORPAY: 0, BANK: 320, ERP: 640 };
-const ROW_HEIGHT = 120;
+// Node width is 280px; columns spaced at 360px intervals = 80px gutters
+const COL_X = { RAZORPAY: 0, BANK: 360, ERP: 720 };
+const ROW_HEIGHT = 160;
 
 interface ReconGraphCanvasProps {
   clusters: ReconciliationCluster[];
@@ -126,10 +127,10 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
           });
           lasers.push({
             id: edgeId,
-            sourceX: COL_X.RAZORPAY + 180,
-            sourceY: y + 40,
+            sourceX: COL_X.RAZORPAY + 280,
+            sourceY: y + 50,
             targetX: COL_X.BANK,
-            targetY: baseY + 40,
+            targetY: baseY + 50,
             color: laserColor,
           });
         });
@@ -175,10 +176,10 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
           });
           lasers.push({
             id: edgeId2 + '-laser',
-            sourceX: COL_X.BANK + 180,
-            sourceY: y + 40,
+            sourceX: COL_X.BANK + 280,
+            sourceY: y + 50,
             targetX: COL_X.ERP,
-            targetY: baseY + 40,
+            targetY: baseY + 50,
             color: bankLaserColor,
           });
         });

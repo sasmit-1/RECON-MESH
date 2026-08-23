@@ -185,6 +185,8 @@ export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamRe
 
       ws.onclose = () => {
         setIsConnected(false);
+        // Auto-reconnect after 1.5 seconds if closed
+        setTimeout(connectWS, 1500);
       };
 
       ws.onerror = (err) => {
@@ -244,7 +246,8 @@ export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamRe
         setClusters((prev) => {
           const existingIds = new Set(prev.map((c) => c.cluster_id));
           const filtered = newClusters.filter((c) => !existingIds.has(c.cluster_id));
-          return [...prev, ...filtered].slice(-100);
+          // Prepend new incoming clusters to top of feed so they are immediately visible
+          return [...filtered, ...prev].slice(0, 50);
         });
       }
 
@@ -254,7 +257,7 @@ export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamRe
         setActiveVouchers((prev) => {
           const existingIds = new Set(prev.map((v) => v.voucher_id));
           const filtered = newVouchers.filter((v) => !existingIds.has(v.voucher_id));
-          return [...prev, ...filtered].slice(-50);
+          return [...filtered, ...prev].slice(0, 30);
         });
       }
     }, 100);

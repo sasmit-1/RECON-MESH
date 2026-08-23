@@ -33,8 +33,8 @@ const NODE_TYPES: NodeTypes = {
 };
 
 // Fixed column X positions (React Flow coordinate space)
-// Node width 240px; 320px column intervals = 80px gutters
-const COL_X = { RAZORPAY: 0, BANK: 320, ERP: 640 };
+// 3 columns aligned with the 3 lane headers
+const COL_X = { RAZORPAY: 20, BANK: 380, ERP: 740 };
 const ROW_HEIGHT = 140;
 
 interface ReconGraphCanvasProps {
@@ -53,12 +53,16 @@ const FlowInner: React.FC<{
   const { setViewport } = useReactFlow();
   const initializedRef = useRef<boolean>(false);
 
-  // Set readable centered zoom ONCE on initial load — NEVER zoom out to microscopic scale
+  const resetToTop = useCallback(() => {
+    setViewport({ x: 40, y: 20, zoom: 0.88 }, { duration: 250 });
+  }, [setViewport]);
+
+  // Set readable centered zoom ONCE on initial load
   useEffect(() => {
     if (!initializedRef.current && nodes.length > 0) {
       initializedRef.current = true;
       const timer = setTimeout(() => {
-        setViewport({ x: 60, y: 30, zoom: 0.88 }, { duration: 0 });
+        setViewport({ x: 40, y: 20, zoom: 0.88 }, { duration: 0 });
       }, 50);
       return () => clearTimeout(timer);
     }
@@ -69,13 +73,22 @@ const FlowInner: React.FC<{
       {/* Layer 0: WebGL Laser Arc Overlay */}
       <ThreeLaserArcOverlay lasers={lasers} viewport={viewport} />
 
+      {/* Floating quick reset button */}
+      <button
+        onClick={resetToTop}
+        title="Reset view to top"
+        className="absolute top-3 right-4 z-20 bg-white/90 backdrop-blur-sm border border-[#E5E7EB] hover:bg-white text-[#374151] hover:text-[#2D65F8] text-[11px] font-medium px-2.5 py-1 rounded-md shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+      >
+        <span>↑ Reset to Top</span>
+      </button>
+
       {/* Layer 1: React Flow Canvas with smooth vertical scrolling */}
       <ReactFlow
         nodes={nodes}
         edges={edges}
         nodeTypes={NODE_TYPES}
         onNodeClick={(_, node) => onNodeSelect(node.id)}
-        defaultViewport={{ x: 60, y: 30, zoom: 0.88 }}
+        defaultViewport={{ x: 40, y: 20, zoom: 0.88 }}
         minZoom={0.5}
         maxZoom={1.5}
         panOnScroll={true}
@@ -98,7 +111,10 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
     const edges: Edge[] = [];
     const lasers: LaserLine[] = [];
 
-    clusters.forEach((cluster, clusterIdx) => {
+    // Render top 35 active clusters for crisp 60fps performance and smooth scrolling
+    const visibleClusters = clusters.slice(0, 35);
+
+    visibleClusters.forEach((cluster, clusterIdx) => {
       const baseY = clusterIdx * ROW_HEIGHT * 1.2;
       const matchStatus = cluster.discrepancy_paise === 0 ? 'MATCHED' : 'DISCREPANCY';
       // Muted professional edge colors — no neon

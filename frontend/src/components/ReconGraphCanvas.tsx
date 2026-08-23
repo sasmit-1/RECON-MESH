@@ -130,14 +130,19 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
       ERP:      Math.round(containerWidth * COL_FRACTIONS.ERP),
     };
 
-    // Limit to MAX_VISIBLE_CLUSTERS for smooth 60fps rendering
-    const visible = clusters.slice(0, MAX_VISIBLE_CLUSTERS);
+    // Limit to active clusters that contain transactions, eliminating blank vertical gaps
+    const activeClusters = clusters
+      .filter((c) => (c.razorpay_txns?.length || 0) + (c.bank_txns?.length || 0) + (c.erp_txns?.length || 0) > 0)
+      .slice(0, MAX_VISIBLE_CLUSTERS);
 
     // Track globally seen txn IDs to skip any duplicates across clusters
     const seenNodeIds = new Set<string>();
+    let currentRow = 0;
 
-    visible.forEach((cluster, clusterIdx) => {
-      const baseY = clusterIdx * ROW_HEIGHT;
+    activeClusters.forEach((cluster) => {
+      const baseY = currentRow * ROW_HEIGHT;
+      currentRow += 1;
+
       const matchStatus = cluster.discrepancy_paise === 0 ? 'MATCHED' : 'DISCREPANCY';
       const edgeColor = cluster.discrepancy_paise === 0 ? '#059669' : '#DC2626';
       // Scope every node ID to its cluster to prevent React Flow duplicate-ID crashes
@@ -227,32 +232,77 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
       });
 
       // ── ERP nodes ───────────────────────────────────────────────────────────
-      cluster.erp_txns.forEach((txn, i) => {
-        const nodeId = `${clusterKey}|erp|${txn.id}`;
-        if (seenNodeIds.has(nodeId)) return;
-        seenNodeIds.add(nodeId);
-        const y = baseY + i * ROW_HEIGHT;
+      if (cluster.erp_txns.length > 0) {
+        cluster.erp_txns.forEach((txn, i) => {
+          const nodeId = `${clusterKey}|erp|${txn.id}`;
+          if (seenNodeIds.has(nodeId)) return;
+          seenNodeIds.add(nodeId);
+          const y = baseY + i * ROW_HEIGHT;
+          nodes.push({
+            id: nodeId,
+            type: 'transaction',
+            position: { x: colX.ERP, y },
+            data: {
+              txnId: txn.id,
+              source: txn.source,
+              original_id: txn.original_id,
+              order_id: txn.order_id,
+              utr: txn.utr,
+              amount_gross_paise: txn.amount_gross_paise,
+              amount_net_paise: txn.amount_net_paise,
+              fee_mdr_paise: txn.fee_mdr_paise,
+              fee_gst_paise: txn.fee_gst_paise,
+              raw_narration: txn.raw_narration,
+              status: cluster.status,
+              timestamp_utc: txn.timestamp_utc,
+              onSelect: onNodeSelect,
+            } as unknown as TransactionNodeData,
+          });
+        });
+      } else if (cluster.bank_txns.length > 0) {
+        // Pending ERP Ledger entry placeholder for unposted / discrepancy settlements
+        const erpPlaceholderId = `${clusterKey}|erp|pending`;
+        const rzpTxn = cluster.razorpay_txns[0];
+        const bankTxn = cluster.bank_txns[0];
+        const isDiscrepancy = cluster.discrepancy_paise !== 0;
+
         nodes.push({
-          id: nodeId,
+          id: erpPlaceholderId,
           type: 'transaction',
-          position: { x: colX.ERP, y },
+          position: { x: colX.ERP, y: baseY },
           data: {
-            txnId: txn.id,
-            source: txn.source,
-            original_id: txn.original_id,
-            order_id: txn.order_id,
-            utr: txn.utr,
-            amount_gross_paise: txn.amount_gross_paise,
-            amount_net_paise: txn.amount_net_paise,
-            fee_mdr_paise: txn.fee_mdr_paise,
-            fee_gst_paise: txn.fee_gst_paise,
-            raw_narration: txn.raw_narration,
-            status: cluster.status,
-            timestamp_utc: txn.timestamp_utc,
+            txnId: bankTxn.id,
+            source: 'ERP',
+            original_id: isDiscrepancy ? 'UNPOSTED · Discrepancy Hold' : 'UNPOSTED · Awaiting Invoice',
+            order_id: rzpTxn?.order_id || 'PENDING',
+            utr: bankTxn.utr,
+            amount_gross_paise: cluster.sum_gross_paise || bankTxn.amount_net_paise,
+            amount_net_paise: cluster.sum_net_expected_paise || bankTxn.amount_net_paise,
+            fee_mdr_paise: 0,
+            fee_gst_paise: 0,
+            raw_narration: 'Awaiting AI voucher dispatch to Zoho Books',
+            status: isDiscrepancy ? 'DISCREPANCY' : 'SETTLED_PENDING_ERP',
+            timestamp_utc: bankTxn.timestamp_utc,
             onSelect: onNodeSelect,
           } as unknown as TransactionNodeData,
         });
-      });
+
+        // Bank → ERP placeholder dashed edge
+        const bankNodeId = `${clusterKey}|bank|${bankTxn.id}`;
+        const edgeId = `edge|${bankNodeId}|${erpPlaceholderId}`;
+        edges.push({
+          id: edgeId,
+          source: bankNodeId,
+          target: erpPlaceholderId,
+          animated: true,
+          style: {
+            stroke: isDiscrepancy ? '#DC2626' : '#D97706',
+            strokeWidth: 1.5,
+            strokeDasharray: '4 4',
+            opacity: 0.6,
+          },
+        });
+      }
     });
 
     return { nodes, edges };

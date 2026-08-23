@@ -10,7 +10,7 @@
 [![Python](https://img.shields.io/badge/python-3.11%20%7C%20FastAPI-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![Frontend](https://img.shields.io/badge/frontend-React%2019%20%7C%20TypeScript%20%7C%20Tailwind-61DAFB.svg?style=flat-square&logo=react&logoColor=black)](https://react.dev)
 [![Audit](https://img.shields.io/badge/audit-SHA--256%20Merkle%20Ledger-4F46E5.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
-[![License](https://img.shields.io/badge/license-MIT-6B7280.svg?style=flat-square)](LICENSE)
+[![Track](https://img.shields.io/badge/Track-04%3A%20AI%20Finance%20Controller-2D65F8.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
 
 **Track 04: AI Finance Controller — Razorpay AI Buildathon**  
 *Autonomous Real-Time Reconciliation of Payment Gateways (Razorpay), Core Banking Feeds (CAMT.053 / MT940), and ERP General Ledgers (Zoho Books / TallyPrime / SAP S/4HANA).*

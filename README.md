@@ -5,7 +5,7 @@
 
 [![Build Status](https://img.shields.io/badge/build-passing-059669.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
 [![Tests](https://img.shields.io/badge/pytest-8%2F8%20passed%20(100%25)-059669.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
-[![Ground Truth Benchmark](https://img.shields.io/badge/ground%20truth%20benchmark-100.00%25%20precision%20%2F%20recall-2D65F8.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
+[![Double-Entry Invariants](https://img.shields.io/badge/invariants-zero--sum%20verified-059669.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
 [![Variance Delta](https://img.shields.io/badge/variance%20delta-%E2%82%B90.00%20(0%20paise)-059669.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
 [![Python](https://img.shields.io/badge/python-3.11%20%7C%20FastAPI-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![Frontend](https://img.shields.io/badge/frontend-React%2019%20%7C%20TypeScript%20%7C%20Tailwind-61DAFB.svg?style=flat-square&logo=react&logoColor=black)](https://react.dev)
@@ -153,19 +153,19 @@ Execution of the genuine 100-batch multi-source benchmark (`python backend/main.
 
 ![CLI Benchmark Terminal](assets/cli-benchmark.png)
 
-| Benchmark Metric | Measured Result | Evaluation Standard | Status | Context |
+| Benchmark Metric | Measured Result | Evaluation Standard | Status | Invariant Verification |
 | :--- | :---: | :---: | :---: | :--- |
-| **Invariant Precision** | **100.00%** | $\ge 99.50\%$ | **PASSED** | Synthetic Ground Truth Invariant Convergence |
-| **Invariant Recall** | **100.00%** | $\ge 99.50\%$ | **PASSED** | Zero Omissions & Exact Integer Subset-Sum Proof |
+| **Double-Entry Invariant Gate** | **BALANCED** | $\sum \text{Debits} - \sum \text{Credits} = 0$ | **PASSED** | Non-Negotiable Double-Entry Audit Gatekeeper |
+| **Statutory GST Invariant** | **VERIFIED** | $\text{GST} = \text{round}(\text{MDR} \times 0.18)$ | **PASSED** | Exact Statutory Tax Compliance |
 | **Discrepancy Variance** | **₹0.00 (0 paise)** | $\text{INR } 0.00$ | **PASSED** | Zero Floating-Point Drift (64-Bit Integer Math) |
 | **End-to-End Latency** | **34.78 ms** | $<500\text{ ms}$ | **PASSED** | Real-time C++ / Numba SIMD Execution |
 | **Total Records Processed** | **286 transactions** | 100 batch (3-way) | **PASSED** | Razorpay Feeds + Bank Deposits + ERP Invoices |
 | **Pass 1 Resolved** | **71 clusters** | Heuristic Pruner | **PASSED** | 1:1 Hash Index & 2-Stage Settlement Join |
 | **Pass 2 Resolved** | **10 clusters** | DP Knapsack Solver | **PASSED** | 1:N Batch & Signed Refund Subset-Sum |
 | **Pass 3 AI Resolved** | **5 clusters** | Forensic AI Agent | **PASSED** | Episodic Memory & AST Sandbox Proof |
-| **Double-Entry Invariants** | **100% VERIFIED** | Zero-Sum Gate | **PASSED** | Non-Negotiable Double-Entry Audit Gatekeeper |
+| **Cryptographic Merkle Audit** | **VERIFIED** | SHA-256 Root Hash | **PASSED** | Tamper-Proof Binary Audit Ledger |
 
-> 💡 **Benchmark Interpretation:** The 100.00% metric is a formal mathematical proof of the engine's double-entry invariants on synthetic ground truth, validating zero floating-point drift and exact integer subset-sum knapsack convergence across 1:1 settlements, 1:N batch deposits, and refund debits.
+> 💡 **Deterministic Invariant Assurance:** RECON-MESH enforces mathematical invariants over exact 64-bit integer paise, guaranteeing zero floating-point drift and exact integer subset-sum knapsack convergence across 1:1 settlements, 1:N batch deposits, and refund debits.
 
 ---
 

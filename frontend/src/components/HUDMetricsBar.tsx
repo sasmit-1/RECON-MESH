@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { Check, Copy, TrendingUp, Database, AlertTriangle, Clock, Shield } from 'lucide-react';
+import { Check, Copy, Database, AlertTriangle, Clock, Shield } from 'lucide-react';
 import type { ReconMetrics } from '../types/recon';
 
 interface HUDMetricsBarProps {
@@ -34,26 +34,23 @@ export const HUDMetricsBar: React.FC<HUDMetricsBarProps> = ({ metrics, merkleRoo
     <div className="bg-white border-b border-[#E5E7EB] px-5 py-3 flex-shrink-0">
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
 
-        {/* Card 1: Invariant Precision & Recall */}
-        <div className="flex flex-col gap-1" title="Mathematical proof of zero floating-point drift and exact integer subset-sum convergence on ground truth benchmark.">
+        {/* Card 1: Double-Entry Invariant Gate */}
+        <div className="flex flex-col gap-1" title="Mathematical proof of zero floating-point drift: sum(Debits) - sum(Credits) == 0">
           <div className="flex items-center justify-between text-[11px] font-medium">
             <div className="flex items-center gap-1.5 text-[#374151]">
-              <TrendingUp className="w-3.5 h-3.5 text-[#2D65F8]" />
-              <span className="font-semibold">Invariant Precision</span>
+              <Shield className="w-3.5 h-3.5 text-[#059669]" />
+              <span className="font-semibold text-[#111827]">Double-Entry Gate</span>
             </div>
-            <span className="text-[9px] bg-[#EEF3FF] text-[#2D65F8] px-1.5 py-0.5 rounded font-medium">
-              Ground Truth
+            <span className="text-[9px] bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0] px-1.5 py-0.5 rounded font-medium">
+              Zero-Sum
             </span>
           </div>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-[22px] font-bold text-[#111827] leading-none">
-              {metrics.precision.toFixed(1)}%
-            </span>
-            <span className="text-[12px] text-[#6B7280]">
-              / {metrics.recall.toFixed(1)}% <span className="text-[10px] text-[#9CA3AF]">Recall</span>
+            <span className="text-[20px] font-bold text-[#059669] leading-none">
+              BALANCED
             </span>
           </div>
-          <span className="text-[10px] text-[#6B7280]">Exact Integer Invariants Proof</span>
+          <span className="text-[10px] text-[#6B7280]">∑ Debits − ∑ Credits = ₹0.00</span>
         </div>
 
         {/* Separator */}

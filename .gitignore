@@ -45,6 +45,8 @@ Thumbs.db
 
 # Pitch & Recording Scripts (Local Only)
 script.md
-*.png
 Screenshot*
-*report.md
+*report.md
+
+# Allow documentation assets
+!assets/**

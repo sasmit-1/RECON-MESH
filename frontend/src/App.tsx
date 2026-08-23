@@ -104,8 +104,10 @@ export function App() {
           <ReconGraphCanvas clusters={clusters} onNodeSelect={handleNodeSelect} />
         </div>
 
-        {/* Empty state */}
-        {clusters.length === 0 && (
+        {/* Empty state — only show when not streaming (startStream intentionally
+            clears clusters to prevent ID collisions; we don't want the spinner
+            flashing during the 100-500ms before the first stream tick arrives) */}
+        {clusters.length === 0 && !isStreaming && (
           <div className="absolute inset-0 top-8 flex flex-col items-center justify-center z-10 pointer-events-none gap-3">
             <div className="w-8 h-8 border-2 border-[#2D65F8] border-t-transparent rounded-full animate-spin" />
             <p className="text-[12px] text-[#9CA3AF]">

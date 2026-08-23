@@ -57,9 +57,15 @@ const FlowInner: React.FC<{
     setViewport({ x: 20, y: 20, zoom: 0.9 }, { duration: 250 });
   }, [setViewport]);
 
-  // Lock viewport to readable zoom on first node load
+  // Lock viewport to readable zoom on first node load, and re-lock whenever
+  // nodes are cleared and re-populated (e.g. after stream start).
   useEffect(() => {
-    if (!initializedRef.current && nodes.length > 0) {
+    if (nodes.length === 0) {
+      // Reset the initialized flag so we re-lock viewport on the next batch
+      initializedRef.current = false;
+      return;
+    }
+    if (!initializedRef.current) {
       initializedRef.current = true;
       const timer = setTimeout(() => {
         setViewport({ x: 20, y: 20, zoom: 0.9 }, { duration: 0 });
@@ -105,6 +111,12 @@ const FlowInner: React.FC<{
 export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, onNodeSelect }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(1200);
+  // Stable ref for onNodeSelect so it never appears in useMemo deps.
+  // Without this, every cluster update recreates handleNodeSelect (because it
+  // closes over `clusters`), which invalidates the memo and rebuilds all
+  // React Flow nodes — causing the flicker/disappear glitch.
+  const onNodeSelectRef = useRef(onNodeSelect);
+  useEffect(() => { onNodeSelectRef.current = onNodeSelect; }, [onNodeSelect]);
 
   // Measure actual rendered container width so columns align with flex-1 lane headers
   useEffect(() => {
@@ -145,6 +157,10 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
       const edgeColor = cluster.discrepancy_paise === 0 ? '#059669' : '#DC2626';
       const clusterKey = cluster.cluster_id;
 
+      // Use a stable wrapper so node data.onSelect never changes between renders
+      // (avoids React Flow diffing every node as "updated" on each cluster flush)
+      const stableOnSelect = (id: string) => onNodeSelectRef.current(id);
+
       // ── 1. Razorpay nodes ───────────────────────────────────────────────────
       const rzpNodeIds: string[] = [];
       cluster.razorpay_txns.forEach((txn, i) => {
@@ -168,7 +184,7 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
             raw_narration: txn.raw_narration,
             status: matchStatus,
             timestamp_utc: txn.timestamp_utc,
-            onSelect: onNodeSelect,
+            onSelect: stableOnSelect,
           } as unknown as TransactionNodeData,
         });
       });
@@ -196,7 +212,7 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
             raw_narration: txn.raw_narration,
             status: matchStatus,
             timestamp_utc: txn.timestamp_utc,
-            onSelect: onNodeSelect,
+            onSelect: stableOnSelect,
           } as unknown as TransactionNodeData,
         });
       });
@@ -225,7 +241,7 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
               raw_narration: txn.raw_narration,
               status: cluster.status,
               timestamp_utc: txn.timestamp_utc,
-              onSelect: onNodeSelect,
+              onSelect: stableOnSelect,
             } as unknown as TransactionNodeData,
           });
         });
@@ -254,7 +270,7 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
             raw_narration: 'Awaiting AI voucher dispatch to Zoho Books',
             status: isDiscrepancy ? 'DISCREPANCY' : 'SETTLED_PENDING_ERP',
             timestamp_utc: bankTxn?.timestamp_utc || new Date().toISOString(),
-            onSelect: onNodeSelect,
+            onSelect: stableOnSelect,
           } as unknown as TransactionNodeData,
         });
       }
@@ -297,9 +313,12 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
     });
 
     return { nodes, edges };
-  }, [clusters, containerWidth, onNodeSelect]);
+  // onNodeSelect is intentionally omitted from useMemo deps — it's accessed via
+  // onNodeSelectRef so changes never invalidate the memo (avoids node flicker).
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clusters, containerWidth]);
 
-  const handleNodeSelect = useCallback((id: string) => onNodeSelect(id), [onNodeSelect]);
+  const handleNodeSelect = useCallback((id: string) => onNodeSelectRef.current(id), []);
 
   return (
     <div ref={containerRef} className="w-full h-full">

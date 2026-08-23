@@ -137,11 +137,19 @@ export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamRe
 
   // Stream controls
   const startStream = useCallback(async () => {
-    setIsStreaming(true);
+    // Clear existing clusters AND buffer so batch data doesn't collide with
+    // incoming stream data — prevents React Flow node ID conflicts that cause
+    // nodes to disappear/flicker during the first few stream ticks.
     clusterBufferRef.current = [];
+    voucherBufferRef.current = [];
+    setClusters([]);
+    setActiveVouchers([]);
+    setIsStreaming(true);
     setMetrics((prev) => ({
       ...prev,
       throughput: 5,
+      totalProcessed: 0,
+      resolvedClusters: 0,
     }));
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify({ action: 'START_STREAM', frequency_hz: 5 }));
@@ -159,6 +167,9 @@ export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamRe
 
   const stopStream = useCallback(async () => {
     setIsStreaming(false);
+    // Drain buffers so the next flush interval doesn't push stale data
+    clusterBufferRef.current = [];
+    voucherBufferRef.current = [];
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify({ action: 'STOP_STREAM' }));
     }

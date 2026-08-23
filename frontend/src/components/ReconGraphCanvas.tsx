@@ -10,7 +10,7 @@
  * between matched node coordinates, tied to the React Flow viewport transform.
  */
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import {
   Background,
   Controls,
@@ -19,6 +19,7 @@ import {
   type NodeTypes,
   ReactFlow,
   ReactFlowProvider,
+  useReactFlow,
   useViewport,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
@@ -41,7 +42,7 @@ interface ReconGraphCanvasProps {
   onNodeSelect: (nodeId: string) => void;
 }
 
-// Inner component inside ReactFlowProvider — calls useViewport()
+// Inner component inside ReactFlowProvider — calls useViewport() and useReactFlow()
 const FlowInner: React.FC<{
   nodes: Node<TransactionNodeData>[];
   edges: Edge[];
@@ -49,6 +50,19 @@ const FlowInner: React.FC<{
   onNodeSelect: (id: string) => void;
 }> = ({ nodes, edges, lasers, onNodeSelect }) => {
   const viewport = useViewport();
+  const { fitView } = useReactFlow();
+  const prevCountRef = useRef<number>(0);
+
+  // Auto-fit viewport whenever nodes load or expand
+  useEffect(() => {
+    if (nodes.length > 0 && nodes.length !== prevCountRef.current) {
+      prevCountRef.current = nodes.length;
+      const timer = setTimeout(() => {
+        fitView({ padding: 0.2, duration: 300 });
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [nodes.length, fitView]);
 
   return (
     <div className="relative w-full h-full bg-[#F4F6FA] overflow-hidden">
@@ -62,8 +76,8 @@ const FlowInner: React.FC<{
         nodeTypes={NODE_TYPES}
         onNodeClick={(_, node) => onNodeSelect(node.id)}
         fitView
-        fitViewOptions={{ padding: 0.25 }}
-        minZoom={0.15}
+        fitViewOptions={{ padding: 0.2 }}
+        minZoom={0.1}
         maxZoom={2.5}
         className="z-10"
         proOptions={{ hideAttribution: true }}

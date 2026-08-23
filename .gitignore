@@ -44,4 +44,6 @@ dist/
 Thumbs.db
 
 # Pitch & Recording Scripts (Local Only)
-script.md
+script.md
+*.png
+Screenshot*

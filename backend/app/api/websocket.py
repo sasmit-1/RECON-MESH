@@ -136,8 +136,8 @@ async def _stream_pipeline_task(
                 "streamed_count": streamed,
             })
 
-            # Mini-batch matching every 10 bank events
-            if len(bank_buf) >= 10 and len(rzp_buf) >= 5:
+            # Mini-batch matching as events stream in
+            if len(bank_buf) >= 2 and len(rzp_buf) >= 2:
                 try:
                     clusters, orphan_rzp, orphan_bank = matcher.prune(
                         list(rzp_buf), list(bank_buf), list(erp_buf)

@@ -138,12 +138,9 @@ export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamRe
   // Stream controls
   const startStream = useCallback(async () => {
     setIsStreaming(true);
-    setClusters([]); // Clear old static batch to visualize real-time incoming stream
     clusterBufferRef.current = [];
     setMetrics((prev) => ({
       ...prev,
-      resolvedClusters: 0,
-      totalProcessed: 0,
       throughput: 5,
     }));
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {

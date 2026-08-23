@@ -135,8 +135,6 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
       .filter((c) => (c.razorpay_txns?.length || 0) + (c.bank_txns?.length || 0) + (c.erp_txns?.length || 0) > 0)
       .slice(0, MAX_VISIBLE_CLUSTERS);
 
-    // Track globally seen txn IDs to skip any duplicates across clusters
-    const seenNodeIds = new Set<string>();
     let currentRow = 0;
 
     activeClusters.forEach((cluster) => {
@@ -145,14 +143,13 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
 
       const matchStatus = cluster.discrepancy_paise === 0 ? 'MATCHED' : 'DISCREPANCY';
       const edgeColor = cluster.discrepancy_paise === 0 ? '#059669' : '#DC2626';
-      // Scope every node ID to its cluster to prevent React Flow duplicate-ID crashes
       const clusterKey = cluster.cluster_id;
 
-      // ── Razorpay nodes ──────────────────────────────────────────────────────
+      // ── 1. Razorpay nodes ───────────────────────────────────────────────────
+      const rzpNodeIds: string[] = [];
       cluster.razorpay_txns.forEach((txn, i) => {
         const nodeId = `${clusterKey}|rzp|${txn.id}`;
-        if (seenNodeIds.has(nodeId)) return;
-        seenNodeIds.add(nodeId);
+        rzpNodeIds.push(nodeId);
         const y = baseY + i * ROW_HEIGHT;
         nodes.push({
           id: nodeId,
@@ -174,26 +171,13 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
             onSelect: onNodeSelect,
           } as unknown as TransactionNodeData,
         });
-
-        // RZP → Bank edges
-        cluster.bank_txns.forEach((bank) => {
-          const bankNodeId = `${clusterKey}|bank|${bank.id}`;
-          const edgeId = `edge|${nodeId}|${bankNodeId}`;
-          edges.push({
-            id: edgeId,
-            source: nodeId,
-            target: bankNodeId,
-            animated: matchStatus === 'DISCREPANCY',
-            style: { stroke: edgeColor, strokeWidth: 1.5, opacity: 0.6 },
-          });
-        });
       });
 
-      // ── Bank nodes ──────────────────────────────────────────────────────────
+      // ── 2. Bank nodes ───────────────────────────────────────────────────────
+      const bankNodeIds: string[] = [];
       cluster.bank_txns.forEach((txn, i) => {
         const nodeId = `${clusterKey}|bank|${txn.id}`;
-        if (seenNodeIds.has(nodeId)) return;
-        seenNodeIds.add(nodeId);
+        bankNodeIds.push(nodeId);
         const y = baseY + i * ROW_HEIGHT;
         nodes.push({
           id: nodeId,
@@ -215,28 +199,14 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
             onSelect: onNodeSelect,
           } as unknown as TransactionNodeData,
         });
-
-        // Bank → ERP edges
-        const bankEdgeColor = cluster.status === 'SETTLED_PENDING_ERP' ? '#D97706' : edgeColor;
-        cluster.erp_txns.forEach((erp) => {
-          const erpNodeId = `${clusterKey}|erp|${erp.id}`;
-          const edgeId = `edge|${nodeId}|${erpNodeId}`;
-          edges.push({
-            id: edgeId,
-            source: nodeId,
-            target: erpNodeId,
-            animated: cluster.status === 'SETTLED_PENDING_ERP',
-            style: { stroke: bankEdgeColor, strokeWidth: 1.5, opacity: 0.6 },
-          });
-        });
       });
 
-      // ── ERP nodes ───────────────────────────────────────────────────────────
+      // ── 3. ERP nodes ────────────────────────────────────────────────────────
+      const erpNodeIds: string[] = [];
       if (cluster.erp_txns.length > 0) {
         cluster.erp_txns.forEach((txn, i) => {
           const nodeId = `${clusterKey}|erp|${txn.id}`;
-          if (seenNodeIds.has(nodeId)) return;
-          seenNodeIds.add(nodeId);
+          erpNodeIds.push(nodeId);
           const y = baseY + i * ROW_HEIGHT;
           nodes.push({
             id: nodeId,
@@ -259,9 +229,10 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
             } as unknown as TransactionNodeData,
           });
         });
-      } else if (cluster.bank_txns.length > 0) {
+      } else if (bankNodeIds.length > 0) {
         // Pending ERP Ledger entry placeholder for unposted / discrepancy settlements
         const erpPlaceholderId = `${clusterKey}|erp|pending`;
+        erpNodeIds.push(erpPlaceholderId);
         const rzpTxn = cluster.razorpay_txns[0];
         const bankTxn = cluster.bank_txns[0];
         const isDiscrepancy = cluster.discrepancy_paise !== 0;
@@ -271,38 +242,58 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
           type: 'transaction',
           position: { x: colX.ERP, y: baseY },
           data: {
-            txnId: bankTxn.id,
+            txnId: bankTxn ? bankTxn.id : 'pending_erp',
             source: 'ERP',
             original_id: isDiscrepancy ? 'UNPOSTED · Discrepancy Hold' : 'UNPOSTED · Awaiting Invoice',
             order_id: rzpTxn?.order_id || 'PENDING',
-            utr: bankTxn.utr,
-            amount_gross_paise: cluster.sum_gross_paise || bankTxn.amount_net_paise,
-            amount_net_paise: cluster.sum_net_expected_paise || bankTxn.amount_net_paise,
+            utr: bankTxn?.utr || null,
+            amount_gross_paise: cluster.sum_gross_paise || (bankTxn?.amount_net_paise ?? 0),
+            amount_net_paise: cluster.sum_net_expected_paise || (bankTxn?.amount_net_paise ?? 0),
             fee_mdr_paise: 0,
             fee_gst_paise: 0,
             raw_narration: 'Awaiting AI voucher dispatch to Zoho Books',
             status: isDiscrepancy ? 'DISCREPANCY' : 'SETTLED_PENDING_ERP',
-            timestamp_utc: bankTxn.timestamp_utc,
+            timestamp_utc: bankTxn?.timestamp_utc || new Date().toISOString(),
             onSelect: onNodeSelect,
           } as unknown as TransactionNodeData,
         });
-
-        // Bank → ERP placeholder dashed edge
-        const bankNodeId = `${clusterKey}|bank|${bankTxn.id}`;
-        const edgeId = `edge|${bankNodeId}|${erpPlaceholderId}`;
-        edges.push({
-          id: edgeId,
-          source: bankNodeId,
-          target: erpPlaceholderId,
-          animated: true,
-          style: {
-            stroke: isDiscrepancy ? '#DC2626' : '#D97706',
-            strokeWidth: 1.5,
-            strokeDasharray: '4 4',
-            opacity: 0.6,
-          },
-        });
       }
+
+      // ── 4. Strictly Intra-Cluster Horizontal Edges ──────────────────────────
+      // Razorpay → Bank edges (only between this row's nodes)
+      rzpNodeIds.forEach((rzpId) => {
+        bankNodeIds.forEach((bankId) => {
+          edges.push({
+            id: `edge|${rzpId}|${bankId}`,
+            source: rzpId,
+            target: bankId,
+            animated: matchStatus === 'DISCREPANCY',
+            style: { stroke: edgeColor, strokeWidth: 1.5, opacity: 0.6 },
+          });
+        });
+      });
+
+      // Bank → ERP edges (only between this row's nodes)
+      const isPendingOrDiscrepant = cluster.erp_txns.length === 0 || cluster.status === 'SETTLED_PENDING_ERP';
+      const isDiscrepancy = cluster.discrepancy_paise !== 0;
+      const bankEdgeColor = isDiscrepancy ? '#DC2626' : (isPendingOrDiscrepant ? '#D97706' : edgeColor);
+
+      bankNodeIds.forEach((bankId) => {
+        erpNodeIds.forEach((erpId) => {
+          edges.push({
+            id: `edge|${bankId}|${erpId}`,
+            source: bankId,
+            target: erpId,
+            animated: isPendingOrDiscrepant,
+            style: {
+              stroke: bankEdgeColor,
+              strokeWidth: 1.5,
+              strokeDasharray: isPendingOrDiscrepant ? '4 4' : undefined,
+              opacity: 0.6,
+            },
+          });
+        });
+      });
     });
 
     return { nodes, edges };

@@ -40,13 +40,19 @@ export function App() {
 
   const handleNodeSelect = useCallback(
     (nodeId: string) => {
-      const txnId = nodeId.replace(/^(rzp-|bank-|erp-)/, '');
-      const found = clusters.find(
-        (cl) =>
-          cl.razorpay_txns.some((t) => t.id === txnId) ||
-          cl.bank_txns.some((t) => t.id === txnId) ||
-          cl.erp_txns.some((t) => t.id === txnId)
-      );
+      // Node IDs are scoped as "{clusterKey}|{lane}|{txnId}" — extract the txnId portion
+      const parts = nodeId.split('|');
+      const txnId = parts.length >= 3 ? parts[2] : nodeId.replace(/^(rzp-|bank-|erp-)/, '');
+      const clusterKey = parts[0];
+      // Find by cluster_id first (fast path), fall back to scanning txn arrays
+      const found =
+        clusters.find((cl) => cl.cluster_id === clusterKey) ??
+        clusters.find(
+          (cl) =>
+            cl.razorpay_txns.some((t) => t.id === txnId) ||
+            cl.bank_txns.some((t) => t.id === txnId) ||
+            cl.erp_txns.some((t) => t.id === txnId)
+        );
       setSelectedCluster(found ?? null);
     },
     [clusters]

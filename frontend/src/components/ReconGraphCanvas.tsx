@@ -6,11 +6,11 @@
  *   Column B: Core Bank Deposits (Net Credit ₹, Narration, Value Date)
  *   Column C: ERP Invoices & GL Ledgers (Invoice ID, AR, Amount ₹)
  *
- * A synchronized Three.js WebGL overlay draws razor-sharp bezier laser arcs
- * between matched node coordinates, tied to the React Flow viewport transform.
+ * Node IDs are scoped per cluster to prevent React Flow duplicate-ID collisions.
+ * Column positions are computed from actual container width to align with lane headers.
  */
 
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import {
   Background,
   Controls,
@@ -25,55 +25,52 @@ import {
 import '@xyflow/react/dist/style.css';
 import type { ReconciliationCluster } from '../types/recon';
 import { CustomTransactionNode, type TransactionNodeData } from './CustomTransactionNode';
-import { ThreeLaserArcOverlay, type LaserLine } from './ThreeLaserArcOverlay';
 
 // Cast to NodeTypes to satisfy @xyflow/react strict signature
 const NODE_TYPES: NodeTypes = {
   transaction: CustomTransactionNode as NodeTypes[string],
 };
 
-// Fixed column X positions (React Flow coordinate space)
-// 3 columns aligned with the 3 lane headers
-const COL_X = { RAZORPAY: 20, BANK: 380, ERP: 740 };
-const ROW_HEIGHT = 140;
+// Fractional offsets within each 1/3-width column
+// Node card is 240px wide. Each column occupies 33.33% of container.
+// We position nodes at a fixed pixel offset from each column's left edge.
+const COL_FRACTIONS = { RAZORPAY: 0.02, BANK: 0.355, ERP: 0.69 };
+const ROW_HEIGHT = 160;
+const MAX_VISIBLE_CLUSTERS = 25;
 
 interface ReconGraphCanvasProps {
   clusters: ReconciliationCluster[];
-  onNodeSelect: (nodeId: string) => void;
+  onNodeSelect: (clusterScopedNodeId: string) => void;
 }
 
 // Inner component inside ReactFlowProvider — calls useViewport() and useReactFlow()
 const FlowInner: React.FC<{
   nodes: Node<TransactionNodeData>[];
   edges: Edge[];
-  lasers: LaserLine[];
   onNodeSelect: (id: string) => void;
-}> = ({ nodes, edges, lasers, onNodeSelect }) => {
-  const viewport = useViewport();
+}> = ({ nodes, edges, onNodeSelect }) => {
+  useViewport(); // keep subscribed so Three.js overlay syncs if re-added later
   const { setViewport } = useReactFlow();
   const initializedRef = useRef<boolean>(false);
 
   const resetToTop = useCallback(() => {
-    setViewport({ x: 40, y: 20, zoom: 0.88 }, { duration: 250 });
+    setViewport({ x: 20, y: 20, zoom: 0.9 }, { duration: 250 });
   }, [setViewport]);
 
-  // Set readable centered zoom ONCE on initial load
+  // Lock viewport to readable zoom on first node load
   useEffect(() => {
     if (!initializedRef.current && nodes.length > 0) {
       initializedRef.current = true;
       const timer = setTimeout(() => {
-        setViewport({ x: 40, y: 20, zoom: 0.88 }, { duration: 0 });
-      }, 50);
+        setViewport({ x: 20, y: 20, zoom: 0.9 }, { duration: 0 });
+      }, 40);
       return () => clearTimeout(timer);
     }
   }, [nodes.length, setViewport]);
 
   return (
     <div className="relative w-full h-full bg-[#F4F6FA] overflow-hidden">
-      {/* Layer 0: WebGL Laser Arc Overlay */}
-      <ThreeLaserArcOverlay lasers={lasers} viewport={viewport} />
-
-      {/* Floating quick reset button */}
+      {/* Floating reset button */}
       <button
         onClick={resetToTop}
         title="Reset view to top"
@@ -82,14 +79,14 @@ const FlowInner: React.FC<{
         <span>↑ Reset to Top</span>
       </button>
 
-      {/* Layer 1: React Flow Canvas with smooth vertical scrolling */}
+      {/* React Flow Canvas — SVG edges provide the connection lines */}
       <ReactFlow
         nodes={nodes}
         edges={edges}
         nodeTypes={NODE_TYPES}
         onNodeClick={(_, node) => onNodeSelect(node.id)}
-        defaultViewport={{ x: 40, y: 20, zoom: 0.88 }}
-        minZoom={0.5}
+        defaultViewport={{ x: 20, y: 20, zoom: 0.9 }}
+        minZoom={0.4}
         maxZoom={1.5}
         panOnScroll={true}
         zoomOnScroll={false}
@@ -106,28 +103,56 @@ const FlowInner: React.FC<{
 };
 
 export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, onNodeSelect }) => {
-  const { nodes, edges, lasers } = useMemo(() => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(1200);
+
+  // Measure actual rendered container width so columns align with flex-1 lane headers
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const obs = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width;
+      if (w && w > 100) setContainerWidth(w);
+    });
+    obs.observe(el);
+    setContainerWidth(el.clientWidth || 1200);
+    return () => obs.disconnect();
+  }, []);
+
+  const { nodes, edges } = useMemo(() => {
     const nodes: Node<TransactionNodeData>[] = [];
     const edges: Edge[] = [];
-    const lasers: LaserLine[] = [];
 
-    // Render top 35 active clusters for crisp 60fps performance and smooth scrolling
-    const visibleClusters = clusters.slice(0, 35);
+    // Compute column X in React Flow world coords from actual container pixel width
+    const colX = {
+      RAZORPAY: Math.round(containerWidth * COL_FRACTIONS.RAZORPAY),
+      BANK:     Math.round(containerWidth * COL_FRACTIONS.BANK),
+      ERP:      Math.round(containerWidth * COL_FRACTIONS.ERP),
+    };
 
-    visibleClusters.forEach((cluster, clusterIdx) => {
-      const baseY = clusterIdx * ROW_HEIGHT * 1.2;
+    // Limit to MAX_VISIBLE_CLUSTERS for smooth 60fps rendering
+    const visible = clusters.slice(0, MAX_VISIBLE_CLUSTERS);
+
+    // Track globally seen txn IDs to skip any duplicates across clusters
+    const seenNodeIds = new Set<string>();
+
+    visible.forEach((cluster, clusterIdx) => {
+      const baseY = clusterIdx * ROW_HEIGHT;
       const matchStatus = cluster.discrepancy_paise === 0 ? 'MATCHED' : 'DISCREPANCY';
-      // Muted professional edge colors — no neon
-      const laserColor = cluster.discrepancy_paise === 0 ? '#059669' : '#DC2626';
+      const edgeColor = cluster.discrepancy_paise === 0 ? '#059669' : '#DC2626';
+      // Scope every node ID to its cluster to prevent React Flow duplicate-ID crashes
+      const clusterKey = cluster.cluster_id;
 
-      // Razorpay nodes
+      // ── Razorpay nodes ──────────────────────────────────────────────────────
       cluster.razorpay_txns.forEach((txn, i) => {
-        const nodeId = `rzp-${txn.id}`;
+        const nodeId = `${clusterKey}|rzp|${txn.id}`;
+        if (seenNodeIds.has(nodeId)) return;
+        seenNodeIds.add(nodeId);
         const y = baseY + i * ROW_HEIGHT;
         nodes.push({
           id: nodeId,
           type: 'transaction',
-          position: { x: COL_X.RAZORPAY, y },
+          position: { x: colX.RAZORPAY, y },
           data: {
             txnId: txn.id,
             source: txn.source,
@@ -145,36 +170,30 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
           } as unknown as TransactionNodeData,
         });
 
-        // RZP → Bank edges + laser arcs
+        // RZP → Bank edges
         cluster.bank_txns.forEach((bank) => {
-          const bankNodeId = `bank-${bank.id}`;
-          const edgeId = `e-${nodeId}-${bankNodeId}`;
+          const bankNodeId = `${clusterKey}|bank|${bank.id}`;
+          const edgeId = `edge|${nodeId}|${bankNodeId}`;
           edges.push({
             id: edgeId,
             source: nodeId,
             target: bankNodeId,
             animated: matchStatus === 'DISCREPANCY',
-            style: { stroke: laserColor, strokeWidth: 1.5, opacity: 0.5 },
-          });
-          lasers.push({
-            id: edgeId,
-            sourceX: COL_X.RAZORPAY + 240,
-            sourceY: y + 50,
-            targetX: COL_X.BANK,
-            targetY: baseY + 50,
-            color: laserColor,
+            style: { stroke: edgeColor, strokeWidth: 1.5, opacity: 0.6 },
           });
         });
       });
 
-      // Bank nodes
+      // ── Bank nodes ──────────────────────────────────────────────────────────
       cluster.bank_txns.forEach((txn, i) => {
-        const nodeId = `bank-${txn.id}`;
+        const nodeId = `${clusterKey}|bank|${txn.id}`;
+        if (seenNodeIds.has(nodeId)) return;
+        seenNodeIds.add(nodeId);
         const y = baseY + i * ROW_HEIGHT;
         nodes.push({
           id: nodeId,
           type: 'transaction',
-          position: { x: COL_X.BANK, y },
+          position: { x: colX.BANK, y },
           data: {
             txnId: txn.id,
             source: txn.source,
@@ -192,38 +211,31 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
           } as unknown as TransactionNodeData,
         });
 
-        // Bank → ERP edges + laser arcs
-        const bankLaserColor =
-          cluster.status === 'SETTLED_PENDING_ERP' ? '#D97706' : laserColor;
+        // Bank → ERP edges
+        const bankEdgeColor = cluster.status === 'SETTLED_PENDING_ERP' ? '#D97706' : edgeColor;
         cluster.erp_txns.forEach((erp) => {
-          const erpNodeId = `erp-${erp.id}`;
-          const edgeId2 = `e-${nodeId}-${erpNodeId}`;
+          const erpNodeId = `${clusterKey}|erp|${erp.id}`;
+          const edgeId = `edge|${nodeId}|${erpNodeId}`;
           edges.push({
-            id: edgeId2,
+            id: edgeId,
             source: nodeId,
             target: erpNodeId,
             animated: cluster.status === 'SETTLED_PENDING_ERP',
-            style: { stroke: bankLaserColor, strokeWidth: 1.5, opacity: 0.5 },
-          });
-          lasers.push({
-            id: edgeId2 + '-laser',
-            sourceX: COL_X.BANK + 240,
-            sourceY: y + 50,
-            targetX: COL_X.ERP,
-            targetY: baseY + 50,
-            color: bankLaserColor,
+            style: { stroke: bankEdgeColor, strokeWidth: 1.5, opacity: 0.6 },
           });
         });
       });
 
-      // ERP nodes
+      // ── ERP nodes ───────────────────────────────────────────────────────────
       cluster.erp_txns.forEach((txn, i) => {
-        const nodeId = `erp-${txn.id}`;
+        const nodeId = `${clusterKey}|erp|${txn.id}`;
+        if (seenNodeIds.has(nodeId)) return;
+        seenNodeIds.add(nodeId);
         const y = baseY + i * ROW_HEIGHT;
         nodes.push({
           id: nodeId,
           type: 'transaction',
-          position: { x: COL_X.ERP, y },
+          position: { x: colX.ERP, y },
           data: {
             txnId: txn.id,
             source: txn.source,
@@ -243,19 +255,20 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
       });
     });
 
-    return { nodes, edges, lasers };
-  }, [clusters, onNodeSelect]);
+    return { nodes, edges };
+  }, [clusters, containerWidth, onNodeSelect]);
 
   const handleNodeSelect = useCallback((id: string) => onNodeSelect(id), [onNodeSelect]);
 
   return (
-    <ReactFlowProvider>
-      <FlowInner
-        nodes={nodes}
-        edges={edges}
-        lasers={lasers}
-        onNodeSelect={handleNodeSelect}
-      />
-    </ReactFlowProvider>
+    <div ref={containerRef} className="w-full h-full">
+      <ReactFlowProvider>
+        <FlowInner
+          nodes={nodes}
+          edges={edges}
+          onNodeSelect={handleNodeSelect}
+        />
+      </ReactFlowProvider>
+    </div>
   );
 };

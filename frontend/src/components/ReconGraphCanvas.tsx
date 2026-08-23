@@ -202,7 +202,11 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
       cluster.bank_txns.forEach((txn, i) => {
         const nodeId = `${clusterKey}|bank|${txn.id}`;
         bankNodeIds.push(nodeId);
-        const y = baseY + i * ROW_HEIGHT;
+        // In 1:N batch clusters, vertically center the single consolidated bank payout card
+        const y = cluster.bank_txns.length === 1 && clusterHeight > 1
+          ? baseY + ((clusterHeight - 1) * ROW_HEIGHT) / 2
+          : baseY + i * ROW_HEIGHT;
+
         nodes.push({
           id: nodeId,
           type: 'transaction',
@@ -220,6 +224,7 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
             raw_narration: txn.raw_narration,
             status: matchStatus,
             timestamp_utc: txn.timestamp_utc,
+            batchCount: clusterHeight > 1 ? clusterHeight : undefined,
             onSelect: stableOnSelect,
           } as unknown as TransactionNodeData,
         });
@@ -286,7 +291,9 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
         });
       }
 
-      // ── 4. Strictly Intra-Cluster Horizontal Edges ──────────────────────────
+      // ── 4. Strictly Intra-Cluster Horizontal / Smoothstep Edges ───────────────
+      const isMultiCard = clusterHeight > 1;
+
       // Razorpay → Bank edges (only between this row's nodes)
       rzpNodeIds.forEach((rzpId) => {
         bankNodeIds.forEach((bankId) => {
@@ -294,8 +301,9 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
             id: `edge|${rzpId}|${bankId}`,
             source: rzpId,
             target: bankId,
+            type: isMultiCard ? 'smoothstep' : 'default',
             animated: isDiscrepancy,
-            style: { stroke: edgeColor, strokeWidth: 1.5, opacity: 0.6 },
+            style: { stroke: edgeColor, strokeWidth: 1.5, opacity: 0.7 },
           });
         });
       });
@@ -308,12 +316,13 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
             id: `edge|${bankId}|${erpId}`,
             source: bankId,
             target: erpId,
+            type: isMultiCard ? 'smoothstep' : 'default',
             animated: isPending || isDiscrepancy,
             style: {
               stroke: edgeColor,
               strokeWidth: 1.5,
               strokeDasharray: isPending ? '4 4' : undefined,
-              opacity: 0.6,
+              opacity: 0.7,
             },
           });
         });

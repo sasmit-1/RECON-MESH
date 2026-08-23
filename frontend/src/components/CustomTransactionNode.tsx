@@ -23,6 +23,7 @@ export interface TransactionNodeData extends Record<string, unknown> {
   raw_narration?: string | null;
   status: MatchStatus;
   timestamp_utc: string;
+  batchCount?: number;
   onSelect?: (id: string) => void;
 }
 
@@ -33,7 +34,7 @@ interface StatusStyle {
   amount: string;   // amount text color
 }
 
-const STATUS_STYLES: Record<MatchStatus, StatusStyle> = {
+const STATUS_STYLES: Record<string, StatusStyle> = {
   MATCHED: {
     accent: 'border-l-[#059669]',
     badge: 'bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0]',
@@ -66,7 +67,7 @@ const STATUS_STYLES: Record<MatchStatus, StatusStyle> = {
   },
 };
 
-const SOURCE_CONFIG: Record<SourceType, { label: string; color: string }> = {
+const SOURCE_CONFIG: Record<string, { label: string; color: string }> = {
   RAZORPAY: { label: 'Razorpay', color: 'text-[#2D65F8]' },
   BANK:     { label: 'Bank',     color: 'text-[#374151]' },
   ERP:      { label: 'ERP/GL',   color: 'text-[#374151]' },
@@ -74,12 +75,18 @@ const SOURCE_CONFIG: Record<SourceType, { label: string; color: string }> = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const CustomTransactionNode: React.FC<any> = ({ data }: { data: TransactionNodeData }) => {
-  const d = data as TransactionNodeData;
-  const style = STATUS_STYLES[d.status] ?? STATUS_STYLES.PENDING;
-  const src   = SOURCE_CONFIG[d.source];
+  const d = (data || {}) as TransactionNodeData;
+  const statusKey = String(d.status || 'MATCHED').toUpperCase();
+  const style = STATUS_STYLES[statusKey] ?? STATUS_STYLES.MATCHED;
+  const sourceKey = String(d.source || 'RAZORPAY').toUpperCase();
+  const src = SOURCE_CONFIG[sourceKey] ?? { label: d.source || 'Transaction', color: 'text-[#374151]' };
 
-  const fmtInr = (paise: number) =>
-    (paise / 100).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmtInr = (paise?: number) => {
+    const val = typeof paise === 'number' && !isNaN(paise) ? paise : 0;
+    return (val / 100).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+
+  const isBatch = typeof d.batchCount === 'number' && d.batchCount > 1;
 
   return (
     <div
@@ -97,7 +104,7 @@ export const CustomTransactionNode: React.FC<any> = ({ data }: { data: Transacti
       {/* Row 1: Source label + status badge */}
       <div className="flex items-center justify-between gap-2">
         <span className={`text-[11px] font-semibold ${src.color}`}>
-          {src.label}
+          {src.label} {isBatch && <span className="text-[9px] font-normal text-[#6B7280]">(Batch 1:{d.batchCount})</span>}
         </span>
         <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-md ${style.badge}`}>
           {style.label}
@@ -107,18 +114,18 @@ export const CustomTransactionNode: React.FC<any> = ({ data }: { data: Transacti
       {/* Row 2: Transaction ID */}
       <p
         className="text-[11px] font-mono text-[#374151] truncate leading-none"
-        title={d.original_id}
+        title={d.original_id || d.txnId}
       >
-        {d.original_id}
+        {d.original_id || d.txnId || 'TXN'}
       </p>
 
       {/* Row 3: Gross Amount */}
       <p className={`text-[17px] font-bold tabular-nums leading-none ${style.amount}`}>
-        ₹{fmtInr(d.amount_gross_paise)}
+        ₹{fmtInr(d.amount_gross_paise ?? d.amount_net_paise)}
       </p>
 
       {/* Row 4: Source-specific detail */}
-      {d.source === 'RAZORPAY' && (
+      {sourceKey === 'RAZORPAY' && (
         <div className="grid grid-cols-2 gap-1.5 pt-2 border-t border-[#F3F4F6]">
           <div>
             <p className="text-[9px] text-[#9CA3AF] uppercase tracking-wide font-medium">MDR</p>
@@ -131,17 +138,19 @@ export const CustomTransactionNode: React.FC<any> = ({ data }: { data: Transacti
         </div>
       )}
 
-      {d.source === 'BANK' && (
+      {sourceKey === 'BANK' && (
         <div className="pt-2 border-t border-[#F3F4F6]">
-          <p className="text-[9px] text-[#9CA3AF] uppercase tracking-wide font-medium">Net Credit</p>
+          <p className="text-[9px] text-[#9CA3AF] uppercase tracking-wide font-medium">
+            {isBatch ? 'Batch Net Credit' : 'Net Credit'}
+          </p>
           <p className="text-[11px] font-mono text-[#374151]">₹{fmtInr(d.amount_net_paise)}</p>
         </div>
       )}
 
-      {d.source === 'ERP' && (
+      {sourceKey === 'ERP' && (
         <div className="pt-2 border-t border-[#F3F4F6]">
           <p className="text-[9px] text-[#9CA3AF] uppercase tracking-wide font-medium">GL Amount</p>
-          <p className="text-[11px] font-mono text-[#374151]">₹{fmtInr(d.amount_gross_paise)}</p>
+          <p className="text-[11px] font-mono text-[#374151]">₹{fmtInr(d.amount_gross_paise ?? d.amount_net_paise)}</p>
         </div>
       )}
 

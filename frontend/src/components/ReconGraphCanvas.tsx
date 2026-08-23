@@ -36,7 +36,7 @@ const NODE_TYPES: NodeTypes = {
 // We position nodes at a fixed pixel offset from each column's left edge.
 const COL_FRACTIONS = { RAZORPAY: 0.02, BANK: 0.355, ERP: 0.69 };
 const ROW_HEIGHT = 175;
-const MAX_VISIBLE_CLUSTERS = 25;
+const MAX_VISIBLE_CLUSTERS = 80;
 
 interface ReconGraphCanvasProps {
   clusters: ReconciliationCluster[];
@@ -142,23 +142,20 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
       ERP:      Math.round(containerWidth * COL_FRACTIONS.ERP),
     };
 
-    // Limit to active clusters that contain transactions, eliminating blank vertical gaps
+    // Deduplicate and filter active clusters that contain transactions
+    const seenClusterIds = new Set<string>();
     const activeClusters = clusters
-      .filter((c) => (c.razorpay_txns?.length || 0) + (c.bank_txns?.length || 0) + (c.erp_txns?.length || 0) > 0)
+      .filter((c) => {
+        if (!c.cluster_id || seenClusterIds.has(c.cluster_id)) return false;
+        seenClusterIds.add(c.cluster_id);
+        return (c.razorpay_txns?.length || 0) + (c.bank_txns?.length || 0) + (c.erp_txns?.length || 0) > 0;
+      })
       .slice(0, MAX_VISIBLE_CLUSTERS);
 
-    let currentRow = 0;
-
-    activeClusters.forEach((cluster) => {
-      const clusterHeight = Math.max(
-        cluster.razorpay_txns?.length || 0,
-        cluster.bank_txns?.length || 0,
-        cluster.erp_txns?.length || 0,
-        1
-      );
-      const baseY = currentRow * ROW_HEIGHT;
-      currentRow += clusterHeight;
-
+    // Guaranteed 1 Cluster = 1 Row (1:1:1 Layout)
+    // Every cluster occupies exactly 1 horizontal row at y = rowIndex * ROW_HEIGHT (175px)
+    activeClusters.forEach((cluster, rowIndex) => {
+      const y = rowIndex * ROW_HEIGHT;
       const isDiscrepancy = cluster.discrepancy_paise !== 0 || cluster.status === 'DISCREPANCY';
       const isMatched = cluster.discrepancy_paise === 0 && cluster.status === 'MATCHED';
       const matchStatus = isDiscrepancy ? 'DISCREPANCY' : (isMatched ? 'MATCHED' : 'SETTLED_PENDING_ERP');
@@ -166,166 +163,134 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
       const clusterKey = cluster.cluster_id;
 
       // Use a stable wrapper so node data.onSelect never changes between renders
-      // (avoids React Flow diffing every node as "updated" on each cluster flush)
       const stableOnSelect = (id: string) => onNodeSelectRef.current(id);
 
-      // ── 1. Razorpay nodes ───────────────────────────────────────────────────
-      const rzpNodeIds: string[] = [];
-      cluster.razorpay_txns.forEach((txn, i) => {
-        const nodeId = `${clusterKey}|rzp|${txn.id}`;
-        rzpNodeIds.push(nodeId);
-        const y = baseY + i * ROW_HEIGHT;
-        nodes.push({
-          id: nodeId,
-          type: 'transaction',
-          position: { x: colX.RAZORPAY, y },
-          data: {
-            txnId: txn.id,
-            source: txn.source,
-            original_id: txn.original_id,
-            order_id: txn.order_id,
-            utr: txn.utr,
-            amount_gross_paise: txn.amount_gross_paise,
-            amount_net_paise: txn.amount_net_paise,
-            fee_mdr_paise: txn.fee_mdr_paise,
-            fee_gst_paise: txn.fee_gst_paise,
-            raw_narration: txn.raw_narration,
-            status: matchStatus,
-            timestamp_utc: txn.timestamp_utc,
-            onSelect: stableOnSelect,
-          } as unknown as TransactionNodeData,
-        });
+      const rzpCount = cluster.razorpay_txns?.length || 0;
+      const isMultiRzp = rzpCount > 1;
+      const primaryRzp = cluster.razorpay_txns?.[0];
+      const primaryBank = cluster.bank_txns?.[0];
+      const primaryErp = cluster.erp_txns?.[0];
+      const hasErp = (cluster.erp_txns?.length || 0) > 0;
+
+      const rzpTotalMdr = (cluster.razorpay_txns || []).reduce((acc, t) => acc + (t.fee_mdr_paise || 0), 0);
+      const rzpTotalGst = (cluster.razorpay_txns || []).reduce((acc, t) => acc + (t.fee_gst_paise || 0), 0);
+
+      const rzpNodeId = `${clusterKey}|rzp`;
+      const bankNodeId = `${clusterKey}|bank`;
+      const erpNodeId = `${clusterKey}|erp`;
+
+      // ── 1. Column 1: Razorpay Consolidated Card (1:1:1 mapping) ─────────────
+      nodes.push({
+        id: rzpNodeId,
+        type: 'transaction',
+        position: { x: colX.RAZORPAY, y },
+        data: {
+          txnId: primaryRzp?.id || `${clusterKey}-rzp`,
+          source: 'RAZORPAY',
+          original_id: isMultiRzp
+            ? `Batch (${rzpCount} Payments)`
+            : (primaryRzp?.original_id || primaryRzp?.id || 'RZP-PAY'),
+          order_id: primaryRzp?.order_id || null,
+          utr: primaryRzp?.utr || primaryBank?.utr || null,
+          amount_gross_paise: cluster.sum_gross_paise || (primaryRzp?.amount_gross_paise ?? 0),
+          amount_net_paise: cluster.sum_net_expected_paise || (primaryRzp?.amount_net_paise ?? 0),
+          fee_mdr_paise: rzpTotalMdr,
+          fee_gst_paise: rzpTotalGst,
+          raw_narration: primaryRzp?.raw_narration,
+          status: matchStatus,
+          timestamp_utc: primaryRzp?.timestamp_utc || new Date().toISOString(),
+          batchCount: isMultiRzp ? rzpCount : undefined,
+          onSelect: () => stableOnSelect(rzpNodeId),
+        } as unknown as TransactionNodeData,
       });
 
-      // ── 2. Bank nodes ───────────────────────────────────────────────────────
-      const bankNodeIds: string[] = [];
-      cluster.bank_txns.forEach((txn, i) => {
-        const nodeId = `${clusterKey}|bank|${txn.id}`;
-        bankNodeIds.push(nodeId);
-        // In 1:N batch clusters, vertically center the single consolidated bank payout card
-        const y = cluster.bank_txns.length === 1 && clusterHeight > 1
-          ? baseY + ((clusterHeight - 1) * ROW_HEIGHT) / 2
-          : baseY + i * ROW_HEIGHT;
-
-        nodes.push({
-          id: nodeId,
-          type: 'transaction',
-          position: { x: colX.BANK, y },
-          data: {
-            txnId: txn.id,
-            source: txn.source,
-            original_id: txn.original_id,
-            order_id: txn.order_id,
-            utr: txn.utr,
-            amount_gross_paise: txn.amount_gross_paise,
-            amount_net_paise: txn.amount_net_paise,
-            fee_mdr_paise: txn.fee_mdr_paise,
-            fee_gst_paise: txn.fee_gst_paise,
-            raw_narration: txn.raw_narration,
-            status: matchStatus,
-            timestamp_utc: txn.timestamp_utc,
-            batchCount: clusterHeight > 1 ? clusterHeight : undefined,
-            onSelect: stableOnSelect,
-          } as unknown as TransactionNodeData,
-        });
+      // ── 2. Column 2: Bank Statement Net Credit Card ─────────────────────────
+      nodes.push({
+        id: bankNodeId,
+        type: 'transaction',
+        position: { x: colX.BANK, y },
+        data: {
+          txnId: primaryBank?.id || `${clusterKey}-bank`,
+          source: 'BANK',
+          original_id: primaryBank?.original_id || primaryBank?.id || 'BANK-DEPOSIT',
+          order_id: primaryRzp?.order_id || null,
+          utr: primaryBank?.utr || primaryRzp?.utr || null,
+          amount_gross_paise: cluster.sum_bank_credit_paise || (primaryBank?.amount_net_paise ?? 0),
+          amount_net_paise: cluster.sum_bank_credit_paise || (primaryBank?.amount_net_paise ?? 0),
+          fee_mdr_paise: 0,
+          fee_gst_paise: 0,
+          raw_narration: primaryBank?.raw_narration || 'Settlement Net Credit',
+          status: matchStatus,
+          timestamp_utc: primaryBank?.timestamp_utc || primaryRzp?.timestamp_utc || new Date().toISOString(),
+          onSelect: () => stableOnSelect(bankNodeId),
+        } as unknown as TransactionNodeData,
       });
 
-      // ── 3. ERP nodes ────────────────────────────────────────────────────────
-      const erpNodeIds: string[] = [];
-      if (cluster.erp_txns.length > 0) {
-        cluster.erp_txns.forEach((txn, i) => {
-          const nodeId = `${clusterKey}|erp|${txn.id}`;
-          erpNodeIds.push(nodeId);
-          const y = baseY + i * ROW_HEIGHT;
-          nodes.push({
-            id: nodeId,
-            type: 'transaction',
-            position: { x: colX.ERP, y },
-            data: {
-              txnId: txn.id,
-              source: txn.source,
-              original_id: txn.original_id,
-              order_id: txn.order_id,
-              utr: txn.utr,
-              amount_gross_paise: txn.amount_gross_paise,
-              amount_net_paise: txn.amount_net_paise,
-              fee_mdr_paise: txn.fee_mdr_paise,
-              fee_gst_paise: txn.fee_gst_paise,
-              raw_narration: txn.raw_narration,
-              status: cluster.status,
-              timestamp_utc: txn.timestamp_utc,
-              onSelect: stableOnSelect,
-            } as unknown as TransactionNodeData,
-          });
-        });
-      } else if (bankNodeIds.length > 0) {
-        // ERP Ledger entry placeholder for settlements awaiting direct dispatch
-        const erpPlaceholderId = `${clusterKey}|erp|pending`;
-        erpNodeIds.push(erpPlaceholderId);
-        const rzpTxn = cluster.razorpay_txns[0];
-        const bankTxn = cluster.bank_txns[0];
+      // ── 3. Column 3: ERP Invoices & GL Ledger Card ─────────────────────────
+      const erpOriginalId = hasErp
+        ? (primaryErp?.original_id || primaryErp?.id || 'ERP-INV')
+        : (isDiscrepancy
+            ? 'UNPOSTED · Discrepancy Hold'
+            : (isMatched ? 'ERP · Direct Settlement' : 'UNPOSTED · Awaiting Invoice'));
 
-        const erpOriginalId = isDiscrepancy
-          ? 'UNPOSTED · Discrepancy Hold'
-          : (isMatched ? 'ERP · Direct Settlement' : 'UNPOSTED · Awaiting Invoice');
+      const erpNarration = hasErp
+        ? (primaryErp?.raw_narration || 'ERP Ledger Post')
+        : (isDiscrepancy ? 'Awaiting AI voucher dispatch to Zoho Books' : 'Direct GL auto-settled');
 
-        nodes.push({
-          id: erpPlaceholderId,
-          type: 'transaction',
-          position: { x: colX.ERP, y: baseY },
-          data: {
-            txnId: bankTxn ? bankTxn.id : 'pending_erp',
-            source: 'ERP',
-            original_id: erpOriginalId,
-            order_id: rzpTxn?.order_id || 'SETTLED',
-            utr: bankTxn?.utr || null,
-            amount_gross_paise: cluster.sum_gross_paise || (bankTxn?.amount_net_paise ?? 0),
-            amount_net_paise: cluster.sum_net_expected_paise || (bankTxn?.amount_net_paise ?? 0),
-            fee_mdr_paise: 0,
-            fee_gst_paise: 0,
-            raw_narration: isDiscrepancy ? 'Awaiting AI voucher dispatch to Zoho Books' : 'Direct GL auto-settled',
-            status: matchStatus,
-            timestamp_utc: bankTxn?.timestamp_utc || new Date().toISOString(),
-            onSelect: stableOnSelect,
-          } as unknown as TransactionNodeData,
-        });
-      }
-
-      // ── 4. Strictly Intra-Cluster Horizontal / Smoothstep Edges ───────────────
-      const isMultiCard = clusterHeight > 1;
-
-      // Razorpay → Bank edges (only between this row's nodes)
-      rzpNodeIds.forEach((rzpId) => {
-        bankNodeIds.forEach((bankId) => {
-          edges.push({
-            id: `edge|${rzpId}|${bankId}`,
-            source: rzpId,
-            target: bankId,
-            type: isMultiCard ? 'smoothstep' : 'default',
-            animated: isDiscrepancy,
-            style: { stroke: edgeColor, strokeWidth: 1.5, opacity: 0.7 },
-          });
-        });
+      nodes.push({
+        id: erpNodeId,
+        type: 'transaction',
+        position: { x: colX.ERP, y },
+        data: {
+          txnId: primaryErp?.id || (primaryBank ? primaryBank.id : `${clusterKey}-erp`),
+          source: 'ERP',
+          original_id: erpOriginalId,
+          order_id: primaryErp?.order_id || primaryRzp?.order_id || 'SETTLED',
+          utr: primaryErp?.utr || primaryBank?.utr || null,
+          amount_gross_paise: hasErp
+            ? (primaryErp?.amount_gross_paise || primaryErp?.amount_net_paise || 0)
+            : (cluster.sum_bank_credit_paise || cluster.sum_gross_paise),
+          amount_net_paise: hasErp
+            ? (primaryErp?.amount_net_paise || 0)
+            : (cluster.sum_bank_credit_paise || cluster.sum_net_expected_paise),
+          fee_mdr_paise: 0,
+          fee_gst_paise: 0,
+          raw_narration: erpNarration,
+          status: matchStatus,
+          timestamp_utc: primaryErp?.timestamp_utc || primaryBank?.timestamp_utc || new Date().toISOString(),
+          onSelect: () => stableOnSelect(erpNodeId),
+        } as unknown as TransactionNodeData,
       });
 
-      // Bank → ERP edges (only between this row's nodes)
+      // ── 4. Pure Horizontal Edges (Left Handle → Right Handle at identical Y) ──
+      // Razorpay → Bank direct horizontal edge
+      edges.push({
+        id: `edge|${clusterKey}|rzp|bank`,
+        source: rzpNodeId,
+        target: bankNodeId,
+        type: 'straight',
+        animated: isDiscrepancy,
+        style: {
+          stroke: edgeColor,
+          strokeWidth: 2,
+          opacity: 0.85,
+        },
+      });
+
+      // Bank → ERP direct horizontal edge
       const isPending = !isMatched && !isDiscrepancy;
-      bankNodeIds.forEach((bankId) => {
-        erpNodeIds.forEach((erpId) => {
-          edges.push({
-            id: `edge|${bankId}|${erpId}`,
-            source: bankId,
-            target: erpId,
-            type: isMultiCard ? 'smoothstep' : 'default',
-            animated: isPending || isDiscrepancy,
-            style: {
-              stroke: edgeColor,
-              strokeWidth: 1.5,
-              strokeDasharray: isPending ? '4 4' : undefined,
-              opacity: 0.7,
-            },
-          });
-        });
+      edges.push({
+        id: `edge|${clusterKey}|bank|erp`,
+        source: bankNodeId,
+        target: erpNodeId,
+        type: 'straight',
+        animated: isPending || isDiscrepancy,
+        style: {
+          stroke: edgeColor,
+          strokeWidth: 2,
+          strokeDasharray: isPending ? '4 4' : undefined,
+          opacity: 0.85,
+        },
       });
     });
 

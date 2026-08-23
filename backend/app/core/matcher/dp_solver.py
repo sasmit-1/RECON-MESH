@@ -191,6 +191,9 @@ class BoundedDPSolver:
                     if r.order_id and r.order_id in erp_by_order:
                         matched_erp.extend(erp_by_order[r.order_id])
 
+                all_erp_found = len(matched_erp) == len(solution) and all(r.order_id for r in solution)
+                cluster_status = MatchStatus.MATCHED if all_erp_found else MatchStatus.SETTLED_PENDING_ERP
+
                 cluster = ReconciliationCluster(
                     cluster_id=f"dp_cluster_{bank_item.id}_{uuid4().hex[:6]}",
                     razorpay_txns=solution,
@@ -200,7 +203,7 @@ class BoundedDPSolver:
                     sum_net_expected_paise=sum(r.amount_net_paise for r in solution),
                     sum_bank_credit_paise=bank_item.amount_net_paise,
                     discrepancy_paise=0,
-                    status=MatchStatus.MATCHED,
+                    status=cluster_status,
                 )
                 matched_clusters.append(cluster)
 

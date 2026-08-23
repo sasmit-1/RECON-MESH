@@ -7,11 +7,14 @@
 
 import React, { useState } from 'react';
 import {
+  Building2,
   Check,
   CheckCircle,
   ChevronRight,
   Copy,
+  CreditCard,
   ExternalLink,
+  FileText,
   Loader2,
   X,
 } from 'lucide-react';
@@ -91,7 +94,7 @@ export const InvestigationDrawer: React.FC<InvestigationDrawerProps> = ({
       />
 
       {/* Drawer */}
-      <div className="fixed right-0 top-0 bottom-0 w-[400px] max-w-[95vw] bg-white z-[200] flex flex-col shadow-drawer border-l border-[#E5E7EB]">
+      <div className="fixed right-0 top-0 bottom-0 w-[420px] max-w-[95vw] bg-white z-[200] flex flex-col shadow-drawer border-l border-[#E5E7EB]">
 
         {/* Header */}
         <div className="h-[52px] border-b border-[#E5E7EB] px-5 flex items-center justify-between flex-shrink-0">
@@ -162,6 +165,145 @@ export const InvestigationDrawer: React.FC<InvestigationDrawerProps> = ({
                   <p className="text-[9px] text-[#9CA3AF] font-medium mt-0.5">{item.label}</p>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Individual Transaction Line Items Breakdown */}
+          <div className="px-5 py-4 border-b border-[#F3F4F6]">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-[11px] font-semibold text-[#374151]">Transaction Line Items</p>
+              <span className="text-[10px] text-[#9CA3AF]">
+                {cluster.razorpay_txns.length + cluster.bank_txns.length + cluster.erp_txns.length} records
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              {/* 1. Razorpay Captured Feeds */}
+              <div>
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <CreditCard className="w-3.5 h-3.5 text-[#2D65F8]" />
+                  <span className="text-[10px] font-semibold text-[#2D65F8] uppercase tracking-wide">
+                    Razorpay Feeds ({cluster.razorpay_txns.length})
+                  </span>
+                </div>
+                <div className="space-y-2">
+                  {cluster.razorpay_txns.map((txn, idx) => (
+                    <div
+                      key={txn.id || `rzp-${idx}`}
+                      className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2.5 text-[11px] font-mono space-y-1.5"
+                    >
+                      <div className="flex items-center justify-between text-[#111827] font-semibold">
+                        <span className="truncate max-w-[180px]" title={txn.original_id || txn.id}>
+                          {txn.original_id || txn.id}
+                        </span>
+                        <span className="text-[#059669]">₹{fmtInr(txn.amount_gross_paise)} Gross</span>
+                      </div>
+                      
+                      <div className="grid grid-cols-3 gap-1 text-[10px] text-[#6B7280] bg-white p-1.5 rounded border border-[#F3F4F6]">
+                        <div>
+                          <span className="text-[#9CA3AF] block text-[8px] uppercase">MDR</span>
+                          ₹{fmtInr(txn.fee_mdr_paise)}
+                        </div>
+                        <div>
+                          <span className="text-[#9CA3AF] block text-[8px] uppercase">GST (18%)</span>
+                          ₹{fmtInr(txn.fee_gst_paise)}
+                        </div>
+                        <div>
+                          <span className="text-[#9CA3AF] block text-[8px] uppercase">Expected Net</span>
+                          <span className="text-[#111827] font-medium">₹{fmtInr(txn.amount_net_paise)}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between text-[10px] text-[#9CA3AF]">
+                        <span className="truncate max-w-[160px]" title={txn.utr || 'No UTR'}>
+                          UTR: {txn.utr || '—'}
+                        </span>
+                        {txn.order_id && (
+                          <span className="truncate max-w-[120px]" title={txn.order_id}>
+                            Order: {txn.order_id}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 2. Bank Statement Deposits */}
+              <div>
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <Building2 className="w-3.5 h-3.5 text-[#374151]" />
+                  <span className="text-[10px] font-semibold text-[#374151] uppercase tracking-wide">
+                    Bank Deposits ({cluster.bank_txns.length})
+                  </span>
+                </div>
+                <div className="space-y-2">
+                  {cluster.bank_txns.map((txn, idx) => (
+                    <div
+                      key={txn.id || `bank-${idx}`}
+                      className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2.5 text-[11px] font-mono space-y-1"
+                    >
+                      <div className="flex items-center justify-between text-[#111827] font-semibold">
+                        <span className="truncate max-w-[180px]" title={txn.original_id || txn.id}>
+                          {txn.original_id || txn.id}
+                        </span>
+                        <span className="text-[#059669]">₹{fmtInr(txn.amount_net_paise)} Net Credit</span>
+                      </div>
+                      {txn.raw_narration && (
+                        <p className="text-[10px] text-[#6B7280] truncate" title={txn.raw_narration}>
+                          {txn.raw_narration}
+                        </p>
+                      )}
+                      <div className="flex items-center justify-between text-[10px] text-[#9CA3AF]">
+                        <span className="truncate max-w-[180px]" title={txn.utr || 'No UTR'}>
+                          UTR: {txn.utr || '—'}
+                        </span>
+                        <span>{txn.timestamp_utc ? new Date(txn.timestamp_utc).toLocaleDateString() : ''}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 3. ERP / GL Invoices */}
+              <div>
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <FileText className="w-3.5 h-3.5 text-[#374151]" />
+                  <span className="text-[10px] font-semibold text-[#374151] uppercase tracking-wide">
+                    ERP / GL Ledgers ({cluster.erp_txns.length})
+                  </span>
+                </div>
+                {cluster.erp_txns.length > 0 ? (
+                  <div className="space-y-2">
+                    {cluster.erp_txns.map((txn, idx) => (
+                      <div
+                        key={txn.id || `erp-${idx}`}
+                        className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2.5 text-[11px] font-mono space-y-1"
+                      >
+                        <div className="flex items-center justify-between text-[#111827] font-semibold">
+                          <span className="truncate max-w-[180px]" title={txn.original_id || txn.id}>
+                            {txn.original_id || txn.id}
+                          </span>
+                          <span>₹{fmtInr(txn.amount_gross_paise || txn.amount_net_paise)}</span>
+                        </div>
+                        {txn.raw_narration && (
+                          <p className="text-[10px] text-[#6B7280] truncate" title={txn.raw_narration}>
+                            {txn.raw_narration}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="bg-[#F9FAFB] border border-[#E5E7EB] border-dashed rounded-lg p-2.5 text-center">
+                    <p className="text-[11px] text-[#6B7280]">
+                      {isDiscrepancy
+                        ? 'Unposted · Awaiting exception resolution & ERP dispatch'
+                        : 'Auto-settled · Direct GL reconciliation applied'}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 

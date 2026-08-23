@@ -249,9 +249,16 @@ export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamRe
         clusterBufferRef.current = [];
         setClusters((prev) => {
           const existingIds = new Set(prev.map((c) => c.cluster_id));
-          const filtered = newClusters.filter((c) => !existingIds.has(c.cluster_id));
+          const seenInBatch = new Set<string>();
+          const filtered = newClusters.filter((c) => {
+            if (!c.cluster_id || existingIds.has(c.cluster_id) || seenInBatch.has(c.cluster_id)) {
+              return false;
+            }
+            seenInBatch.add(c.cluster_id);
+            return true;
+          });
           // Prepend new incoming clusters to top of feed so they are immediately visible
-          return [...filtered, ...prev].slice(0, 50);
+          return [...filtered, ...prev].slice(0, 100);
         });
       }
 
@@ -260,7 +267,14 @@ export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamRe
         voucherBufferRef.current = [];
         setActiveVouchers((prev) => {
           const existingIds = new Set(prev.map((v) => v.voucher_id));
-          const filtered = newVouchers.filter((v) => !existingIds.has(v.voucher_id));
+          const seenInBatch = new Set<string>();
+          const filtered = newVouchers.filter((v) => {
+            if (!v.voucher_id || existingIds.has(v.voucher_id) || seenInBatch.has(v.voucher_id)) {
+              return false;
+            }
+            seenInBatch.add(v.voucher_id);
+            return true;
+          });
           return [...filtered, ...prev].slice(0, 30);
         });
       }

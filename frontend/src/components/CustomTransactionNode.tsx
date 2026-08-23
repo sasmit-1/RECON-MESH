@@ -104,7 +104,11 @@ export const CustomTransactionNode: React.FC<any> = ({ data }: { data: Transacti
       {/* Row 1: Source label + status badge */}
       <div className="flex items-center justify-between gap-2">
         <span className={`text-[11px] font-semibold ${src.color}`}>
-          {src.label} {isBatch && <span className="text-[9px] font-normal text-[#6B7280]">(Batch 1:{d.batchCount})</span>}
+          {src.label} {isBatch && (
+            <span className="ml-1 text-[9px] font-medium text-[#4F46E5] bg-[#EEF2FF] px-1.5 py-0.5 rounded border border-[#C7D2FE]">
+              Batch 1:{d.batchCount}
+            </span>
+          )}
         </span>
         <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-md ${style.badge}`}>
           {style.label}

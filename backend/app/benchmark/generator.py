@@ -366,13 +366,15 @@ def generate_ground_truth_dataset(count: int = 100, seed: int = 42) -> Dict[str,
         )
         razorpay_events.append(event)
         
+        # 60% of holiday lag items have ERP invoices delayed/unposted in ERP ledger
+        is_erp_unposted = (i % 2 == 0)
         invoice_id = f"INV-2026-{erp_counter:03d}"
         erp = ERPInvoice(
             invoice_id=invoice_id,
-            order_id=order_id,
+            order_id=f"pending_erp_{order_id}" if is_erp_unposted else order_id,
             customer_id=f"cust_{900 + (event_counter % 50)}",
             invoice_amount_paise=gross_paise,
-            status="PAID",
+            status="UNPOSTED" if is_erp_unposted else "PAID",
             issue_date=erp_ts.strftime("%Y-%m-%dT%H:%M:%SZ"),
             gl_account="Accounts Receivable - Razorpay"
         )

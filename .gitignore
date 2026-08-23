@@ -46,4 +46,5 @@ Thumbs.db
 # Pitch & Recording Scripts (Local Only)
 script.md
 *.png
-Screenshot*
+Screenshot*
+*report.md

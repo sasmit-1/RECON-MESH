@@ -140,7 +140,7 @@ export const ThreeLaserArcOverlay: React.FC<ThreeLaserArcOverlayProps> = ({ lase
       const cp2 = new THREE.Vector3(midX, p3.y, 0);
 
       const curve = new THREE.CubicBezierCurve3(p0, cp1, cp2, p3);
-      const points = curve.getPoints(40);
+      const points = curve.getPoints(16);
       const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
       const hexColor = laser.color ? parseInt(laser.color.replace('#', ''), 16) : 0x00ff66;

@@ -50,35 +50,38 @@ const FlowInner: React.FC<{
   onNodeSelect: (id: string) => void;
 }> = ({ nodes, edges, lasers, onNodeSelect }) => {
   const viewport = useViewport();
-  const { fitView } = useReactFlow();
-  const prevCountRef = useRef<number>(0);
+  const { setViewport } = useReactFlow();
+  const initializedRef = useRef<boolean>(false);
 
-  // Auto-fit viewport whenever nodes load or expand
+  // Set readable centered zoom ONCE on initial load — NEVER zoom out to microscopic scale
   useEffect(() => {
-    if (nodes.length > 0 && nodes.length !== prevCountRef.current) {
-      prevCountRef.current = nodes.length;
+    if (!initializedRef.current && nodes.length > 0) {
+      initializedRef.current = true;
       const timer = setTimeout(() => {
-        fitView({ padding: 0.2, duration: 300 });
+        setViewport({ x: 60, y: 30, zoom: 0.88 }, { duration: 0 });
       }, 50);
       return () => clearTimeout(timer);
     }
-  }, [nodes.length, fitView]);
+  }, [nodes.length, setViewport]);
 
   return (
     <div className="relative w-full h-full bg-[#F4F6FA] overflow-hidden">
       {/* Layer 0: WebGL Laser Arc Overlay */}
       <ThreeLaserArcOverlay lasers={lasers} viewport={viewport} />
 
-      {/* Layer 1: React Flow Canvas */}
+      {/* Layer 1: React Flow Canvas with smooth vertical scrolling */}
       <ReactFlow
         nodes={nodes}
         edges={edges}
         nodeTypes={NODE_TYPES}
         onNodeClick={(_, node) => onNodeSelect(node.id)}
-        fitView
-        fitViewOptions={{ padding: 0.2 }}
-        minZoom={0.1}
-        maxZoom={2.5}
+        defaultViewport={{ x: 60, y: 30, zoom: 0.88 }}
+        minZoom={0.5}
+        maxZoom={1.5}
+        panOnScroll={true}
+        zoomOnScroll={false}
+        zoomOnPinch={true}
+        panOnDrag={true}
         className="z-10"
         proOptions={{ hideAttribution: true }}
       >

@@ -221,7 +221,7 @@ async def reconcile_batch(req: BatchReconcileRequest) -> Dict[str, Any]:
     # 4. Pass 2: Bounded DP Solver on Residual Orphans
     dp_solver = BoundedDPSolver()
     pass2_clusters, final_orphan_rzp, final_orphan_bank = dp_solver.match_residual_orphans(
-        orphan_rzp, orphan_bank
+        orphan_rzp, orphan_bank, erp_txns
     )
 
     # 5. Pass 3: AI Exception Investigation (EpisodicMemory -> ReconInvestigator)

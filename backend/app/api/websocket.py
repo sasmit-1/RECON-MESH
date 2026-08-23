@@ -188,7 +188,9 @@ async def _stream_pipeline_task(
 
                 if orphan_bank:
                     dp_solver = BoundedDPSolver()
-                    p2_clusters, f_orphan_rzp, f_orphan_bank = dp_solver.match_residual_orphans(orphan_rzp, orphan_bank)
+                    p2_clusters, f_orphan_rzp, f_orphan_bank = dp_solver.match_residual_orphans(
+                        orphan_rzp, orphan_bank, erp_buf
+                    )
                     matched_clusters += len(p2_clusters)
                     for cl in p2_clusters:
                         cl_dict = cl.model_dump() if hasattr(cl, "model_dump") else cl.dict()

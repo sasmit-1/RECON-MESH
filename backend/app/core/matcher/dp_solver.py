@@ -130,6 +130,7 @@ class BoundedDPSolver:
         self,
         orphan_rzp: List[CanonicalTransaction],
         orphan_bank: List[CanonicalTransaction],
+        erp_invoices: Optional[List[CanonicalTransaction]] = None,
     ) -> Tuple[
         List[ReconciliationCluster],
         List[CanonicalTransaction],
@@ -155,6 +156,15 @@ class BoundedDPSolver:
         remaining_rzp: List[CanonicalTransaction] = list(orphan_rzp)
         remaining_bank: List[CanonicalTransaction] = []
 
+        erp_by_order: Dict[str, List[CanonicalTransaction]] = {}
+        if erp_invoices:
+            from collections import defaultdict
+            erp_map = defaultdict(list)
+            for e in erp_invoices:
+                if e.order_id:
+                    erp_map[e.order_id].append(e)
+            erp_by_order = erp_map
+
         for bank_item in orphan_bank:
             # Filter candidates by temporal proximity window ONLY.
             # Do NOT truncate with [: max_cluster_size] here — that would drop valid subset members.
@@ -176,11 +186,16 @@ class BoundedDPSolver:
             )
 
             if solution is not None:
+                matched_erp: List[CanonicalTransaction] = []
+                for r in solution:
+                    if r.order_id and r.order_id in erp_by_order:
+                        matched_erp.extend(erp_by_order[r.order_id])
+
                 cluster = ReconciliationCluster(
                     cluster_id=f"dp_cluster_{bank_item.id}_{uuid4().hex[:6]}",
                     razorpay_txns=solution,
                     bank_txns=[bank_item],
-                    erp_txns=[],  # ERP join handled upstream by GreedyHeuristicPruner Stage 2
+                    erp_txns=matched_erp,
                     sum_gross_paise=sum(r.amount_gross_paise for r in solution),
                     sum_net_expected_paise=sum(r.amount_net_paise for r in solution),
                     sum_bank_credit_paise=bank_item.amount_net_paise,

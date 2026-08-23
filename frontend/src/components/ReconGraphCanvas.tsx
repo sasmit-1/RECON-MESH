@@ -150,11 +150,19 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
     let currentRow = 0;
 
     activeClusters.forEach((cluster) => {
+      const clusterHeight = Math.max(
+        cluster.razorpay_txns?.length || 0,
+        cluster.bank_txns?.length || 0,
+        cluster.erp_txns?.length || 0,
+        1
+      );
       const baseY = currentRow * ROW_HEIGHT;
-      currentRow += 1;
+      currentRow += clusterHeight;
 
-      const matchStatus = cluster.discrepancy_paise === 0 ? 'MATCHED' : 'DISCREPANCY';
-      const edgeColor = cluster.discrepancy_paise === 0 ? '#059669' : '#DC2626';
+      const isDiscrepancy = cluster.discrepancy_paise !== 0 || cluster.status === 'DISCREPANCY';
+      const isMatched = cluster.discrepancy_paise === 0 && cluster.status === 'MATCHED';
+      const matchStatus = isDiscrepancy ? 'DISCREPANCY' : (isMatched ? 'MATCHED' : 'SETTLED_PENDING_ERP');
+      const edgeColor = isDiscrepancy ? '#DC2626' : (isMatched ? '#059669' : '#D97706');
       const clusterKey = cluster.cluster_id;
 
       // Use a stable wrapper so node data.onSelect never changes between renders
@@ -246,12 +254,15 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
           });
         });
       } else if (bankNodeIds.length > 0) {
-        // Pending ERP Ledger entry placeholder for unposted / discrepancy settlements
+        // ERP Ledger entry placeholder for settlements awaiting direct dispatch
         const erpPlaceholderId = `${clusterKey}|erp|pending`;
         erpNodeIds.push(erpPlaceholderId);
         const rzpTxn = cluster.razorpay_txns[0];
         const bankTxn = cluster.bank_txns[0];
-        const isDiscrepancy = cluster.discrepancy_paise !== 0;
+
+        const erpOriginalId = isDiscrepancy
+          ? 'UNPOSTED · Discrepancy Hold'
+          : (isMatched ? 'ERP · Direct Settlement' : 'UNPOSTED · Awaiting Invoice');
 
         nodes.push({
           id: erpPlaceholderId,
@@ -260,15 +271,15 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
           data: {
             txnId: bankTxn ? bankTxn.id : 'pending_erp',
             source: 'ERP',
-            original_id: isDiscrepancy ? 'UNPOSTED · Discrepancy Hold' : 'UNPOSTED · Awaiting Invoice',
-            order_id: rzpTxn?.order_id || 'PENDING',
+            original_id: erpOriginalId,
+            order_id: rzpTxn?.order_id || 'SETTLED',
             utr: bankTxn?.utr || null,
             amount_gross_paise: cluster.sum_gross_paise || (bankTxn?.amount_net_paise ?? 0),
             amount_net_paise: cluster.sum_net_expected_paise || (bankTxn?.amount_net_paise ?? 0),
             fee_mdr_paise: 0,
             fee_gst_paise: 0,
-            raw_narration: 'Awaiting AI voucher dispatch to Zoho Books',
-            status: isDiscrepancy ? 'DISCREPANCY' : 'SETTLED_PENDING_ERP',
+            raw_narration: isDiscrepancy ? 'Awaiting AI voucher dispatch to Zoho Books' : 'Direct GL auto-settled',
+            status: matchStatus,
             timestamp_utc: bankTxn?.timestamp_utc || new Date().toISOString(),
             onSelect: stableOnSelect,
           } as unknown as TransactionNodeData,
@@ -283,28 +294,25 @@ export const ReconGraphCanvas: React.FC<ReconGraphCanvasProps> = ({ clusters, on
             id: `edge|${rzpId}|${bankId}`,
             source: rzpId,
             target: bankId,
-            animated: matchStatus === 'DISCREPANCY',
+            animated: isDiscrepancy,
             style: { stroke: edgeColor, strokeWidth: 1.5, opacity: 0.6 },
           });
         });
       });
 
       // Bank → ERP edges (only between this row's nodes)
-      const isPendingOrDiscrepant = cluster.erp_txns.length === 0 || cluster.status === 'SETTLED_PENDING_ERP';
-      const isDiscrepancy = cluster.discrepancy_paise !== 0;
-      const bankEdgeColor = isDiscrepancy ? '#DC2626' : (isPendingOrDiscrepant ? '#D97706' : edgeColor);
-
+      const isPending = !isMatched && !isDiscrepancy;
       bankNodeIds.forEach((bankId) => {
         erpNodeIds.forEach((erpId) => {
           edges.push({
             id: `edge|${bankId}|${erpId}`,
             source: bankId,
             target: erpId,
-            animated: isPendingOrDiscrepant,
+            animated: isPending || isDiscrepancy,
             style: {
-              stroke: bankEdgeColor,
+              stroke: edgeColor,
               strokeWidth: 1.5,
-              strokeDasharray: isPendingOrDiscrepant ? '4 4' : undefined,
+              strokeDasharray: isPending ? '4 4' : undefined,
               opacity: 0.6,
             },
           });

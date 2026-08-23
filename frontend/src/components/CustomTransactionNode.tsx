@@ -87,11 +87,11 @@ export const CustomTransactionNode: React.FC<any> = ({ data }: { data: Transacti
       className={`
         bg-white border border-[#E5E7EB] border-l-[3px] ${style.accent}
         rounded-lg shadow-card
-        min-w-[240px] w-[240px]
+        min-w-[240px] w-[240px] min-h-[146px] h-[146px]
         cursor-pointer select-none
         hover:shadow-panel hover:-translate-y-px
         transition-all duration-150
-        flex flex-col gap-2 p-3
+        flex flex-col justify-between p-3
       `}
     >
       {/* Row 1: Source label + status badge */}

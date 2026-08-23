@@ -35,7 +35,7 @@ const NODE_TYPES: NodeTypes = {
 // Node card is 240px wide. Each column occupies 33.33% of container.
 // We position nodes at a fixed pixel offset from each column's left edge.
 const COL_FRACTIONS = { RAZORPAY: 0.02, BANK: 0.355, ERP: 0.69 };
-const ROW_HEIGHT = 160;
+const ROW_HEIGHT = 175;
 const MAX_VISIBLE_CLUSTERS = 25;
 
 interface ReconGraphCanvasProps {

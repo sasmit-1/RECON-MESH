@@ -15,7 +15,7 @@ class GeminiLLM(BaseLLMEngine):
     Gemini REST client provider.
     """
 
-    def __init__(self, api_key: str = "", model: str = "gemini-1.5-flash"):
+    def __init__(self, api_key: str = "", model: str = "gemini-3.6-flash"):
         self.api_key = api_key
         self.model = model
         self.base_url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}"

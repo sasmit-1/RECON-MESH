@@ -8,6 +8,12 @@ from abc import ABC, abstractmethod
 import os
 from typing import AsyncGenerator, Dict, Any, Optional
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 
 class BaseLLMEngine(ABC):
     """
@@ -61,7 +67,7 @@ def get_llm_engine() -> BaseLLMEngine:
         api_key = os.getenv("GEMINI_API_KEY", "").strip()
         if api_key:
             from backend.app.agent.gemini_client import GeminiLLM
-            model = os.getenv("GEMINI_MODEL_NAME", "gemini-1.5-flash")
+            model = os.getenv("GEMINI_MODEL_NAME", "gemini-3.6-flash")
             return GeminiLLM(api_key=api_key, model=model)
 
     # No API key present → use deterministic offline engine (zero setup required)

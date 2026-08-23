@@ -223,7 +223,7 @@ def test_3way_batch_pipeline_100pct():
         batch_ledger = MerkleAuditLedger()
         from backend.app.agent.investigator import ReconInvestigator
 
-        investigator = ReconInvestigator()
+        investigator = ReconInvestigator(llm_engine=DeterministicOfflineLLM())
         memory = EpisodicMemoryStore(db_path="backend/data/test_episodic_memory.db")
         pass3_clusters: list[ReconciliationCluster] = []
 

@@ -172,16 +172,36 @@ async def _stream_pipeline_task(
                 except Exception as exc:
                     logger.warning("Mini-batch match error: %s", exc)
 
-        # Final flush of remaining buffer
-        if bank_buf and rzp_buf:
+        # Final flush of remaining buffer through Pass 1, Pass 2, and Pass 3
+        if bank_buf or rzp_buf:
             try:
-                clusters, _, _ = matcher.prune(rzp_buf, bank_buf, erp_buf)
-                matched_clusters += len(clusters)
-                for cl in clusters:
+                from backend.app.core.matcher.dp_solver import BoundedDPSolver
+                from backend.app.api.routes import _run_pass3_agent
+                from backend.app.guardrails.merkle_audit import MerkleAuditLedger
+
+                stream_ledger = MerkleAuditLedger()
+                p1_clusters, orphan_rzp, orphan_bank = matcher.prune(rzp_buf, bank_buf, erp_buf)
+                matched_clusters += len(p1_clusters)
+                for cl in p1_clusters:
                     cl_dict = cl.model_dump() if hasattr(cl, "model_dump") else cl.dict()
                     await manager.broadcast({"event": "CLUSTER_MATCHED", "cluster": cl_dict})
-            except Exception:
-                pass
+
+                if orphan_bank:
+                    dp_solver = BoundedDPSolver()
+                    p2_clusters, f_orphan_rzp, f_orphan_bank = dp_solver.match_residual_orphans(orphan_rzp, orphan_bank)
+                    matched_clusters += len(p2_clusters)
+                    for cl in p2_clusters:
+                        cl_dict = cl.model_dump() if hasattr(cl, "model_dump") else cl.dict()
+                        await manager.broadcast({"event": "CLUSTER_MATCHED", "cluster": cl_dict})
+
+                    if f_orphan_bank:
+                        p3_clusters = await _run_pass3_agent(f_orphan_rzp, f_orphan_bank, p1_clusters + p2_clusters, stream_ledger)
+                        matched_clusters += len(p3_clusters)
+                        for cl in p3_clusters:
+                            cl_dict = cl.model_dump() if hasattr(cl, "model_dump") else cl.dict()
+                            await manager.broadcast({"event": "CLUSTER_MATCHED", "cluster": cl_dict})
+            except Exception as exc:
+                logger.warning("Stream final flush match error: %s", exc)
 
         await manager.broadcast({
             "event": "STREAM_COMPLETE",

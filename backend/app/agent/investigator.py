@@ -76,7 +76,12 @@ Please analyze the variance and generate the resolution hypothesis JSON.
         )
 
         try:
-            res_data = json.loads(response_text)
+            cleaned_text = response_text.strip()
+            if "```json" in cleaned_text:
+                cleaned_text = cleaned_text.split("```json")[1].split("```")[0].strip()
+            elif "```" in cleaned_text:
+                cleaned_text = cleaned_text.split("```")[1].split("```")[0].strip()
+            res_data = json.loads(cleaned_text)
         except Exception:
             # Fallback if response is not clean JSON
             res_data = {

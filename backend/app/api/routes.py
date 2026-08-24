@@ -186,7 +186,7 @@ async def health_check() -> Dict[str, Any]:
         "status": "OK",
         "service": "TRIDENT Autonomous FinOps Engine",
         "version": "2.1.0",
-        "engine_mode": "Native C++ (SIMD Vectorized)" if is_native else "Python Numba (JIT Compiled)",
+        "engine_mode": "Native C++ (Compiled PyBind11)" if is_native else "Python Numba (JIT Compiled)",
         "engine_class": engine_name,
         "timestamp_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }

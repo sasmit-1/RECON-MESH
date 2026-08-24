@@ -36,7 +36,7 @@ Digital enterprises process millions of transactions daily across fragmented, as
 In production FinOps, standard rule-based scripts break on complex real-world anomalies, manual reconciliation takes days, and generic LLM wrappers are fundamentally dangerous due to floating-point rounding drift, hallucinations, and Remote Code Execution (RCE) vulnerabilities.
 
 **TRIDENT** solves this with an industrial **3-Pass Reconciliation Kernel**:
-- **Pass 1 (Heuristic Pruner):** $O(N)$ hash-map UTR & settlement pruner in C++ SIMD / Python Numba resolving 1:1 matches and batch metadata in $<30\text{ms}$.
+- **Pass 1 (Heuristic Pruner):** $O(N)$ hash-map UTR & settlement pruner in Native C++ (PyBind11) / Python Numba resolving 1:1 matches and batch metadata in $<30\text{ms}$.
 - **Pass 2 (Bounded DP Knapsack Solver):** Exact 0-1 subset-sum solver matching unindexed 1-to-N batch deposits and customer refund debits over signed integer paise hash tables.
 - **Pass 3 (Forensic AI Agent & AST Sandbox):** Sub-5ms SQLite episodic memory recall + LLM anomaly analyzer evaluated through a strict, whitelist-only Abstract Syntax Tree (AST) arithmetic parser with zero `eval()`/`exec()`.
 - **Double-Entry Invariant Gatekeeper & Merkle Tree:** Non-negotiable mathematical validation ($\sum \text{Debits} - \sum \text{Credits} = 0$) and cryptographic SHA-256 Merkle audit trail.
@@ -67,7 +67,7 @@ In production FinOps, standard rule-based scripts break on complex real-world an
         │  PASS 1: HEURISTIC   │      │    PASS 2: BOUNDED   │      │   PASS 3: EPISODIC MEMORY    │
         │    GREEDY PRUNER     │      │   KNAPSACK DP SOLVER │      │   + FORENSIC AI AGENT (AST)  │
         │                      │      │                      │      │                              │
-        │ • C++ / Numba SIMD   │      │ • Signed Paise Table │      │ • <5ms SQLite-vec Precedents │
+        │ • Native C++ / Numba │      │ • Signed Paise Table │      │ • <5ms SQLite Precedents     │
         │ • 1:1 UTR Hash Index │      │ • 1:N Batch Knapsack │      │ • Zero-Egress Air-Gapped LLM │
         │ • 2-Stage ERP Join   │      │ • Refund Debits Sub- │      │ • Whitelisted AST Evaluator  │
         │ • SETTLED_PENDING_ERP│      │   set-Sum Resolution │      │ • SHA-256 Proof Hash Binding │
@@ -106,7 +106,7 @@ In production FinOps, standard rule-based scripts break on complex real-world an
 ### 3. Bounded DP Knapsack Subset-Sum Solver (`dp_solver.py`)
 - Unindexed 1-to-N batch settlements bundle multiple customer payments minus concurrent refunds into single lump-sum bank credits with zero foreign keys.
 - Operates on a signed integer hash table (`dict[int, list[int]]`). Negative refund debits shift state keys left safely without array index wrapping or `IndexError`.
-- Combinatorial depth is bounded to $K \le 25$ items and guarded by `_MAX_DP_STATES = 50,000`.
+- Combinatorial depth is bounded to $K \le 25$ items and guarded by `_MAX_DP_STATES = 50,000`. Unresolvable residuals fall through cleanly to Pass 3 (Agentic Investigation) $\to$ Human Suspense Queue without stalling.
 
 ### 4. Whitelisted AST Safe Math Evaluator (`ast_evaluator.py`)
 - Eliminates Python `eval()` and `exec()` Remote Code Execution (RCE) vulnerabilities.
@@ -114,8 +114,8 @@ In production FinOps, standard rule-based scripts break on complex real-world an
 - Rejects function calls, imports, lambdas, comprehensions, and attribute accesses with `SecurityViolationError`.
 - Computes an immutable proof hash: $\text{SHA256}(\text{DSL} \parallel \text{Paise Result})$.
 
-### 5. SQLite Episodic Resolution Memory & Temporal RAG (`memory_store.py`)
-- Caches verified anomaly precedents as 384-dimensional deterministic MD5 feature vectors.
+### 5. SQLite Episodic Resolution Memory & Deterministic Feature Hashing (`memory_store.py`)
+- Caches verified anomaly precedents as 384-dimensional deterministic feature vectors using fast MD5 feature hashing (hash trick) for zero-cold-start, zero-dependency sub-millisecond similarity queries.
 - Range-queries on `(discrepancy_type, variance_paise)` followed by cosine similarity ranking resolve repeat anomalies in **$<5\text{ms}$** without calling external LLMs.
 
 ### 6. Invariant Gatekeeper & Binary Merkle Audit Ledger (`invariant_gate.py`, `merkle_audit.py`)
@@ -143,7 +143,7 @@ In production FinOps, standard rule-based scripts break on complex real-world an
   - **Granular Line Items:** Complete itemized breakdown of all individual payments within a 1:N batch.
   - **AST Adjustment Formula:** Validated mathematical proof (`NET_SETTLEMENT = GROSS − MDR − GST`).
   - **SHA-256 Audit Hash:** Tamper-proof leaf verification.
-  - **1-Click ERP Dispatch:** Formatted payload dispatch to **Zoho Books**, **TallyPrime**, and **SAP S/4HANA**.
+  - **1-Click ERP Dispatch:** Formatted payload dispatch to **Zoho Books**, **TallyPrime**, and **SAP S/4HANA** with deterministic `reference_number` idempotency keys.
 
 ---
 
@@ -158,7 +158,7 @@ Execution of the genuine 100-batch multi-source benchmark (`python backend/main.
 | **Double-Entry Invariant Gate** | **BALANCED** | $\sum \text{Debits} - \sum \text{Credits} = 0$ | **PASSED** | Non-Negotiable Double-Entry Audit Gatekeeper |
 | **Statutory GST Invariant** | **VERIFIED** | $\text{GST} = \text{round}(\text{MDR} \times 0.18)$ | **PASSED** | Exact Statutory Tax Compliance |
 | **Discrepancy Variance** | **₹0.00 (0 paise)** | $\text{INR } 0.00$ | **PASSED** | Zero Floating-Point Drift (64-Bit Integer Math) |
-| **End-to-End Latency** | **34.78 ms** | $<500\text{ ms}$ | **PASSED** | Real-time C++ / Numba SIMD Execution |
+| **End-to-End Latency** | **34.78 ms** | $<500\text{ ms}$ | **PASSED** | Real-time Native C++ / Numba JIT Execution |
 | **Total Records Processed** | **286 transactions** | 100 batch (3-way) | **PASSED** | Razorpay Feeds + Bank Deposits + ERP Invoices |
 | **Pass 1 Resolved** | **71 clusters** | Heuristic Pruner | **PASSED** | 1:1 Hash Index & 2-Stage Settlement Join |
 | **Pass 2 Resolved** | **10 clusters** | DP Knapsack Solver | **PASSED** | 1:N Batch & Signed Refund Subset-Sum |
@@ -276,12 +276,12 @@ Open **`http://localhost:5173`** in your browser.
 │   │   │   ├── dispatcher.py          # Zoho / Tally / SAP closed-loop dispatchers
 │   │   │   ├── matcher/
 │   │   │   │   ├── dp_solver.py       # Bounded DP knapsack subset-sum solver (Pass 2)
-│   │   │   │   ├── engine_factory.py  # Dual-mode engine factory (C++ SIMD vs Numba JIT)
+│   │   │   │   ├── engine_factory.py  # Dual-mode engine factory (Native C++ vs Numba JIT)
 │   │   │   │   ├── greedy_pruner.py   # 2-Stage Heuristic pruner (Pass 1)
 │   │   │   │   ├── native/
-│   │   │   │   │   ├── matcher.cpp    # PyBind11 C++ SIMD matching kernel
+│   │   │   │   │   ├── matcher.cpp    # PyBind11 C++ high-throughput matching kernel
 │   │   │   │   │   └── setup.py       # C++ extension compilation script
-│   │   │   │   └── numba_fallback.py  # Vectorized Numba JIT fallback pruner
+│   │   │   │   └── numba_fallback.py  # High-throughput Numba JIT fallback pruner
 │   │   │   ├── models.py              # Canonical Pydantic v2 domain schemas
 │   │   │   └── normalizer.py          # Exact integer paise sanitizer & UTR extractor
 │   │   └── guardrails/                # Accounting Invariants & Merkle Ledger

@@ -34,7 +34,7 @@ export interface UseReconStreamReturn {
 export function useReconStream(wsUrl: string = DEFAULT_WS_URL): UseReconStreamReturn {
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [isStreaming, setIsStreaming] = useState<boolean>(false);
-  const [engineMode, setEngineMode] = useState<string>('Native C++ (SIMD Vectorized)');
+  const [engineMode, setEngineMode] = useState<string>('Native C++ (Compiled PyBind11)');
   const [merkleRoot, setMerkleRoot] = useState<string>('SHA-256 INITIALIZED');
 
   const [clusters, setClusters] = useState<ReconciliationCluster[]>([]);

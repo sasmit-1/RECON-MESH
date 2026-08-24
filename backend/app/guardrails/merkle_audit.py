@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from typing import Any, List, Union
+from typing import Any, Dict, List, Union
 
 from backend.app.core.models import DiscrepancyVoucher
 

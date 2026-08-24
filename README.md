@@ -3,7 +3,8 @@
 # ⚡ TRIDENT
 ### Autonomous Multi-Source 3-Way Financial Reconciliation Engine & Invariant Gatekeeper
 
-[![Build Status](https://img.shields.io/badge/build-passing-059669.svg?style=flat-square)](https://github.com/sasmit-1/TRIDENT)
+[![CI](https://github.com/sasmit-1/TRIDENT/actions/workflows/ci.yml/badge.svg)](https://github.com/sasmit-1/TRIDENT/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Tests](https://img.shields.io/badge/pytest-8%2F8%20passed%20(100%25)-059669.svg?style=flat-square)](https://github.com/sasmit-1/TRIDENT)
 [![Double-Entry Invariants](https://img.shields.io/badge/invariants-zero--sum%20verified-059669.svg?style=flat-square)](https://github.com/sasmit-1/TRIDENT)
 [![Variance Delta](https://img.shields.io/badge/variance%20delta-%E2%82%B90.00%20(0%20paise)-059669.svg?style=flat-square)](https://github.com/sasmit-1/TRIDENT)
@@ -36,10 +37,12 @@ Digital enterprises process millions of transactions daily across fragmented, as
 In production FinOps, standard rule-based scripts break on complex real-world anomalies, manual reconciliation takes days, and generic LLM wrappers are fundamentally dangerous due to floating-point rounding drift, hallucinations, and Remote Code Execution (RCE) vulnerabilities.
 
 **TRIDENT** solves this with an industrial **3-Pass Reconciliation Kernel**:
-- **Pass 1 (Heuristic Pruner):** $O(N)$ hash-map UTR & settlement pruner in Native C++ (PyBind11) / Python Numba resolving 1:1 matches and batch metadata in $<30\text{ms}$.
+- **Pass 1 (Heuristic Pruner):** $O(N)$ hash-map UTR & settlement pruner in Python Numba (with native PyBind11 C++ kernel support) resolving 1:1 matches and batch metadata in $<30\text{ms}$.
 - **Pass 2 (Bounded DP Knapsack Solver):** Exact 0-1 subset-sum solver matching unindexed 1-to-N batch deposits and customer refund debits over signed integer paise hash tables.
 - **Pass 3 (Forensic AI Agent & AST Sandbox):** Sub-5ms SQLite episodic memory recall + LLM anomaly analyzer evaluated through a strict, whitelist-only Abstract Syntax Tree (AST) arithmetic parser with zero `eval()`/`exec()`.
 - **Double-Entry Invariant Gatekeeper & Merkle Tree:** Non-negotiable mathematical validation ($\sum \text{Debits} - \sum \text{Credits} = 0$) and cryptographic SHA-256 Merkle audit trail.
+
+> ⚡ **Dynamic Execution Modes:** Architecture supports dynamic execution modes: defaults to pure Python/Numba with Gemini/Groq cloud routing for instant evaluation, with zero-code toggle support for native PyBind11 C++ compilation and local air-gapped Ollama edge nodes.
 
 ---
 
@@ -249,6 +252,9 @@ Open **`http://localhost:5173`** in your browser.
 
 ```
 .
+├── .github/
+│   └── workflows/
+│       └── ci.yml                     # Automated GitHub Actions test pipeline
 ├── assets/                            # Demo video, animated GIF, and verified UI screenshots
 │   ├── cli-benchmark.png              # Headless CLI benchmark execution screenshot
 │   ├── dashboard-canvas.png           # 3-column bipartite financial board screenshot
@@ -307,8 +313,9 @@ Open **`http://localhost:5173`** in your browser.
 │   │       └── recon.ts               # TypeScript canonical domain schemas
 │   ├── package.json                   # Frontend dependencies
 │   └── vite.config.ts                 # Vite bundler configuration
+├── LICENSE                            # MIT License
 ├── pytest.ini                         # Pytest configuration & warning suppression
-├── requirements.txt                   # Root Python dependencies
+├── requirements.txt                   # Root Python dependencies pointer
 └── README.md                          # Master Production Documentation
 ```
 

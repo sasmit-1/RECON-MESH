@@ -1,5 +1,5 @@
 """
-RECON-MESH Canonical Normalizer (Step 02)
+TRIDENT Canonical Normalizer (Step 02)
 Provides robust sanitization, UTC timestamp parsing, exact integer paise arithmetic,
 and UTR token extraction for incoming multi-source financial telemetry.
 """

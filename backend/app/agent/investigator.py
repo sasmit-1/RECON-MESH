@@ -1,5 +1,5 @@
 """
-RECON-MESH AI Recon Investigator (Step 07)
+TRIDENT AI Recon Investigator (Step 07)
 Orchestrates Chain-of-Verification analysis on unresolved discrepancy clusters.
 Integrates the AST Safe Math Evaluator (Step 06) to validate generated arithmetic DSLs
 and produces cryptographically hashed double-entry DiscrepancyVouchers.
@@ -16,7 +16,7 @@ from backend.app.core.models import DiscrepancyVoucher, ReconciliationCluster
 
 logger = logging.getLogger(__name__)
 
-INVESTIGATOR_SYSTEM_PROMPT = """You are the RECON-MESH Autonomous Financial Investigator & Auditor.
+INVESTIGATOR_SYSTEM_PROMPT = """You are the TRIDENT Autonomous Financial Investigator & Auditor.
 Your objective is to analyze unresolved 3-way financial reconciliation discrepancies across Razorpay webhooks, Bank statements, and ERP invoices, and output a structured resolution voucher.
 
 CRITICAL AST DSL SYNTAX CONSTRAINT:
@@ -45,7 +45,7 @@ Output MUST be a valid JSON object matching the following structure:
 
 class ReconInvestigator:
     """
-    Chain-of-Verification AI Investigator for RECON-MESH.
+    Chain-of-Verification AI Investigator for TRIDENT.
     Analyzes discrepancy clusters, generates math DSL proofs, and builds DiscrepancyVouchers.
     """
 

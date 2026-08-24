@@ -1,3 +1,3 @@
 """
-RECON-MESH Automated Test Suite Package
+TRIDENT Automated Test Suite Package
 """

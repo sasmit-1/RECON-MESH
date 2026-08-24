@@ -1,1 +1,1 @@
-# RECON-MESH Agent Package
+# TRIDENT Agent Package

@@ -1,5 +1,5 @@
 /**
- * RECON-MESH Step 12: Interactive 3-Column Bipartite DAG Canvas
+ * TRIDENT Step 12: Interactive 3-Column Bipartite DAG Canvas
  * =============================================================
  * Renders a high-density React Flow bipartite board with 3 columnar lanes:
  *   Column A: Razorpay Captured Feeds (Gross ₹, MDR, GST, UTR)

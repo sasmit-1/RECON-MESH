@@ -1,5 +1,5 @@
 """
-RECON-MESH Step 09: Closed-Loop Executable ERP Dispatcher
+TRIDENT Step 09: Closed-Loop Executable ERP Dispatcher
 =========================================================
 Transforms verified DiscrepancyVouchers into production-ready API payloads
 and dispatches them to external accounting ledgers (Zoho Books, TallyPrime, SAP S/4HANA).
@@ -51,7 +51,7 @@ class ERPDispatcher:
         Structure adheres to Zoho Books API specification while supporting top-level
         property access.
         """
-        narration_text = narration or f"RECON-MESH Automated Adjustment for {voucher_id}"
+        narration_text = narration or f"TRIDENT Automated Adjustment for {voucher_id}"
         date_str = cls._current_date_str()
 
         line_items = []
@@ -93,7 +93,7 @@ class ERPDispatcher:
         narration: str = "",
     ) -> str:
         """Formats standard Tally Prime TALLYMESSAGE XML voucher payload."""
-        narration_text = narration or f"RECON-MESH Automated Adjustment for {voucher_id}"
+        narration_text = narration or f"TRIDENT Automated Adjustment for {voucher_id}"
         date_str = cls._current_date_tally_str()
 
         lines = []
@@ -144,7 +144,7 @@ class ERPDispatcher:
             "voucher_type": "Journal",
             "voucher_number": f"RECON-{voucher_id}",
             "date": cls._current_date_tally_str(),
-            "narration": narration or f"RECON-MESH Automated Adjustment for {voucher_id}",
+            "narration": narration or f"TRIDENT Automated Adjustment for {voucher_id}",
             "xml_payload": cls.generate_tally_xml(voucher_id, journal_entries, narration),
         }
 
@@ -201,7 +201,7 @@ class ERPDispatcher:
         Otherwise, executes a local mock dispatch returning the structured payload.
         """
         system_upper = target_system.upper()
-        narration_text = narration or f"RECON-MESH adjustment for cluster {voucher.cluster_id}"
+        narration_text = narration or f"TRIDENT adjustment for cluster {voucher.cluster_id}"
 
         if system_upper == "ZOHO":
             payload = cls.generate_zoho_payload(voucher.voucher_id, journal_entries, narration_text)

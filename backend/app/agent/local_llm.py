@@ -1,5 +1,5 @@
 """
-RECON-MESH Local Ollama Provider (Step 07)
+TRIDENT Local Ollama Provider (Step 07)
 Provides 0-egress local edge LLM inference via Ollama REST API.
 """
 

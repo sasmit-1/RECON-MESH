@@ -1,5 +1,5 @@
 /**
- * RECON-MESH MetricsBar Wrapper
+ * TRIDENT MetricsBar Wrapper
  * Re-exports HUDMetricsBar for backward compatibility and spec alignment.
  */
 

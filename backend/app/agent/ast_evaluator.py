@@ -1,5 +1,5 @@
 """
-RECON-MESH AST Safe Math Evaluator & Sandboxed Grammar (Step 06)
+TRIDENT AST Safe Math Evaluator & Sandboxed Grammar (Step 06)
 
 Provides a strict whitelist-based Abstract Syntax Tree evaluator for agent-generated
 financial arithmetic DSL expressions. Zero `eval()` / `exec()` usage — all evaluation
@@ -43,7 +43,7 @@ class SecurityViolationError(Exception):
 
 class ASTSafeMathEvaluator:
     """
-    Strict AST-based arithmetic evaluator for RECON-MESH agent DSL expressions.
+    Strict AST-based arithmetic evaluator for TRIDENT agent DSL expressions.
 
     Supports only:
       • Integer and float constants

@@ -1,5 +1,5 @@
 /**
- * RECON-MESH: Live Audit Terminal
+ * TRIDENT: Live Audit Terminal
  * ================================
  * Clean log stream panel — light gray background, JetBrains Mono,
  * muted color-coded level tags. Collapsible bottom dock.
@@ -52,7 +52,7 @@ export const LiveAuditTerminal: React.FC<LiveAuditTerminalProps> = ({
 }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [logs, setLogs] = useState<LogEntry[]>([
-    makeLog('SYS',   'RECON-MESH Engine v2.1.0 initialized.'),
+    makeLog('SYS',   'TRIDENT Engine v2.1.0 initialized.'),
     makeLog('INVAR', 'Double-entry zero-sum gatekeeper → active.'),
     makeLog('MERKLE','SHA-256 binary Merkle ledger → ready.'),
     makeLog('SYS',   'Awaiting reconciliation batch…'),

@@ -1,5 +1,5 @@
 """
-RECON-MESH Bounded DP Subset-Sum Solver (Step 05)
+TRIDENT Bounded DP Subset-Sum Solver (Step 05)
 Implements Pass 2 of the Dual-Pass Reconciliation Kernel.
 
 Resolves unindexed 1-to-N bank deposits with concurrent customer refunds against

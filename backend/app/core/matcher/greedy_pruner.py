@@ -1,5 +1,5 @@
 """
-RECON-MESH 2-Stage Greedy Heuristic Pruner (Step 03)
+TRIDENT 2-Stage Greedy Heuristic Pruner (Step 03)
 Implements Pass 1 of the Dual-Pass Recon Kernel using a 2-Stage Matching Architecture:
   Stage 1 (Settlement Layer): Match Razorpay <-> Bank by UTR, net paise, and time window.
   Stage 2 (Ledger Layer):     Join RZP.order_id <-> ERP.order_id, applying SETTLED_PENDING_ERP
@@ -24,7 +24,7 @@ from backend.app.core.matcher.numba_fallback import (
 
 class GreedyHeuristicPruner:
     """
-    Pass 1 heuristic pruner for the RECON-MESH Dual-Pass Reconciliation Kernel.
+    Pass 1 heuristic pruner for the TRIDENT Dual-Pass Reconciliation Kernel.
 
     Architecture:
     - Stage 1A: Strict 1:1 settlement match (UTR + net paise + 72h window).

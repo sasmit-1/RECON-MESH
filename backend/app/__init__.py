@@ -1,1 +1,1 @@
-# RECON-MESH App Package
+# TRIDENT App Package

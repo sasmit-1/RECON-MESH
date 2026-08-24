@@ -1,5 +1,5 @@
 """
-RECON-MESH Numba Acceleration Layer (Step 03)
+TRIDENT Numba Acceleration Layer (Step 03)
 Provides JIT-compiled greedy 1:1 matching over integer paise amounts and Unix timestamps.
 Falls back cleanly to vectorized NumPy / pure Python if Numba is unavailable or fails to compile.
 """

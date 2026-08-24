@@ -1,5 +1,5 @@
 /*
- * RECON-MESH Native C++ High-Throughput Heuristic Matching Kernel (Step 04)
+ * TRIDENT Native C++ High-Throughput Heuristic Matching Kernel (Step 04)
  *
  * Compiled via PyBind11 as a Python extension module (`matcher_native`).
  * Processes 10,000+ transactions in <30ms using unordered_map UTR hash indexing
@@ -228,7 +228,7 @@ private:
 // ---------------------------------------------------------------------------
 
 PYBIND11_MODULE(matcher_native, m) {
-    m.doc() = "RECON-MESH Native C++ High-Throughput Heuristic Matcher (PyBind11)";
+    m.doc() = "TRIDENT Native C++ High-Throughput Heuristic Matcher (PyBind11)";
 
     py::class_<NativeTransaction>(m, "NativeTransaction")
         .def(py::init<std::string, std::string, int64_t, int64_t, std::string>(),

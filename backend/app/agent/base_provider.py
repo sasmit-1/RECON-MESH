@@ -1,5 +1,5 @@
 """
-RECON-MESH Base LLM Provider & Dynamic Factory (Step 07)
+TRIDENT Base LLM Provider & Dynamic Factory (Step 07)
 Defines the abstract interface for pluggable LLM inference engines and the
 factory router supporting local Ollama edge nodes, Gemini, and Groq cloud providers.
 """

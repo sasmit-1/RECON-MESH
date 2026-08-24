@@ -1,5 +1,5 @@
 """
-RECON-MESH Groq Provider (Step 07)
+TRIDENT Groq Provider (Step 07)
 Provides sub-200ms ultra-low-latency Groq LPU inference.
 """
 

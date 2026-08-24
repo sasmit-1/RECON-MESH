@@ -1,5 +1,5 @@
 """
-RECON-MESH Step 09: Deterministic Invariant Gatekeeper & Merkle Audit Ledger
+TRIDENT Step 09: Deterministic Invariant Gatekeeper & Merkle Audit Ledger
 =============================================================================
 Enforces non-probabilistic mathematical zero-sum double-entry accounting
 invariants and tax audit verification.

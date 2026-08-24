@@ -1,5 +1,5 @@
 """
-RECON-MESH Step 10: WebSocket Streaming Manager
+TRIDENT Step 10: WebSocket Streaming Manager
 ================================================
 Provides bidirectional real-time event streaming to the React/Three.js frontend.
 Broadcasts live CLUSTER_MATCHED, METRICS_UPDATE, and STREAM_TICK payloads.
@@ -20,7 +20,7 @@ from uuid import uuid4
 
 from fastapi import WebSocket, WebSocketDisconnect
 
-logger = logging.getLogger("recon_mesh.websocket")
+logger = logging.getLogger("trident.websocket")
 
 
 class ConnectionManager:
@@ -237,7 +237,7 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
             {
                 "event": "HANDSHAKE",
                 "status": "CONNECTED",
-                "engine": "RECON-MESH Autonomous FinOps v2.1",
+                "engine": "TRIDENT Autonomous FinOps v2.1",
                 "features": [
                     "HeuristicPruner",
                     "DPSolver",

@@ -1,5 +1,5 @@
 /**
- * RECON-MESH: Full Workspace Assembly
+ * TRIDENT: Full Workspace Assembly
  * =====================================
  * Razorpay-style clean professional layout.
  * Row 1 (52px):    ControlHeader

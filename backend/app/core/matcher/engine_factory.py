@@ -1,5 +1,5 @@
 """
-RECON-MESH Matcher Engine Dynamic Factory (Step 04)
+TRIDENT Matcher Engine Dynamic Factory (Step 04)
 Implements a dual-mode factory pattern:
   - NATIVE_MATCHER=true  → attempts to load compiled C++ PyBind11 matcher_native module.
   - NATIVE_MATCHER=false → silently falls back to the Python GreedyHeuristicPruner (Step 03).

@@ -1,5 +1,5 @@
 /**
- * RECON-MESH: Custom Transaction Node
+ * TRIDENT: Custom Transaction Node
  * =====================================
  * Clean, professional node card for React Flow.
  * White surface, subtle colored left-border by status, readable typography.

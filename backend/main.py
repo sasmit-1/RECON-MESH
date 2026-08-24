@@ -1,5 +1,5 @@
 """
-RECON-MESH Step 10: FastAPI Application Entry Point & Headless Benchmark CLI
+TRIDENT Step 10: FastAPI Application Entry Point & Headless Benchmark CLI
 =============================================================================
 Provides both:
   1. Production FastAPI Web Server with WebSockets & CORS support.
@@ -40,7 +40,7 @@ from backend.app.api.websocket import websocket_endpoint
 # ---------------------------------------------------------------------------
 
 app = FastAPI(
-    title="RECON-MESH Autonomous FinOps Engine",
+    title="TRIDENT Autonomous FinOps Engine",
     description="High-Throughput Multi-Source Financial Reconciliation Engine & Invariant Gatekeeper",
     version="2.1.0",
     docs_url="/docs",
@@ -90,7 +90,7 @@ def run_headless_benchmark(batch_size: int = 100) -> None:
     import asyncio
 
     print("=" * 75)
-    print(f"RECON-MESH REAL GROUND-TRUTH PIPELINE EVALUATION (Batch: {batch_size})")
+    print(f"TRIDENT REAL GROUND-TRUTH PIPELINE EVALUATION (Batch: {batch_size})")
     print("=" * 75)
 
     from backend.app.benchmark.generator import generate_ground_truth_dataset
@@ -225,7 +225,7 @@ def run_headless_benchmark(batch_size: int = 100) -> None:
     merkle_root = batch_ledger.get_merkle_root()
 
     print("\n" + "=" * 76)
-    print("  RECON-MESH: 3-PASS PIPELINE BENCHMARK EVALUATION")
+    print("  TRIDENT: 3-PASS PIPELINE BENCHMARK EVALUATION")
     print("=" * 76)
     print(f"  * Total Records Processed:     {len(rzp_txns) + len(bank_txns) + len(erp_txns)} transactions (3-Way Multi-Source)")
     print(f"  * Pass 1 Resolved (Heuristic): {len(pass1_clusters)} clusters (1:1 UTR & Settled)")
@@ -248,7 +248,7 @@ def run_headless_benchmark(batch_size: int = 100) -> None:
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="RECON-MESH Autonomous FinOps Engine / CLI Benchmark")
+    parser = argparse.ArgumentParser(description="TRIDENT Autonomous FinOps Engine / CLI Benchmark")
     parser.add_argument("--demo-mode", action="store_true", help="Run real 1-click headless evaluation")
     parser.add_argument("--synthetic-batch", type=int, default=100, help="Batch size for benchmark")
     parser.add_argument("--host", type=str, default="0.0.0.0", help="Server host IP")

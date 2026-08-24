@@ -1,5 +1,5 @@
 /**
- * RECON-MESH Step 11: Real-Time Throttled WebSocket Stream Hook
+ * TRIDENT Step 11: Real-Time Throttled WebSocket Stream Hook
  * =============================================================
  * Connects to ws://localhost:8000/ws/recon-stream with 100ms buffered throttling
  * using useRef to prevent React 19 re-render thrashing during high-throughput bursts.

@@ -1,5 +1,5 @@
 """
-RECON-MESH Gemini Provider (Step 07)
+TRIDENT Gemini Provider (Step 07)
 Provides cloud-based Gemini LLM inference for quick evaluation.
 """
 

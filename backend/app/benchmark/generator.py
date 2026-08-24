@@ -1,5 +1,5 @@
 """
-RECON-MESH Ground-Truth Synthetic Data Generator (Step 01)
+TRIDENT Ground-Truth Synthetic Data Generator (Step 01)
 Generates deterministic, production-grade 3-way financial reconciliation benchmarks
 covering all 5 enterprise FinOps edge cases with exact integer paise precision.
 """
@@ -671,7 +671,7 @@ async def stream_synthetic_events(rate_hz: float = 1.0, count: int = 100, seed: 
 # ------------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="RECON-MESH Step 01 Ground-Truth Data Generator")
+    parser = argparse.ArgumentParser(description="TRIDENT Step 01 Ground-Truth Data Generator")
     parser.add_argument("--count", type=int, default=100, help="Number of Razorpay events to generate")
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
     parser.add_argument("--out", type=str, default="benchmark_results/ground_truth_100.json", help="Output JSON path")

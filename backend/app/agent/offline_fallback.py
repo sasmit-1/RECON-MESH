@@ -1,5 +1,5 @@
 """
-RECON-MESH: Deterministic Offline LLM Fallback (Pass 3 Demo Mode)
+TRIDENT: Deterministic Offline LLM Fallback (Pass 3 Demo Mode)
 ==================================================================
 When no LLM API keys are configured, this engine produces a fully
 deterministic resolution for known FinOps exception patterns:

@@ -1,5 +1,5 @@
 """
-RECON-MESH Step 09: Cryptographic Merkle Audit Tree
+TRIDENT Step 09: Cryptographic Merkle Audit Tree
 ====================================================
 Computes SHA-256 tamper-proof Merkle binary tree proofs over all
 resolved financial vouchers and agent audit events.

@@ -1,5 +1,5 @@
 """
-RECON-MESH Automated Test Suite: Comprehensive Reconciliation Kernel Verification
+TRIDENT Automated Test Suite: Comprehensive Reconciliation Kernel Verification
 =================================================================================
 Covers:
   - test_zero_sum_invariant_gate(): Double-entry mathematical zero-sum accounting invariants.

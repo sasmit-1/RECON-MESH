@@ -1,16 +1,16 @@
 <div align="center">
 
-# ⚡ RECON-MESH
+# ⚡ TRIDENT
 ### Autonomous Multi-Source 3-Way Financial Reconciliation Engine & Invariant Gatekeeper
 
-[![Build Status](https://img.shields.io/badge/build-passing-059669.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
-[![Tests](https://img.shields.io/badge/pytest-8%2F8%20passed%20(100%25)-059669.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
-[![Double-Entry Invariants](https://img.shields.io/badge/invariants-zero--sum%20verified-059669.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
-[![Variance Delta](https://img.shields.io/badge/variance%20delta-%E2%82%B90.00%20(0%20paise)-059669.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
+[![Build Status](https://img.shields.io/badge/build-passing-059669.svg?style=flat-square)](https://github.com/sasmit-1/TRIDENT)
+[![Tests](https://img.shields.io/badge/pytest-8%2F8%20passed%20(100%25)-059669.svg?style=flat-square)](https://github.com/sasmit-1/TRIDENT)
+[![Double-Entry Invariants](https://img.shields.io/badge/invariants-zero--sum%20verified-059669.svg?style=flat-square)](https://github.com/sasmit-1/TRIDENT)
+[![Variance Delta](https://img.shields.io/badge/variance%20delta-%E2%82%B90.00%20(0%20paise)-059669.svg?style=flat-square)](https://github.com/sasmit-1/TRIDENT)
 [![Python](https://img.shields.io/badge/python-3.11%20%7C%20FastAPI-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![Frontend](https://img.shields.io/badge/frontend-React%2019%20%7C%20TypeScript%20%7C%20Tailwind-61DAFB.svg?style=flat-square&logo=react&logoColor=black)](https://react.dev)
-[![Audit](https://img.shields.io/badge/audit-SHA--256%20Merkle%20Ledger-4F46E5.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
-[![Track](https://img.shields.io/badge/Track-04%3A%20AI%20Finance%20Controller-2D65F8.svg?style=flat-square)](https://github.com/sasmit-1/RECON-MESH)
+[![Audit](https://img.shields.io/badge/audit-SHA--256%20Merkle%20Ledger-4F46E5.svg?style=flat-square)](https://github.com/sasmit-1/TRIDENT)
+[![Track](https://img.shields.io/badge/Track-04%3A%20AI%20Finance%20Controller-2D65F8.svg?style=flat-square)](https://github.com/sasmit-1/TRIDENT)
 
 **Track 04: AI Finance Controller — Razorpay AI Buildathon**  
 *Autonomous Real-Time Reconciliation of Payment Gateways (Razorpay), Core Banking Feeds (CAMT.053 / MT940), and ERP General Ledgers (Zoho Books / TallyPrime / SAP S/4HANA).*
@@ -18,7 +18,7 @@
 ---
 
 ### 🎥 Live Engine Preview
-![RECON-MESH Demo Walkthrough](assets/demo-preview.gif)
+![TRIDENT Demo Walkthrough](assets/demo-preview.gif)
 
 > 📹 **[Watch the Full Demo Recording (assets/demo-video.mp4)](assets/demo-video.mp4)**
 
@@ -35,7 +35,7 @@ Digital enterprises process millions of transactions daily across fragmented, as
 
 In production FinOps, standard rule-based scripts break on complex real-world anomalies, manual reconciliation takes days, and generic LLM wrappers are fundamentally dangerous due to floating-point rounding drift, hallucinations, and Remote Code Execution (RCE) vulnerabilities.
 
-**RECON-MESH** solves this with an industrial **3-Pass Reconciliation Kernel**:
+**TRIDENT** solves this with an industrial **3-Pass Reconciliation Kernel**:
 - **Pass 1 (Heuristic Pruner):** $O(N)$ hash-map UTR & settlement pruner in C++ SIMD / Python Numba resolving 1:1 matches and batch metadata in $<30\text{ms}$.
 - **Pass 2 (Bounded DP Knapsack Solver):** Exact 0-1 subset-sum solver matching unindexed 1-to-N batch deposits and customer refund debits over signed integer paise hash tables.
 - **Pass 3 (Forensic AI Agent & AST Sandbox):** Sub-5ms SQLite episodic memory recall + LLM anomaly analyzer evaluated through a strict, whitelist-only Abstract Syntax Tree (AST) arithmetic parser with zero `eval()`/`exec()`.
@@ -47,7 +47,7 @@ In production FinOps, standard rule-based scripts break on complex real-world an
 
 ```
 ════════════════════════════════════════════════════════════════════════════════════════════════════
-                                  RECON-MESH ARCHITECTURE PIPELINE
+                                  TRIDENT ARCHITECTURE PIPELINE
 ════════════════════════════════════════════════════════════════════════════════════════════════════
 
      [Razorpay Webhooks]                [Bank Feeds (MT940)]             [ERP Invoices (Zoho/SAP)]
@@ -165,7 +165,7 @@ Execution of the genuine 100-batch multi-source benchmark (`python backend/main.
 | **Pass 3 AI Resolved** | **5 clusters** | Forensic AI Agent | **PASSED** | Episodic Memory & AST Sandbox Proof |
 | **Cryptographic Merkle Audit** | **VERIFIED** | SHA-256 Root Hash | **PASSED** | Tamper-Proof Binary Audit Ledger |
 
-> 💡 **Deterministic Invariant Assurance:** RECON-MESH enforces mathematical invariants over exact 64-bit integer paise, guaranteeing zero floating-point drift and exact integer subset-sum knapsack convergence across 1:1 settlements, 1:N batch deposits, and refund debits.
+> 💡 **Deterministic Invariant Assurance:** TRIDENT enforces mathematical invariants over exact 64-bit integer paise, guaranteeing zero floating-point drift and exact integer subset-sum knapsack convergence across 1:1 settlements, 1:N batch deposits, and refund debits.
 
 ---
 
@@ -207,8 +207,8 @@ backend/tests/test_recon_pipeline.py::test_fastapi_rest_routes PASSED           
 
 ### 1. Clone & Setup Backend
 ```bash
-git clone https://github.com/sasmit-1/RECON-MESH.git
-cd RECON-MESH
+git clone https://github.com/sasmit-1/TRIDENT.git
+cd TRIDENT
 
 # Create & activate virtual environment
 python -m venv venv

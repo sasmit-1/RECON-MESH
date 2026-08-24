@@ -1,5 +1,5 @@
 """
-RECON-MESH API Package
+TRIDENT API Package
 ======================
 FastAPI routes, WebSocket streaming engine, and HTTP endpoints.
 """

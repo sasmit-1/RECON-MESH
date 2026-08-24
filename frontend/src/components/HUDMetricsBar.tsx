@@ -1,5 +1,5 @@
 /**
- * RECON-MESH: HUD Metrics Bar
+ * TRIDENT: HUD Metrics Bar
  * ============================
  * Clean metric cards showing key reconciliation KPIs.
  * Razorpay-style: white cards, subtle shadows, brand blue accents.

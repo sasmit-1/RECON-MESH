@@ -1,5 +1,5 @@
 /**
- * RECON-MESH: Investigation Drawer
+ * TRIDENT: Investigation Drawer
  * ==================================
  * Slide-over panel for cluster deep-dive.
  * Razorpay-style: clean white, structured sections, no neon.

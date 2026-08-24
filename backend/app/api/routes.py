@@ -1,5 +1,5 @@
 """
-RECON-MESH Step 10: FastAPI REST API Routes
+TRIDENT Step 10: FastAPI REST API Routes
 ===========================================
 Defines HTTP endpoints for batch reconciliation ingestion, health status,
 Merkle audit tree verification, and ERP payload dispatching.
@@ -34,7 +34,7 @@ from backend.app.core.normalizer import normalize_event
 from backend.app.guardrails.invariant_gate import InvariantGatekeeper
 from backend.app.guardrails.merkle_audit import MerkleAuditLedger
 
-logger = logging.getLogger("recon_mesh.routes")
+logger = logging.getLogger("trident.routes")
 
 router = APIRouter()
 
@@ -184,7 +184,7 @@ async def health_check() -> Dict[str, Any]:
 
     return {
         "status": "OK",
-        "service": "RECON-MESH Autonomous FinOps Engine",
+        "service": "TRIDENT Autonomous FinOps Engine",
         "version": "2.1.0",
         "engine_mode": "Native C++ (SIMD Vectorized)" if is_native else "Python Numba (JIT Compiled)",
         "engine_class": engine_name,

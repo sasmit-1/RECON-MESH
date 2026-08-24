@@ -1,5 +1,5 @@
 """
-RECON-MESH Guardrails Package
+TRIDENT Guardrails Package
 =============================
 Provides deterministic invariant enforcement and cryptographic audit ledgers.
 """

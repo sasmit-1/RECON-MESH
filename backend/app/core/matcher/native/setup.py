@@ -1,5 +1,5 @@
 """
-RECON-MESH Native C++ Extension Build Script (Step 04)
+TRIDENT Native C++ Extension Build Script (Step 04)
 Compiles matcher.cpp into a PyBind11 Python extension module: matcher_native.
 
 Usage (from repo root):
@@ -75,8 +75,8 @@ matcher_native_ext = Extension(
 setup(
     name="matcher_native",
     version="1.0.0",
-    description="RECON-MESH Native C++ Heuristic Matching Kernel (PyBind11)",
-    author="RECON-MESH Engineering",
+    description="TRIDENT Native C++ Heuristic Matching Kernel (PyBind11)",
+    author="TRIDENT Engineering",
     ext_modules=[matcher_native_ext],
     python_requires=">=3.10",
     zip_safe=False,

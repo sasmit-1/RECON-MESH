@@ -1,5 +1,5 @@
 /**
- * RECON-MESH: Control Header
+ * TRIDENT: Control Header
  * ===========================
  * Razorpay-style top navigation bar — clean white surface,
  * brand blue accents, minimal iconography.
@@ -56,7 +56,7 @@ export const ControlHeader: React.FC<ControlHeaderProps> = ({
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-[13px] font-semibold text-[#111827] tracking-tight">
-              Recon-Mesh
+              Trident
             </span>
             <span className="text-[10px] text-[#9CA3AF] font-medium">
               Financial Reconciliation Engine

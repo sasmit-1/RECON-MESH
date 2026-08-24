@@ -1,5 +1,5 @@
 /**
- * RECON-MESH Step 12: Three.js WebGL Laser Arc Overlay
+ * TRIDENT Step 12: Three.js WebGL Laser Arc Overlay
  * =====================================================
  * Transparent hardware-accelerated WebGL canvas positioned behind React Flow.
  * Renders razor-sharp 1px glowing green bezier laser arcs between matched node

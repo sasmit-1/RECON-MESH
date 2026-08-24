@@ -1,1 +1,1 @@
-# RECON-MESH Core Package
+# TRIDENT Core Package

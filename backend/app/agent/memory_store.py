@@ -1,5 +1,5 @@
 """
-RECON-MESH Step 08: Episodic Memory Store & Temporal Vector RAG
+TRIDENT Step 08: Episodic Memory Store & Temporal Vector RAG
 ================================================================
 Implements a local SQLite-backed episodic memory that:
 
@@ -134,7 +134,7 @@ def _variance_ratio(variance_paise: int) -> float:
 
 class EpisodicMemoryStore:
     """
-    SQLite-backed episodic memory for the RECON-MESH agent.
+    SQLite-backed episodic memory for the TRIDENT agent.
 
     Each method opens a fresh connection and explicitly closes it in a
     finally-block, guaranteeing the OS file handle is released on Windows

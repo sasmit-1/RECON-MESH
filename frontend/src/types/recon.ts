@@ -1,5 +1,5 @@
 /**
- * RECON-MESH Domain Type Definitions
+ * TRIDENT Domain Type Definitions
  * Unified Canonical Schemas for Frontend State & Telemetry Streaming.
  */
 

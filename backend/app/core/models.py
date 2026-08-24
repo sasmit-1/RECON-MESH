@@ -1,5 +1,5 @@
 """
-RECON-MESH Canonical Data Models (Step 02)
+TRIDENT Canonical Data Models (Step 02)
 Defines Pydantic v2 domain schemas for multi-source 3-way financial reconciliation.
 """
 

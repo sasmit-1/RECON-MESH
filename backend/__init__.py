@@ -1,1 +1,1 @@
-# RECON-MESH Backend Package
+# TRIDENT Backend Package

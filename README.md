@@ -4,6 +4,7 @@
 ### Autonomous Multi-Source 3-Way Financial Reconciliation Engine & Invariant Gatekeeper
 
 [![CI](https://github.com/sasmit-1/TRIDENT/actions/workflows/ci.yml/badge.svg)](https://github.com/sasmit-1/TRIDENT/actions/workflows/ci.yml)
+[![YouTube Demo Walkthrough](https://img.shields.io/badge/YouTube-Video%20Walkthrough-FF0000.svg?style=flat-square&logo=youtube)](https://www.youtube.com/watch?v=dX9mNN2BDng)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Tests](https://img.shields.io/badge/pytest-8%2F8%20passed%20(100%25)-059669.svg?style=flat-square)](https://github.com/sasmit-1/TRIDENT)
 [![Double-Entry Invariants](https://img.shields.io/badge/invariants-zero--sum%20verified-059669.svg?style=flat-square)](https://github.com/sasmit-1/TRIDENT)
@@ -18,10 +19,16 @@
 
 ---
 
-### 🎥 Live Engine Preview
+### 🎥 Live Engine Preview & Video Walkthrough
+
+[![Watch YouTube Walkthrough](https://img.shields.io/badge/▶_Watch_YouTube_Demo_Walkthrough-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=dX9mNN2BDng)
+
+<br/>
+
 ![TRIDENT Demo Walkthrough](assets/demo-preview.gif)
 
-> 📹 **[Watch the Full Demo Recording (assets/demo-video.mp4)](assets/demo-video.mp4)**
+> 📹 **[Watch the Full 5-Minute Demo Walkthrough on YouTube (https://www.youtube.com/watch?v=dX9mNN2BDng)](https://www.youtube.com/watch?v=dX9mNN2BDng)**  
+> *(Local high-definition mirror available in repo at [assets/demo-video.mp4](assets/demo-video.mp4))*
 
 </div>
 
